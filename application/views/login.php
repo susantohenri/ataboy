@@ -22,7 +22,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?= base_url() ?>"><b>Prototype</b>App</a>
+    <a href="<?= base_url() ?>"><b>Ataboy</b>App</a>
   </div>
   <!-- /.login-logo -->
   <div class="card">

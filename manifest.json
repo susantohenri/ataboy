@@ -1,11 +1,11 @@
 {
-  "name": "simokerkop",
-  "short_name": "simokerkop",
+  "name": "Ataboy",
+  "short_name": "Ataboy",
   "theme_color": "#17a2b8",
   "background_color": "#ffffff",
   "display": "standalone",
-  "Scope": "../simokerkop/.",
-  "start_url": "/simokerkop/",
+  "Scope": "../ataboy/.",
+  "start_url": "/ataboy/",
   "icons": [
     {
       "src": "icon.png",

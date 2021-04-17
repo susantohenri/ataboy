@@ -101,5 +101,253 @@
 	{
 		"controller": "PengajuanPhoto",
 		"fields": []
+	},
+	{
+		"controller": "BarangKeluarBulk",
+		"fields": [
+			{
+				"name": "pengajuan",
+				"type": "relation",
+				"model": "Pengajuans",
+				"field": "createdAt"
+			}
+		],
+		"childs": [
+			{
+				"controller": "BarangKeluar",
+				"label": "Item"
+			}
+		]
+	},
+	{
+		"controller": "BarangKeluar",
+		"fields": [
+			{
+				"name": "barang",
+				"type": "relation",
+				"model": "Barangs",
+				"field": "nama"
+			},
+			{
+				"name": "jumlah",
+				"type": "int"
+			},
+			{
+				"name": "satuan",
+				"type": "relation",
+				"model": "BarangSatuans",
+				"field": "nama"
+			},
+			{
+				"name": "keterangan"
+			},
+			{
+				"name": "pengajuan"
+			}
+		]
+	},
+	{
+		"controller": "Donasi",
+		"fields": [
+			{
+				"name": "status"
+			},
+			{
+				"name": "alamat"
+			}
+		],
+		"childs": [
+			{
+				"controller": "DonasiBarang",
+				"label": "Item"
+			},
+			{
+				"controller": "DonasiPhoto",
+				"label": "Foto"
+			}
+		]
+	},
+	{
+		"controller": "DonasiBarang",
+		"fields": [
+			{
+				"name": "barang",
+				"type": "relation",
+				"model": "Barangs",
+				"field": "nama"
+			},
+			{
+				"name": "jumlah",
+				"type": "int"
+			},
+			{
+				"name": "satuan",
+				"type": "relation",
+				"model": "BarangSatuans",
+				"field": "nama"
+			}
+		]
+	},
+	{
+		"controller": "DonasiPhoto",
+		"fields": []
+	},
+	{
+		"controller": "Blog",
+		"fields": [
+			{
+				"name": "judul"
+			},
+			{
+				"name": "isi"
+			}
+		]
+	},
+	{
+		"controller": "Barang",
+		"fields": [
+			{
+				"name": "nama"
+			},
+			{
+				"name": "jenis"
+			}
+		],
+		"childs": [
+			{
+				"controller": "BarangSatuan",
+				"label": "Item"
+			}
+		]
+	},
+	{
+		"controller": "BarangSatuan",
+		"fields": [
+			{
+				"name": "nama"
+			},
+			{
+				"name": "skala"
+			}
+		]
+	},
+	{
+		"controller": "BarangMasukBulk",
+		"fields": [
+			{
+				"name": "donasi",
+				"type": "relation",
+				"model": "Donasis",
+				"field": "createdAt"
+			},
+			{
+				"name": "keterangan"
+			}
+		],
+		"childs": [
+			{
+				"controller": "BarangMasuk",
+				"label": "Item"
+			}
+		]
+	},
+	{
+		"controller": "BarangMasuk",
+		"fields": [
+			{
+				"name": "barang",
+				"type": "relation",
+				"model": "Barangs",
+				"field": "nama"
+			},
+			{
+				"name": "jumlah",
+				"type": "int"
+			},
+			{
+				"name": "satuan",
+				"type": "relation",
+				"model": "BarangSatuans",
+				"field": "nama"
+			},
+			{
+				"name": "keterangan"
+			},
+			{
+				"name": "donasi"
+			}
+		]
+	},
+	{
+		"controller": "RiwayatBarang",
+		"fields": [
+			{
+				"name": "barangMasuk"
+			},
+			{
+				"name": "barangKeluar"
+			},
+			{
+				"name": "barang"
+			},
+			{
+				"name": "jumlah",
+				"type": "int"
+			},
+			{
+				"name": "satuan"
+			}
+		]
+	},
+	{
+		"controller": "Donatur",
+		"fields": [
+			{
+				"name": "status"
+			},
+			{
+				"name": "nama"
+			},
+			{
+				"name": "alamat"
+			},
+			{
+				"name": "nohp"
+			}
+		]
+	},
+	{
+		"controller": "KepalaKelurahan",
+		"fields": [
+			{
+				"name": "status"
+			},
+			{
+				"name": "nama"
+			},
+			{
+				"name": "alamat"
+			},
+			{
+				"name": "kelurahan",
+				"type": "relation",
+				"model": "Kelurahans",
+				"field": "nama"
+			},
+			{
+				"name": "nohp"
+			}
+		]
+	},
+	{
+		"controller": "AdminWarehouse",
+		"fields": [
+			{
+				"name": "status"
+			},
+			{
+				"name": "nama"
+			}
+		]
 	}
 ]

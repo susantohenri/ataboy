@@ -1,0 +1,105 @@
+[
+	{
+		"controller": "Pengajuan",
+		"fields": [
+			{
+				"name": "status"
+			},
+			{
+				"name": "kecamatan",
+				"type": "relation",
+				"model": "Kecamatans",
+				"field": "nama"
+			},
+			{
+				"name": "kelurahan",
+				"type": "relation",
+				"model": "Kelurahans",
+				"field": "nama"
+			},
+			{
+				"name": "latitude"
+			},
+			{
+				"name": "longitude"
+			},
+			{
+				"name": "bencana",
+				"type": "relation",
+				"model": "Bencanas",
+				"field": "nama"
+			},
+			{
+				"name": "jumlah_kk_jiwa",
+				"label": "Jumlah KK / Jiwa",
+				"type": "int"
+			},
+			{
+				"name": "tiket_id"
+			}
+		],
+		"childs": [
+			{
+				"controller": "PengajuanBarang",
+				"label": "Item"
+			},
+			{
+				"controller": "PengajuanPhoto",
+				"label": "Foto"
+			}
+		]
+	},
+	{
+		"controller": "Kecamatan",
+		"fields": [
+			{
+				"name": "nama"
+			}
+		]
+	},
+	{
+		"controller": "Kelurahan",
+		"fields": [
+			{
+				"name": "nama"
+			}
+		]
+	},
+	{
+		"controller": "Bencana",
+		"fields": [
+			{
+				"name": "nama"
+			},
+			{
+				"name": "status",
+                "type": "boolean"
+			}
+		]
+	},
+	{
+		"controller": "PengajuanBarang",
+		"fields": [
+			{
+				"name": "barang",
+				"type": "relation",
+				"model": "Barangs",
+				"field": "nama"
+			},
+			{
+				"name": "jumlah",
+				"type": "int"
+			},
+			{
+				"name": "satuan",
+				"type": "relation",
+				"model": "BarangSatuans",
+				"field": "nama"
+			}
+		]
+	},
+	{
+		"controller": "PengajuanPhoto",
+		"fields": []
+	}
+]

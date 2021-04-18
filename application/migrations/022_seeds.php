@@ -41,7 +41,7 @@ class Migration_seeds extends CI_Migration
         'name' => $role
       ));
     }
-
+    // ADMIN WAREHOUSE PERMISSION
     foreach (array('Pengajuan', 'Kecamatan', 'Desa', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'Kelurahan') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
@@ -50,8 +50,24 @@ class Migration_seeds extends CI_Migration
           'entity' => $entity
         ));
       }
-      if (!in_array($entity, array('Menu', 'Permission', 'Role'))) $this->Menus->create(array(
+      $this->Menus->create(array(
         'role' => $appRole['Admin Warehouse'],
+        'name' => $entity,
+        'url' => $entity,
+        'icon' => $fas[rand(0, count($fas) - 1)]
+      ));
+    }
+    // ADMIN WAREHOUSE DONATUR
+    foreach (array('Donasi', 'DonasiBarang', 'DonasiPhoto') as $entity) {
+      foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
+        $this->Permissions->create(array(
+          'role' => $appRole['Donatur'],
+          'action' => $action,
+          'entity' => $entity
+        ));
+      }
+      $this->Menus->create(array(
+        'role' => $appRole['Donatur'],
         'name' => $entity,
         'url' => $entity,
         'icon' => $fas[rand(0, count($fas) - 1)]
@@ -68,11 +84,21 @@ class Migration_seeds extends CI_Migration
     // DELETE PERMISSION FOR DELETING USERS END
 
     // SETUP MENU START
-    $this->db->where('url', 'User')->delete('menu');
+    foreach (array(
+      'User'
+      , 'DonasiBarang'
+      , 'DonasiPhoto'
+      , 'PengajuanBarang'
+      , 'PengajuanPhoto'
+      , 'BarangMasuk'
+      , 'BarangKeluar'
+      , 'BarangSatuan'
+    ) as $noNeedMenu) $this->db->where('url', $noNeedMenu)->delete('menu');
     $this->db->set('name', 'Super Admin')->set('icon', 'user-circle')->where('url', 'SuperAdmin')->update('menu');
     $this->db->set('name', 'Admin Warehouse')->set('icon', 'user-cog')->where('url', 'AdminWarehouse')->update('menu');
     $this->db->set('icon', 'user-tag')->where('url', 'Kelurahan')->update('menu');
     $this->db->set('icon', 'user-tie')->where('url', 'Donatur')->update('menu');
+    $this->db->set('icon', 'medkit')->where('url', 'Donasi')->update('menu');
     // SETUP MENU END
 
   }

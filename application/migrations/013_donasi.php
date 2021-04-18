@@ -12,6 +12,7 @@ class Migration_donasi extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `status` varchar(255) NOT NULL,
+        `donatur` varchar(255) NOT NULL,
         `alamat` varchar(255) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8

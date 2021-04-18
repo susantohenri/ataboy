@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_kelurahan extends CI_Migration {
+class Migration_desa extends CI_Migration {
 
   function up () {
 
     $this->db->query("
-      CREATE TABLE `kelurahan` (
+      CREATE TABLE `desa` (
         `uuid` varchar(36) NOT NULL,
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
@@ -19,7 +19,7 @@ class Migration_kelurahan extends CI_Migration {
   }
 
   function down () {
-    $this->db->query("DROP TABLE IF EXISTS `kelurahan`");
+    $this->db->query("DROP TABLE IF EXISTS `desa`");
   }
 
 }

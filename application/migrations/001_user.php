@@ -16,7 +16,7 @@ class Migration_user extends CI_Migration {
         `nama` varchar(255) NOT NULL,
         `alamat` varchar(255) NOT NULL,
         `nohp` varchar(255) NOT NULL,
-        `kelurahan` varchar(255) NOT NULL,
+        `desa` varchar(255) NOT NULL,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         PRIMARY KEY (`uuid`),

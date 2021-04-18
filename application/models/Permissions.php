@@ -16,6 +16,7 @@ class Permissions extends MY_Model {
           array ('text' => 'Permission', 'value' => 'Permission'),
           array ('text' => 'Pengajuan', 'value' => 'Pengajuan'),
           array ('text' => 'Kecamatan', 'value' => 'Kecamatan'),
+          array ('text' => 'Desa', 'value' => 'Desa'),
           array ('text' => 'Kelurahan', 'value' => 'Kelurahan'),
           array ('text' => 'Bencana', 'value' => 'Bencana'),
           array ('text' => 'PengajuanBarang', 'value' => 'PengajuanBarang'),
@@ -32,7 +33,6 @@ class Permissions extends MY_Model {
           array ('text' => 'BarangMasuk', 'value' => 'BarangMasuk'),
           array ('text' => 'RiwayatBarang', 'value' => 'RiwayatBarang'),
           array ('text' => 'Donatur', 'value' => 'Donatur'),
-          array ('text' => 'KepalaKelurahan', 'value' => 'KepalaKelurahan'),
           array ('text' => 'AdminWarehouse', 'value' => 'AdminWarehouse'),
           /*additionalEntity*/
         ),

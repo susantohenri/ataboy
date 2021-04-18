@@ -10,7 +10,7 @@ class Migration_seeds extends CI_Migration
     $this->load->model(array('Users', 'Roles', 'Permissions', 'Menus'));
     $fas = array('database', 'desktop', 'download', 'ethernet', 'hdd', 'hdd', 'headphones', 'keyboard', 'keyboard', 'laptop', 'memory', 'microchip', 'mobile', 'mobile-alt', 'plug', 'power-off', 'print', 'satellite', 'satellite-dish', 'save', 'save', 'sd-card', 'server', 'sim-card', 'stream', 'tablet', 'tablet-alt', 'tv', 'upload');
     $admin = $this->Roles->create(array('name' => 'Super Admin'));
-    foreach (array('User', 'Role', 'Permission', 'Menu', 'Pengajuan', 'Kecamatan', 'Kelurahan', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'KepalaKelurahan', 'AdminWarehouse'/*additionalEntity*/) as $entity) {
+    foreach (array('User', 'Role', 'Permission', 'Menu', 'Pengajuan', 'Kecamatan', 'Desa', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'Kelurahan', 'AdminWarehouse', 'SuperAdmin') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
           'role' => $admin,
@@ -42,7 +42,7 @@ class Migration_seeds extends CI_Migration
       ));
     }
 
-    foreach (array('Pengajuan', 'Kecamatan', 'Kelurahan', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'KepalaKelurahan') as $entity) {
+    foreach (array('Pengajuan', 'Kecamatan', 'Desa', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'Kelurahan') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
           'role' => $appRole['Admin Warehouse'],
@@ -61,15 +61,18 @@ class Migration_seeds extends CI_Migration
 
     // DELETE PERMISSION FOR DELETING USERS START
     foreach ($this->Permissions->find(array('action' => 'delete')) as $delete) {
-      if (in_array($delete->entity, array('User', 'AdminWarehouse', 'kepalaKelurahan', 'Donatur'))) {
+      if (in_array($delete->entity, array('SuperAdmin', 'AdminWarehouse', 'Kelurahan', 'Donatur'))) {
         $this->Permissions->delete($delete->uuid);
       }
     }
     // DELETE PERMISSION FOR DELETING USERS END
 
     // SETUP MENU START
-    $this->db->set('name', 'Admin Warehouse')->set('icon', 'university')->where('url', 'AdminWarehouse')->update('menu');
-    $this->db->set('icon', 'briefcase')->where('url', 'Donatur')->update('menu');
+    $this->db->where('url', 'User')->delete('menu');
+    $this->db->set('name', 'Super Admin')->set('icon', 'user-circle')->where('url', 'SuperAdmin')->update('menu');
+    $this->db->set('name', 'Admin Warehouse')->set('icon', 'user-cog')->where('url', 'AdminWarehouse')->update('menu');
+    $this->db->set('icon', 'user-tag')->where('url', 'Kelurahan')->update('menu');
+    $this->db->set('icon', 'user-tie')->where('url', 'Donatur')->update('menu');
     // SETUP MENU END
 
   }

@@ -34,21 +34,38 @@ class Migration_seeds extends CI_Migration
     ));
     // DEFAULT END
 
+    // ROLE & PERMISSION START
+    $appRole = array();
+    foreach (array('Admin Warehouse', 'Kelurahan', 'Donatur') as $role) {
+      $appRole[$role] = $this->Roles->create(array(
+        'name' => $role
+      ));
+    }
+
+    foreach (array('Pengajuan', 'Kecamatan', 'Kelurahan', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'KepalaKelurahan') as $entity) {
+      foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
+        $this->Permissions->create(array(
+          'role' => $appRole['Admin Warehouse'],
+          'action' => $action,
+          'entity' => $entity
+        ));
+      }
+      if (!in_array($entity, array('Menu', 'Permission', 'Role'))) $this->Menus->create(array(
+        'role' => $appRole['Admin Warehouse'],
+        'name' => $entity,
+        'url' => $entity,
+        'icon' => $fas[rand(0, count($fas) - 1)]
+      ));
+    }
+    // ROLE & PERMISSION END
+
     // DELETE PERMISSION FOR DELETING USERS START
-    foreach ($this->Permissions->find(array('role' => $admin, 'action' => 'delete')) as $delete) {
+    foreach ($this->Permissions->find(array('action' => 'delete')) as $delete) {
       if (in_array($delete->entity, array('User', 'AdminWarehouse', 'kepalaKelurahan', 'Donatur'))) {
         $this->Permissions->delete($delete->uuid);
       }
     }
     // DELETE PERMISSION FOR DELETING USERS END
-
-    // ROLE START
-    foreach (array('Admin Warehouse', 'Kelurahan', 'Donatur') as $role) {
-      $this->Roles->create(array(
-        'name' => $role
-      ));
-    }
-    // ROLE END
 
     // SETUP MENU START
     $this->db->set('name', 'Admin Warehouse')->set('icon', 'university')->where('url', 'AdminWarehouse')->update('menu');

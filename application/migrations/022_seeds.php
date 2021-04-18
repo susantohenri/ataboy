@@ -52,6 +52,7 @@ class Migration_seeds extends CI_Migration
 
     // SETUP MENU START
     $this->db->set('name', 'Admin Warehouse')->set('icon', 'university')->where('url', 'AdminWarehouse')->update('menu');
+    $this->db->set('icon', 'briefcase')->where('url', 'Donatur')->update('menu');
     // SETUP MENU END
 
   }

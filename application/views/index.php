@@ -31,9 +31,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <a href="<?= base_url() ?>" class="navbar-brand">
         <!-- <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
              style="opacity: .8"> -->
-        <H2><span class="brand-text font-weight-light"><b>Prototype</b>App</span></H2>
+        <H2><span class="brand-text font-weight-light"><b>ATA</b>boy</span></H2>
       </a>
-      <a href="<?= site_url('Login/Logout') ?>">Logout</a>
+
+      <a>Halo, <b><?= $this->session->userdata('nama') ?></b></a>
+      <small><a href="<?= site_url('Login/Logout') ?>">Logout</a></small>
     </div>
   </nav>
   <!-- /.navbar -->

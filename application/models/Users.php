@@ -18,14 +18,8 @@ class Users extends MY_Model {
     );
 
     $this->form[]= array(
-      'name' => 'role',
-      'label'=> 'Role',
-      'options' => array(),
-      'attributes' => array(
-        array('data-autocomplete' => 'true'),
-        array('data-model' => 'Roles'),
-        array('data-field' => 'name')
-      ),
+    	'name' => 'nama',
+    	'label'=> 'Nama'
     );
 
     $this->form[]= array(
@@ -52,6 +46,11 @@ class Users extends MY_Model {
       else $data['password'] = md5($data['password']);
     } else unset ($data['password']);
     unset ($data['confirm_password']);
+
+    $this->load->model('Roles');
+    $superadmin = $this->Roles->findOne(array('name' => 'Super Admin'));
+    $data['role'] = $superadmin['uuid'];
+
     return parent::save ($data);
   }
 

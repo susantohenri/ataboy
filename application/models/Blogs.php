@@ -7,6 +7,7 @@ class Blogs extends MY_Model
   {
     parent::__construct();
     $this->table = 'blog';
+    $this->file_location = 'blog-images';
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
       (object) array('mData' => 'judul', 'sTitle' => 'Judul'),
@@ -23,6 +24,12 @@ class Blogs extends MY_Model
         'width' => 2,
         'label' => 'Isi',
         'type' => 'textarea'
+      ),
+      array(
+        'name' => 'gambar',
+        'type' => 'file',
+        'width' => 2,
+        'label' => 'Gambar',
       ),
       array(
         'name' => 'status',
@@ -44,5 +51,35 @@ class Blogs extends MY_Model
       ->select("{$this->table}.orders")
       ->select('blog.judul');
     return parent::dt();
+  }
+
+  function save($record)
+  {
+    foreach ($record as $field => &$value) {
+      if (is_array($value)) $value = implode(',', $value);
+      else if (strpos($value, '[comma-replacement]') > -1) $value = str_replace('[comma-replacement]', ',', $value);
+    }
+    if (strlen($_FILES['gambar']['name']) > 0) {
+      $oldfile = null;
+      if (isset($record['uuid'])) {
+        $artikel = self::findOne($record['uuid']);
+        $oldfile = $artikel['gambar'];
+      }
+      $record['gambar'] = $this->fileupload ($this->file_location, $_FILES['gambar'], $oldfile);
+    }
+    return isset($record['uuid']) ? $this->update($record) : $this->create($record);
+  }
+
+  function delete($uuid)
+  {
+    foreach ($this->childs as $child) {
+      $childmodel = $child['model'];
+      $this->load->model($childmodel);
+      foreach ($this->$childmodel->find(array($this->table => $uuid)) as $childrecord)
+        $this->$childmodel->delete($childrecord->uuid);
+    }
+    $artikel = self::findOne($uuid);
+    $this->fileupload ('', null, $artikel['gambar']);
+    return $this->db->where('uuid', $uuid)->delete($this->table);
   }
 }

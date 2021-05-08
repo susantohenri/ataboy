@@ -49,6 +49,19 @@
                 </div>
                 <?php break; ?>
               <?php
+              case 'file': ?>
+                <div class="form-group row">
+                  <label class="col-sm-3 control-label"><?= $field['label']  ?></label>
+                  <div class="col-sm-9">
+                    <input class="form-control" type="<?= $field['type'] ?>" value="<?= htmlentities($field['value']) ?>" name="<?= $field['name'] ?>" <?= $field['attr'] ?>>
+                    <?php if (strlen($field['value']) > 0): ?>
+                    <br>
+                    <img src="<?= base_url($field['value']) ?>" width="200" height="100">
+                    <?php endif; ?>
+                  </div>
+                </div>
+              <?php break; ?>
+              <?php
               default: ?>
                 <div class="form-group row">
                   <label class="col-sm-3 control-label"><?= $field['label']  ?></label>

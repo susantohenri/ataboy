@@ -99,6 +99,10 @@ function formInit (scope) {
   scope.find('[data-number="true"]').keyup(function () {
     $(this).val(currency(getNumber($(this))))
   })
+
+  scope.find('textarea').each(function () {
+    $(this).summernote()
+  })
 }
 
 function getNumber (element) {

@@ -13,6 +13,7 @@ class Migration_blog extends CI_Migration {
         `updatedAt` datetime DEFAULT NULL,
         `judul` varchar(255) NOT NULL,
         `isi` varchar(255) NOT NULL,
+        `status` TINYINT(1) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

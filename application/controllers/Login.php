@@ -15,7 +15,9 @@ class Login extends CI_Controller {
 				redirect(base_url());
 			}
 		}
-		$this->load->view('login');
+		$this->load->model('Blogs');
+		$params['blogs'] = $this->Blogs->find(array('status' => 1));
+		$this->load->view('login', $params);
 	}
 
 	function Migrate ($version = null) {

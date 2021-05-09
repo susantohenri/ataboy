@@ -50,14 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container">
-                    <div class="row mb-2">
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content-header -->
+        &nbsp;
 
             <!-- Main content -->
             <div class="content">
@@ -73,6 +66,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div><!-- /.card -->
                         </div>
+
+                    </div>
+                    <!-- /.row -->
+                    <div class="row">
+
+                        <?php foreach ($blogs as $blog) : ?>
+                            <div class="col-sm-12 col-md-3">
+                                <div class="card card-outline">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-4 col-md-12">
+                                                <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                            </div>
+                                            <div class="col-8 col-md-12">
+                                                <b><?= $blog->judul ?></b>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div><!-- /.card -->
+                            </div>
+                        <?php endforeach ?>
 
                     </div>
                     <!-- /.row -->

@@ -11,6 +11,7 @@ class Migration_barangsatuan extends CI_Migration {
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
+        `barang` varchar(36) NOT NULL,
         `nama` varchar(255) NOT NULL,
         `skala` varchar(255) NOT NULL,
         PRIMARY KEY (`uuid`)

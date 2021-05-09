@@ -50,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-        &nbsp;
+            &nbsp;
 
             <!-- Main content -->
             <div class="content">
@@ -72,7 +72,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="row">
 
                         <?php foreach ($blogs as $blog) : ?>
-                            <div class="col-sm-12 col-md-3">
+                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer"
+                                onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')"
+                            >
                                 <div class="card card-outline">
                                     <div class="card-body">
 
@@ -142,6 +144,38 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <center>
+                                <h2 id="judul"></h2>
+                            </center>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                    <img id="gambar" src="" style="width: 100%;">
+                                </div>
+                            </div><!-- /.card -->
+                        </div>
+                        <div class="col-sm-12" id="isi">
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -44,7 +44,7 @@
                 <div class="form-group row">
                   <label class="col-sm-3 control-label"><?= $field['label']  ?></label>
                   <div class="col-sm-9">
-                    <textarea class="form-control" name="<?= $field['name'] ?>" <?= $field['attr'] ?>></textarea>
+                    <textarea class="form-control" name="<?= $field['name'] ?>" <?= $field['attr'] ?>><?= $field['value'] ?></textarea>
                   </div>
                 </div>
                 <?php break; ?>

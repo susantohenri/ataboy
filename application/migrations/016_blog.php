@@ -12,7 +12,7 @@ class Migration_blog extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `judul` varchar(255) NOT NULL,
-        `isi` varchar(255) NOT NULL,
+        `isi` text NOT NULL,
         `gambar` varchar(255) NOT NULL,
         `status` TINYINT(1) NOT NULL,
         PRIMARY KEY (`uuid`)

@@ -7,6 +7,7 @@
                     <a href="<?= site_url($current['controller'] . '/create') ?>" class="btn btn-primary">
                         <i class="fa fa-plus"></i>&nbsp;Add New <?= $page_title ?>
                     </a>
+                    <a href="<?= site_url() ?>" class="btn btn-warning"><i class="fa fa-arrow-left"></i> &nbsp; Cancel</a>
                 </div>
             <?php endif ?>
         </div>

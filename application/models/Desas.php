@@ -41,4 +41,10 @@ class Desas extends MY_Model
       ->select('desa.nama');
     return parent::dt();
   }
+
+  function select2WithKec ($field, $term, $kec)
+  {
+    $this->db->where('kec', $kec);
+    return parent::select2($field, $term);
+  }
 }

@@ -61,7 +61,7 @@ class Pengajuans extends MY_Model
 			),
 			array(
 				'name' => 'bencana',
-				'label' => 'Bencana',
+				'label' => 'Jenis Bencana',
 				'options' => array(),
 				'width' => 2,
 				'attributes' => array(
@@ -82,6 +82,7 @@ class Pengajuans extends MY_Model
 				'name' => 'tiket_id',
 				'width' => 2,
 				'label' => 'ID Tiket',
+				'value' => strtoupper(substr(uniqid(), 0, 8))
 			),
 			array(
 				'name' => 'status',
@@ -91,12 +92,12 @@ class Pengajuans extends MY_Model
 		);
 		$this->childs = array(
 			array(
-				'label' => 'Item',
+				'label' => 'Kebutuhan',
 				'controller' => 'PengajuanBarang',
 				'model' => 'PengajuanBarangs'
 			),
 			array(
-				'label' => 'Foto',
+				'label' => 'Bukti Foto',
 				'controller' => 'PengajuanPhoto',
 				'model' => 'PengajuanPhotos'
 			),
@@ -116,7 +117,7 @@ class Pengajuans extends MY_Model
 	function getForm($uuid = false, $isSubform = false)
 	{
 		$form = parent::getForm($uuid, $isSubform);
-		$hide = array('status', 'tiket_id');
+		$hide = array('status');
 		$disabled = array('status', 'tiket_id', 'propinsi', 'kabupaten');
 
 		if (false === $uuid) {
@@ -155,7 +156,6 @@ class Pengajuans extends MY_Model
 	function create($record)
 	{
 		$record['status'] = 'DIAJUKAN';
-		$record['tiket_id'] = strtoupper(substr(uniqid(), 0, 8));
 		return parent::create($record);
 	}
 }

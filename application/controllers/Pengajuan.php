@@ -47,8 +47,10 @@ class Pengajuan extends MY_Controller
 			'bootstrap-datepicker.js',
 			'daterangepicker.min.js',
 			'select2.full.min.js',
+			'leaflet.js',
 			'form-pengajuan.js'
 		);
+		$vars['css'] = array ('leaflet.css');
 		$this->loadview('index', $vars);
 	}
 
@@ -65,8 +67,10 @@ class Pengajuan extends MY_Controller
 			'bootstrap-datepicker.js',
 			'daterangepicker.min.js',
 			'select2.full.min.js',
+			'leaflet.js',
 			'form-pengajuan.js'
 		);
+		$vars['css'] = array ('leaflet.css');
 		$this->loadview('index', $vars);
 	}
 

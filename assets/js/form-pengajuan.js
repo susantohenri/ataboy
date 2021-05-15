@@ -1,5 +1,7 @@
 window.onload = function () {
 
+  setupMap()
+
   formInit($(`[data-controller="${current_controller}"]`))
   $('.main-form').submit(function () {
     $('[name="tiket_id"]').removeAttr('disabled')
@@ -135,4 +137,68 @@ function currency(number) {
   var reverse = number.toString().split('').reverse().join(''),
     currency = reverse.match(/\d{1,3}/g)
   return currency.join(',').split('').reverse().join('')
+}
+
+function setupMap() {
+  $('body').append(`
+    <div class="modal" tabindex="-1" role="dialog" id="map">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="mapid" style="width: 100%; height: 600px; cursor: pointer">
+              <center class="text-info">Loading Map, Please Wait ...</center>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `)
+
+  $('[name="latlng"]').parent().html(`
+    <a class="btn btn-info" id="show_map">
+      <i class="fas fa-map-marker-alt"></i>
+    </a>
+  `)
+
+  $('#show_map').click(function () {
+    $('#map').modal('show')
+  })
+
+  setTimeout(function () {
+    const token = 'pk.eyJ1IjoibGllbWdpb2t0aWFuIiwiYSI6ImNrbWJmcjJuYzIxNXcyd3FyajloZ3IxencifQ.DX3ZeWJ7I7nGUhTupCABXQ'
+    const boyolali = [-7.517198764411566, 110.59333666185161]
+
+    var mymap = L.map('mapid').setView(boyolali, 12)
+    L.tileLayer(`https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${token}`, {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' + 'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11',
+      tileSize: 512,
+      zoomOffset: -1
+    }).addTo(mymap)
+
+    var marker
+    var lat = $('[name="latitude"]').val()
+    var lng = $('[name="longitude"]').val()
+    try {
+      marker = L.marker([lat, lng]).addTo(mymap)
+    } catch (e) {
+      $('#mapid').html('Gagal Memuat Titik Lokasi')
+    }
+
+    mymap.on('click', function (point) {
+      try {
+        if (undefined !== marker) mymap.removeLayer(marker)
+        marker = L.marker([point.latlng.lat, point.latlng.lng]).addTo(mymap)
+        $('[name="latitude"]').val(point.latlng.lat)
+        $('[name="longitude"]').val(point.latlng.lng)
+      } catch (e) {
+        $('#mapid').html('Gagal Menandai Titik Lokasi')
+      }
+    })
+
+  }, 2000)
 }

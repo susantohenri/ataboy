@@ -1,8 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class BarangSatuans extends MY_Model {
+class BarangSatuans extends MY_Model
+{
 
-  function __construct () {
+  function __construct()
+  {
     parent::__construct();
     $this->table = 'barangsatuan';
     $this->thead = array(
@@ -10,28 +12,37 @@ class BarangSatuans extends MY_Model {
       (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
 
     );
-    $this->form = array (
-        array (
-				      'name' => 'nama',
-				      'width' => 2,
-		      		'label'=> 'Nama',
-					  ),
-        array (
-				      'name' => 'skala',
-				      'width' => 2,
-		      		'label'=> 'Skala',
-					  ),
+    $this->form = array(
+      array(
+        'name' => 'nama',
+        'width' => 4,
+        'label' => 'Nama',
+      ),
+      array(
+        'name' => 'skala',
+        'width' => 2,
+        'label' => 'Skala',
+        'attributes' => array(
+          array('data-number' => 'true')
+        )
+      ),
     );
-    $this->childs = array (
-    );
+    $this->childs = array();
   }
 
-  function dt () {
+  function dt()
+  {
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
       ->select('barangsatuan.nama');
     return parent::dt();
+  }
+
+  function select2WithBarang ($field, $term, $brg)
+  {
+    $this->db->where('barang', $brg);
+    return parent::select2($field, $term);
   }
 
 }

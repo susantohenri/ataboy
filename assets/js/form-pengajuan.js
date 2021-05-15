@@ -64,7 +64,7 @@ function formInit(scope) {
     $(this).parent().parent().remove()
   })
   scope.find('select').not('.select2-hidden-accessible').each(function () {
-    if ($(this).is('[name="kelurahan"]') && 'Pengajuan' === current_controller) {
+    if ($(this).is('[name="kelurahan"]')) {
       var model = $(this).attr('data-model')
       var field = $(this).attr('data-field')
       $(this).select2({
@@ -80,8 +80,23 @@ function formInit(scope) {
           type: 'POST', dataType: 'json'
         }
       })
-    }
-    else if ($(this).is('[data-autocomplete]')) {
+    } else if ($(this).is('[name^="PengajuanBarang_satuan"]')) {
+      var model = $(this).attr('data-model')
+      var field = $(this).attr('data-field')
+      $(this).select2({
+        ajax: {
+          url: current_controller_url + '/select2/' + model + '/' + field,
+          data: function (params) {
+            var query = {
+              search: params.term,
+              barang: $(this).parent().parent().find('[name^="PengajuanBarang_barang["]').val()
+            }
+            return query;
+          },
+          type: 'POST', dataType: 'json'
+        }
+      })
+    } else if ($(this).is('[data-autocomplete]')) {
       var model = $(this).attr('data-model')
       var field = $(this).attr('data-field')
       $(this).select2({
@@ -90,6 +105,25 @@ function formInit(scope) {
           type: 'POST', dataType: 'json'
         }
       })
+
+      if ($(this).is('[name="kecamatan"]'))
+      {
+        $(this).change(function () {
+          let kelurahan = $('[name="kelurahan"]')
+          kelurahan.val('')
+          kelurahan.trigger('change.select2')
+        })
+      }
+
+      if ($(this).is('[name^="PengajuanBarang_barang["]'))
+      {
+        $(this).change(function () {
+          let satuan = $(this).parent().parent().find('[name^="PengajuanBarang_satuan"]')
+          satuan.val('')
+          satuan.trigger('change.select2')
+        })
+      }
+
     } else if ($(this).is('[data-suggestion]')) {
       $(this).select2({
         tags: true,

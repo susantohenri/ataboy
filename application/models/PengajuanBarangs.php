@@ -17,7 +17,7 @@ class PengajuanBarangs extends MY_Model
 				'name' => 'barang',
 				'label' => 'Barang',
 				'options' => array(),
-				'width' => 7,
+				'width' => 6,
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Barangs'),
@@ -36,7 +36,7 @@ class PengajuanBarangs extends MY_Model
 				'name' => 'satuan',
 				'label' => 'Satuan',
 				'options' => array(),
-				'width' => 2,
+				'width' => 3,
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'BarangSatuans'),

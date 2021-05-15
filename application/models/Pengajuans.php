@@ -81,8 +81,7 @@ class Pengajuans extends MY_Model
 			array(
 				'name' => 'tiket_id',
 				'width' => 2,
-				'label' => 'ID Tiket',
-				'value' => strtoupper(substr(uniqid(), 0, 8))
+				'label' => 'ID Tiket'
 			),
 			array(
 				'name' => 'status',
@@ -117,7 +116,7 @@ class Pengajuans extends MY_Model
 	function getForm($uuid = false, $isSubform = false)
 	{
 		$form = parent::getForm($uuid, $isSubform);
-		$hide = array('status');
+		$hide = array('status', 'tiket_id');
 		$disabled = array('status', 'tiket_id', 'propinsi', 'kabupaten');
 
 		if (false === $uuid) {
@@ -156,6 +155,28 @@ class Pengajuans extends MY_Model
 	function create($record)
 	{
 		$record['status'] = 'DIAJUKAN';
+		$record['tiket_id'] = $this->generate_tiket_id();
 		return parent::create($record);
+	}
+
+	private function generate_tiket_id ()
+	{
+		$tiket_id = $this->generate_random_alphanumeric();
+		while ($this->is_tiket_id_exists($tiket_id))
+		{
+			$tiket_id = $this->generate_random_alphanumeric();
+		}
+		return $tiket_id;
+	}
+
+	private function generate_random_alphanumeric ()
+	{
+		return strtoupper(substr(uniqid(), 0, 8));
+	}
+
+	function is_tiket_id_exists ($tiket_id)
+	{
+		$found = $this->findOne(array('tiket_id' => $tiket_id));
+		return isset($found['uuid']);
 	}
 }

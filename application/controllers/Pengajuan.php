@@ -9,6 +9,31 @@ class Pengajuan extends MY_Controller
 		parent::__construct();
 	}
 
+	public function index()
+	{
+		$vars = array();
+		$model = $this->model;
+		if ($post = $this->$model->lastSubmit($this->input->post())) {
+			if (isset($post['delete'])) $this->$model->delete($post['delete']);
+			else {
+				$uuid = $this->$model->save($post);
+				if (!isset ($post['uuid']))
+				{
+					$created = $this->$model->findOne($uuid);
+					$vars['tiket_id'] = $created['tiket_id'];
+				}
+			}
+		}
+		$vars['page_name'] = 'table-pengajuan';
+		$vars['js'] = array(
+			'jquery.dataTables.min.js',
+			'dataTables.bootstrap4.js',
+			'table.js'
+		);
+		$vars['thead'] = $this->$model->thead;
+		$this->loadview('index', $vars);
+	}
+
 	function create()
 	{
 		$model = $this->model;

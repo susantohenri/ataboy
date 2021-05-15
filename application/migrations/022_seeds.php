@@ -99,7 +99,8 @@ class Migration_seeds extends CI_Migration
     $this->db->set('icon', 'user-tag')->where('url', 'Kelurahan')->update('menu');
     $this->db->set('icon', 'user-tie')->where('url', 'Donatur')->update('menu');
     $this->db->set('icon', 'medkit')->where('url', 'Donasi')->update('menu');
-    $this->db->set('icon', 'file-powerpoint')->where('url', 'Pengajuan')->update('menu');
+    $this->db->set('icon', 'hand-holding')->where('url', 'Pengajuan')->update('menu');
+    $this->db->set('icon', 'hands-helping')->where('url', 'Donasi')->update('menu');
     // SETUP MENU END
 
     $this->db->query("

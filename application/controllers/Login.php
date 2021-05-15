@@ -15,8 +15,14 @@ class Login extends CI_Controller {
 				redirect(base_url());
 			}
 		}
-		$this->load->model('Blogs');
+		$this->load->model(array('Blogs', 'Pengajuans'));
 		$params['blogs'] = $this->Blogs->find(array('status' => 1));
+		$params['mapMarkers'] = array_map(function ($pengajuan) {
+			return array (
+				'lat' => $pengajuan->latitude,
+				'lng' => $pengajuan->longitude
+			);
+		}, $this->Pengajuans->find(array('status' => 'DITERIMA')));
 		$this->load->view('login', $params);
 	}
 

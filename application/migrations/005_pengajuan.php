@@ -11,7 +11,7 @@ class Migration_pengajuan extends CI_Migration {
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
-        `status` varchar(255) NOT NULL,
+        `status` enum('DIAJUKAN','DITERIMA','DITOLAK','SELESAI') NOT NULL,
         `kecamatan` varchar(36) NOT NULL,
         `kelurahan` varchar(36) NOT NULL,
         `latitude` varchar(255) NOT NULL,

@@ -27,8 +27,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             margin: 5px 0
         }
     </style>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
+    <script src="<?= base_url('assets/js/leaflet.js') ?>" ></script>
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -202,21 +202,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
             zoomOffset: -1
         }).addTo(mymap)
 
+        <?php foreach ($mapMarkers as $marker): ?>
         try {
-            let slatlng = localStorage.getItem('marker_lurah_1')
-            let olatlng = JSON.parse(slatlng)
-            let marker = L.marker([olatlng.lat, olatlng.lng]).addTo(mymap)
+            let marker = L.marker([<?= $marker['lat'] ?>, <?= $marker['lng'] ?>]).addTo(mymap)
         } catch (e) {
 
         }
-
-        try {
-            let slatlng = localStorage.getItem('marker_lurah_2')
-            let olatlng = JSON.parse(slatlng)
-            let marker = L.marker([olatlng.lat, olatlng.lng]).addTo(mymap)
-        } catch (e) {
-
-        }
+        <?php endforeach ?>
     </script>
 </body>
 

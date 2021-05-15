@@ -10,7 +10,7 @@ class Migration_seeds extends CI_Migration
     $this->load->model(array('Users', 'Roles', 'Permissions', 'Menus'));
     $fas = array('database', 'desktop', 'download', 'ethernet', 'hdd', 'hdd', 'headphones', 'keyboard', 'keyboard', 'laptop', 'memory', 'microchip', 'mobile', 'mobile-alt', 'plug', 'power-off', 'print', 'satellite', 'satellite-dish', 'save', 'save', 'sd-card', 'server', 'sim-card', 'stream', 'tablet', 'tablet-alt', 'tv', 'upload');
     $admin = $this->Roles->create(array('name' => 'Super Admin'));
-    foreach (array('User', 'Role', 'Permission', 'Menu', 'Pengajuan', 'Kecamatan', 'Desa', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'Kelurahan', 'AdminWarehouse', 'SuperAdmin') as $entity) {
+    foreach (array('User', 'Role', 'Permission', 'Menu', 'Pengajuan', 'PengajuanBarang', 'PengajuanPhoto', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Barang', 'BarangSatuan', 'RiwayatBarang', 'BarangKeluarBulk', 'BarangKeluar', 'BarangMasukBulk', 'BarangMasuk', 'Kecamatan', 'Desa', 'Bencana', 'Blog', 'Donatur', 'Kelurahan', 'AdminWarehouse', 'SuperAdmin') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
           'role' => $admin,
@@ -94,13 +94,21 @@ class Migration_seeds extends CI_Migration
       , 'BarangKeluar'
       , 'BarangSatuan'
     ) as $noNeedMenu) $this->db->where('url', $noNeedMenu)->delete('menu');
-    $this->db->set('name', 'Super Admin')->set('icon', 'user-circle')->where('url', 'SuperAdmin')->update('menu');
-    $this->db->set('name', 'Admin Warehouse')->set('icon', 'user-cog')->where('url', 'AdminWarehouse')->update('menu');
-    $this->db->set('icon', 'user-tag')->where('url', 'Kelurahan')->update('menu');
+    $this->db->set('name', 'Super Admin')->set('icon', 'user-secret')->where('url', 'SuperAdmin')->update('menu');
+    $this->db->set('name', 'Admin Warehouse')->set('icon', 'user-shield')->where('url', 'AdminWarehouse')->update('menu');
+    $this->db->set('icon', 'user-check')->where('url', 'Kelurahan')->update('menu');
     $this->db->set('icon', 'user-tie')->where('url', 'Donatur')->update('menu');
     $this->db->set('icon', 'medkit')->where('url', 'Donasi')->update('menu');
     $this->db->set('icon', 'hand-holding')->where('url', 'Pengajuan')->update('menu');
     $this->db->set('icon', 'hands-helping')->where('url', 'Donasi')->update('menu');
+    $this->db->set('name', 'Master Barang')->set('icon', 'box-open')->where('url', 'Barang')->update('menu');
+    $this->db->set('name', 'Daftar Kecamatan')->set('icon', 'map-marked-alt')->where('url', 'Kecamatan')->update('menu');
+    $this->db->set('name', 'Daftar Desa')->set('icon', 'map-marker-alt')->where('url', 'Desa')->update('menu');
+    $this->db->set('name', 'Jenis Bencana')->set('icon', 'house-damage')->where('url', 'Bencana')->update('menu');
+    $this->db->set('icon', 'pen-alt')->where('url', 'Blog')->update('menu');
+    $this->db->set('name', 'Barang Keluar')->set('icon', 'shipping-fast')->where('url', 'BarangKeluarBulk')->update('menu');
+    $this->db->set('name', 'Barang Masuk')->set('icon', 'people-carry')->where('url', 'BarangMasukBulk')->update('menu');
+    $this->db->set('name', 'Riwayat Barang')->set('icon', 'history')->where('url', 'RiwayatBarang')->update('menu');
     // SETUP MENU END
 
     $this->db->query("

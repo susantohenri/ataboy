@@ -16,8 +16,18 @@
             </select>
           </div>
         <?php break; ?>
-        <?php case 'textarea': ?>
-        <!-- not yet available at this moment -->
+        <?php case 'file': ?>
+          <?php if (strlen($field['value']) > 0): ?>
+          <div class="input-group col-sm-2">
+            <img src="<?= base_url($field['value']) ?>" width="200" height="100">
+          </div>
+          <?php endif ?>
+          <div class="<?= strlen($field['value']) > 0 ? 'd-none':'' ?> input-group col-sm-<?= $field['width'] ?>">
+            <div class="input-group-prepend">
+              <span class="input-group-text"><?= $field['label'] ?></span>
+            </div>
+            <input class="form-control" type="<?= $field['type'] ?>" value="<?= htmlentities($field['value']) ?>" name="<?= "{$controller}_" ?><?= $field['name'] ?>[<?= $uuid ?>]" <?= $field['attr'] ?> placeholder="<?= $field['label'] ?>">
+          </div>
         <?php break; ?>
         <?php default: ?>
           <div class="input-group col-sm-<?= $field['width'] ?>">

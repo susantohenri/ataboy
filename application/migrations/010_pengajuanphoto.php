@@ -12,6 +12,7 @@ class Migration_pengajuanphoto extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `pengajuan` varchar(36) NOT NULL,
+        `gambar` varchar(255) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

@@ -15,7 +15,7 @@ class PengajuanBarangs extends MY_Model
 		$this->form = array(
 			array(
 				'name' => 'barang',
-				'label' => 'Barang',
+				'label' => 'Item',
 				'options' => array(),
 				'width' => 6,
 				'attributes' => array(
@@ -34,7 +34,7 @@ class PengajuanBarangs extends MY_Model
 			),
 			array(
 				'name' => 'satuan',
-				'label' => 'Satuan',
+				'label' => 'Unit',
 				'options' => array(),
 				'width' => 3,
 				'attributes' => array(

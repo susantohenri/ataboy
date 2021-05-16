@@ -159,6 +159,39 @@ function formInit(scope) {
   scope.find('textarea').each(function () {
     $(this).summernote()
   })
+
+  scope.find('[type="file"]').each(function () {
+    $(this).change(function () {
+      let localFileName = $(this).val().split('\\').pop()
+      $(this).parent().parent().find('[name^="PengajuanPhoto_localFileName["').val(localFileName)
+    })
+  })
+
+  scope.find('img').each(function () {
+    $(this).css('cursor', 'pointer').click(function () {
+      var src = $(this).attr('src')
+      $('body').append(`
+        <div class="modal" tabindex="-1" role="dialog" id="preview">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-center">
+                <img src="${src}">
+              </div>
+            </div>
+          </div>
+        </div>
+      `)
+      $('#preview').modal('show')
+      $('#preview').on('hidden.bs.modal', function (e) {
+        $('#preview').remove()
+      })
+    })
+  })
 }
 
 function getNumber(element) {

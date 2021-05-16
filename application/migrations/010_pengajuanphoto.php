@@ -21,6 +21,11 @@ class Migration_pengajuanphoto extends CI_Migration {
 
   function down () {
     $this->db->query("DROP TABLE IF EXISTS `pengajuanphoto`");
+    $dir = 'foto-bencana';
+    foreach (scandir($dir) as $file)
+    {
+      if (!in_array($file, array('.', '..'))) unlink("{$dir}/$file");
+    }
   }
 
 }

@@ -23,6 +23,11 @@ class Migration_blog extends CI_Migration {
 
   function down () {
     $this->db->query("DROP TABLE IF EXISTS `blog`");
+    $dir = 'blog-images';
+    foreach (scandir($dir) as $file)
+    {
+      if (!in_array($file, array('.', '..'))) unlink("{$dir}/$file");
+    }
   }
 
 }

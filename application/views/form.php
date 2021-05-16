@@ -82,9 +82,12 @@
 
   <?php if (count($subform) > 0) : foreach ($subform as $subfield) : ?>
       <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h4><?= $subfield['label'] ?></h4>
+        </div>
         <div class="card-body">
           <fieldset class="form-child" data-controller="<?= $subfield['controller'] ?>" data-uuids="<?= str_replace('"', "'", json_encode($subfield['uuids'])) ?>">
-            <legend><?= $subfield['label'] ?></legend>
+            <!-- <legend><?= $subfield['label'] ?></legend> -->
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-12">
                 <?php if ((empty($subfield->uuids) && in_array("create_{$subfield['controller']}", $permission)) || (!empty($subfield->uuids) && in_array("update_{$subfield['controller']}", $permission))) : ?>

@@ -117,7 +117,7 @@ function formInit (scope) {
                 </button>
               </div>
               <div class="modal-body text-center">
-                <img src="${src}" style="width: 100%">
+                <img src="${src}" style="max-width: 100%">
               </div>
             </div>
           </div>

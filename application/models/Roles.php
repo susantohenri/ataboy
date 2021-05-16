@@ -29,4 +29,10 @@ class Roles extends MY_Model {
     return parent::dt();
   }
 
+  function getRole ()
+  {
+    $role = $this->findOne(array('uuid' => $this->session->userdata('role')));
+    return $role['name'];
+  }
+
 }

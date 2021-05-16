@@ -111,6 +111,15 @@ class Pengajuans extends MY_Model
 
 	function dt()
 	{
+		$this->load->model('Roles');
+		if ($this->Roles->getRole() === 'Kelurahan')
+		{
+			$this->datatables->where('createdBy', $this->session->userdata('uuid'));
+		}
+		if ($status = $this->input->get('status'))
+		{
+			$this->datatables->where('status', $status);
+		}
 		$this->datatables
 			->select("{$this->table}.uuid")
 			->select("{$this->table}.orders")
@@ -162,6 +171,7 @@ class Pengajuans extends MY_Model
 	{
 		$record['status'] = 'DIAJUKAN';
 		$record['tiket_id'] = $this->generate_tiket_id();
+		$record['createdBy'] = $this->session->userdata('uuid');
 		return parent::create($record);
 	}
 

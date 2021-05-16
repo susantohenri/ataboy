@@ -9,9 +9,10 @@ class Migration_pengajuan extends CI_Migration {
       CREATE TABLE `pengajuan` (
         `uuid` varchar(36) NOT NULL,
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
+        `createdBy` varchar(36) NOT NULL,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
-        `status` enum('DIAJUKAN','DITERIMA','DITOLAK','SELESAI') NOT NULL,
+        `status` enum('DIAJUKAN', 'DIVERIFIKASI','DITERIMA','DITOLAK','SELESAI') NOT NULL,
         `kecamatan` varchar(36) NOT NULL,
         `kelurahan` varchar(36) NOT NULL,
         `latitude` varchar(255) NOT NULL,

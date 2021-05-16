@@ -57,7 +57,7 @@ class Migration_seeds extends CI_Migration
         'icon' => $fas[rand(0, count($fas) - 1)]
       ));
     }
-    // ADMIN WAREHOUSE DONATUR
+    // DONATUR PERMISSION
     foreach (array('Donasi', 'DonasiBarang', 'DonasiPhoto') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
@@ -71,6 +71,32 @@ class Migration_seeds extends CI_Migration
         'name' => $entity,
         'url' => $entity,
         'icon' => $fas[rand(0, count($fas) - 1)]
+      ));
+    }
+    // KELURAHAN PERMISSION
+    foreach (array('Pengajuan', 'PengajuanBarang', 'PengajuanPhoto') as $entity) {
+      foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
+        $this->Permissions->create(array(
+          'role' => $appRole['Kelurahan'],
+          'action' => $action,
+          'entity' => $entity
+        ));
+      }
+    }
+    $this->Menus->create(array(
+      'role' => $appRole['Kelurahan'],
+      'name' => 'Pengajuan Baru',
+      'url' => 'Pengajuan/create',
+      'icon' => 'file-medical'
+    ));
+    $iconPengajuans = array ('file-signature', 'file-archive', 'file-powerpoint', 'file-prescription');
+    foreach (array('Diajukan', 'Diverifikasi', 'Diterima', 'Ditolak') as $index => $statusPengajuan)
+    {
+      $this->Menus->create(array(
+        'role' => $appRole['Kelurahan'],
+        'name' => $statusPengajuan,
+        'url' => 'Pengajuan?status=' . $statusPengajuan,
+        'icon' => $iconPengajuans[$index]
       ));
     }
     // ROLE & PERMISSION END

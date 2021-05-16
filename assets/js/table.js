@@ -8,7 +8,7 @@ window.onload = function () {
   $('.table-model').DataTable( {
     processing: true,
     serverSide: true,
-    ajax: {url: current_controller_url + '/dt', type: 'POST', dataSrc:function (data) {
+    ajax: {url: current_controller_url + '/dt' + window.location.search, type: 'POST', dataSrc:function (data) {
       footer = data.footer
       return data.data
     }},

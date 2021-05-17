@@ -29,8 +29,10 @@ class Pengajuan extends MY_Controller
 		$vars['js'] = array(
 			'jquery.dataTables.min.js',
 			'dataTables.bootstrap4.js',
-			'table.js'
+			'select2.full.min.js',
+			'table-pengajuan.js'
 		);
+		$vars['css'] = array ('select2.min.css');
 		$vars['thead'] = $this->$model->thead;
 		$this->loadview('index', $vars);
 	}

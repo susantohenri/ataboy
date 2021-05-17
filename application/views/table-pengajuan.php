@@ -11,8 +11,70 @@
                 </div>
             <?php endif ?>
         </div>
-        <div class="card-body">
+        <div class="card-header">
+            <div class="form-horizontal form-groups">
+                <form class="form-filter-pengajuan">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Propinsi</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="propinsi">
+                                <option value="Jawa Tengah" selected="selected">Jawa Tengah</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Kabupaten</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="kabupaten">
+                                <option value="Boyolali" selected="selected">Boyolali</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Kecamatan</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="kecamatan">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Kelurahan</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="kelurahan">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">ID Tiket</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" name="tiket_id">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Status</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="status">
+                                <?php foreach (array('Diajukan', 'Diverifikasi', 'Diterima', 'Ditolak') as $index => $statusPengajuan) : ?>
+                                    <option value="<?= $statusPengajuan ?>"><?= $statusPengajuan ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-right">
+                            <a class="btn btn-info btn-submit-filter">Search</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body">
             <table class="table table-bordered table-striped datatable table-model">
                 <tfoot>
                     <tr>

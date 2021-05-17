@@ -27,13 +27,19 @@ class Pengajuans extends MY_Model
 				'name' => 'propinsi',
 				'width' => 2,
 				'label' => 'Propinsi',
-				'value' => 'Jawa Tengah'
+				'value' => 'Jawa Tengah',
+				'options' => array(
+					array('value' => 'Jawa Tengah', 'text' => 'Jawa Tengah')
+				)
 			),
 			array(
 				'name' => 'kabupaten',
 				'width' => 2,
 				'label' => 'Kabupaten',
-				'value' => 'Boyolali'
+				'value' => 'Boyolali',
+				'options' => array(
+					array('value' => 'Boyolali', 'text' => 'Boyolali')
+				)
 			),
 			array(
 				'name' => 'kecamatan',
@@ -112,13 +118,16 @@ class Pengajuans extends MY_Model
 	function dt()
 	{
 		$this->load->model('Roles');
-		if ($this->Roles->getRole() === 'Kelurahan')
-		{
+		if ($this->Roles->getRole() === 'Kelurahan') {
 			$this->datatables->where('createdBy', $this->session->userdata('uuid'));
 		}
-		if ($status = $this->input->get('status'))
-		{
-			$this->datatables->where('status', $status);
+
+		foreach (array ('kecamatan', 'kelurahan', 'tiket_id', 'status') as $filter) {
+			if ($parameter = $this->input->get($filter)) {
+				if (strlen($parameter) > 0) {
+					$this->datatables->where($filter, $parameter);
+				}
+			}
 		}
 		$this->datatables
 			->select("{$this->table}.uuid")
@@ -132,7 +141,7 @@ class Pengajuans extends MY_Model
 	{
 		$form = parent::getForm($uuid, $isSubform);
 		$hide = array('status', 'tiket_id');
-		$disabled = array('status', 'tiket_id', 'propinsi', 'kabupaten');
+		$disabled = array('status', 'tiket_id');
 
 		if (false === $uuid) {
 			$form = array_filter(
@@ -175,22 +184,21 @@ class Pengajuans extends MY_Model
 		return parent::create($record);
 	}
 
-	private function generate_tiket_id ()
+	private function generate_tiket_id()
 	{
 		$tiket_id = $this->generate_random_alphanumeric();
-		while ($this->is_tiket_id_exists($tiket_id))
-		{
+		while ($this->is_tiket_id_exists($tiket_id)) {
 			$tiket_id = $this->generate_random_alphanumeric();
 		}
 		return $tiket_id;
 	}
 
-	private function generate_random_alphanumeric ()
+	private function generate_random_alphanumeric()
 	{
 		return strtoupper(substr(uniqid(), 0, 8));
 	}
 
-	function is_tiket_id_exists ($tiket_id)
+	function is_tiket_id_exists($tiket_id)
 	{
 		$found = $this->findOne(array('tiket_id' => $tiket_id));
 		return isset($found['uuid']);

@@ -100,6 +100,12 @@ class Pengajuans extends MY_Model
 					array('data-number' => 'true')
 				)
 			),
+			array(
+				'name' => 'keterangan',
+				'width' => 2,
+				'label' => 'Keterangan',
+				'type' => 'textarea'
+			),
 		);
 		$this->childs = array(
 			array(
@@ -122,7 +128,7 @@ class Pengajuans extends MY_Model
 			$this->datatables->where('createdBy', $this->session->userdata('uuid'));
 		}
 
-		foreach (array ('kecamatan', 'kelurahan', 'tiket_id', 'status') as $filter) {
+		foreach (array('kecamatan', 'kelurahan', 'tiket_id', 'status') as $filter) {
 			if ($parameter = $this->input->get($filter)) {
 				if (strlen($parameter) > 0) {
 					$this->datatables->where($filter, $parameter);

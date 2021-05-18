@@ -72,12 +72,7 @@ class Donasis extends MY_Model
         'label' => 'Item',
         'controller' => 'DonasiBarang',
         'model' => 'DonasiBarangs'
-      ),
-      array(
-        'label' => 'Foto',
-        'controller' => 'DonasiPhoto',
-        'model' => 'DonasiPhotos'
-      ),
+      )
     );
   }
 

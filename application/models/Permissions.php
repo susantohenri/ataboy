@@ -25,7 +25,6 @@ class Permissions extends MY_Model {
           array ('text' => 'BarangKeluar', 'value' => 'BarangKeluar'),
           array ('text' => 'Donasi', 'value' => 'Donasi'),
           array ('text' => 'DonasiBarang', 'value' => 'DonasiBarang'),
-          array ('text' => 'DonasiPhoto', 'value' => 'DonasiPhoto'),
           array ('text' => 'Blog', 'value' => 'Blog'),
           array ('text' => 'Barang', 'value' => 'Barang'),
           array ('text' => 'BarangSatuan', 'value' => 'BarangSatuan'),

@@ -160,10 +160,6 @@
 			{
 				"controller": "DonasiBarang",
 				"label": "Item"
-			},
-			{
-				"controller": "DonasiPhoto",
-				"label": "Foto"
 			}
 		]
 	},
@@ -187,10 +183,6 @@
 				"field": "nama"
 			}
 		]
-	},
-	{
-		"controller": "DonasiPhoto",
-		"fields": []
 	},
 	{
 		"controller": "Blog",

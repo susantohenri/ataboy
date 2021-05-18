@@ -51,9 +51,13 @@ class Pengajuan extends MY_Controller
 			'daterangepicker.min.js',
 			'select2.full.min.js',
 			'leaflet.js',
+			'summernote.min.js',
 			'form-pengajuan.js'
 		);
-		$vars['css'] = array ('leaflet.css');
+		$vars['css'] = array(
+			'summernote.min.css',
+			'leaflet.css'
+		);
 		$this->loadview('index', $vars);
 	}
 
@@ -71,9 +75,13 @@ class Pengajuan extends MY_Controller
 			'daterangepicker.min.js',
 			'select2.full.min.js',
 			'leaflet.js',
+			'summernote.min.js',
 			'form-pengajuan.js'
 		);
-		$vars['css'] = array ('leaflet.css');
+		$vars['css'] = array(
+			'summernote.min.css',
+			'leaflet.css'
+		);
 		$this->loadview('index', $vars);
 	}
 

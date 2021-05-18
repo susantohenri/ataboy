@@ -11,6 +11,7 @@ class Migration_donasibarang extends CI_Migration {
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
+        `donasi` varchar(36) NOT NULL,
         `barang` varchar(36) NOT NULL,
         `jumlah` INT(11) NOT NULL,
         `satuan` varchar(36) NOT NULL,

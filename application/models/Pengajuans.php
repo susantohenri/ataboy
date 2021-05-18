@@ -201,7 +201,7 @@ class Pengajuans extends MY_Model
 
 	private function generate_random_alphanumeric()
 	{
-		return strtoupper(substr(uniqid(), 0, 8));
+		return strtoupper(substr(uniqid(), 0, 11));
 	}
 
 	function is_tiket_id_exists($tiket_id)

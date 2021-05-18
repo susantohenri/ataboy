@@ -19,7 +19,7 @@ class Migration_pengajuan extends CI_Migration {
         `longitude` varchar(255) NOT NULL,
         `bencana` varchar(36) NOT NULL,
         `jumlah_kk_jiwa` INT(11) NOT NULL,
-        `tiket_id` varchar(255) NOT NULL,
+        `tiket_id` varchar(12) NOT NULL,
         `keterangan` text NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `kecamatan` (`kecamatan`),

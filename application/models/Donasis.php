@@ -9,7 +9,7 @@ class Donasis extends MY_Model
     $this->table = 'donasi';
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
-      (object) array('mData' => 'donatur', 'sTitle' => 'Donatur'),
+      (object) array('mData' => 'tiket_id', 'sTitle' => 'ID'),
       (object) array('mData' => 'status', 'sTitle' => 'Status'),
     );
     $this->form = array(
@@ -19,9 +19,52 @@ class Donasis extends MY_Model
         'label' => 'Status',
       ),
       array(
-        'name' => 'alamat',
+        'name' => 'metode',
         'width' => 2,
-        'label' => 'Alamat',
+        'label' => 'Metode Donasi',
+        'options' => array(
+          array('value' => 'DIKIRIM', 'text' => 'Dikirim'),
+          array('value' => 'DIAMBIL', 'text' => 'Diambil')
+        )
+      ),
+      array(
+        'name' => 'rekening_tujuan',
+        'width' => 2,
+        'label' => 'Rekening Tujuan (Optional)',
+        'options' => array(
+          array('value' => '--', 'text' => '--'),
+          array('value' => 'MANDIRI Virtual Account - 8903980801206344', 'text' => 'MANDIRI Virtual Account - 8903980801206344'),
+        )
+      ),
+      array(
+        'name' => 'alamat_tujuan',
+        'width' => 2,
+        'label' => 'Alamat Tujuan (Optional)',
+        'options' => array(
+          array('value' => '--', 'text' => '--'),
+          array('value' => 'BPBD Kabupaten Boyolali. Tegalmulyo, Mojosongo, Boyolali, Boyolali Regency, Central Java 57322', 'text' => 'BPBD Kabupaten Boyolali. Tegalmulyo, Mojosongo, Boyolali, Boyolali Regency, Central Java 57322'),
+        )
+      ),
+      array(
+        'name' => 'alamat_pengirim',
+        'width' => 2,
+        'label' => 'Alamat Pengirim / Pengambilan',
+      ),
+      array(
+        'name' => 'no_resi',
+        'width' => 2,
+        'label' => 'No. Resi (Optional)',
+      ),
+      array(
+        'name' => 'updatedAt',
+        'width' => 2,
+        'label' => 'Terakhir Update',
+      ),
+      array(
+        'name' => 'keterangan',
+        'width' => 2,
+        'label' => 'Keterangan',
+        'type' => 'textarea'
       ),
     );
     $this->childs = array(
@@ -43,8 +86,33 @@ class Donasis extends MY_Model
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
-      ->select("user.nama donatur", false)
-      ->join('user', 'donasi.donatur = user.uuid', 'left');
+      ->select("{$this->table}.tiket_id")
+      ->select("{$this->table}.status");
     return parent::dt();
+  }
+
+  function getForm($uuid = false, $isSubform = false)
+  {
+    $form = parent::getForm($uuid, $isSubform);
+    $hide = array('status', 'tiket_id', 'updatedAt');
+    $disabled = array('status', 'tiket_id', 'updatedAt');
+
+    if (false === $uuid) {
+      $form = array_filter(
+        $form,
+        function ($field) use ($hide) {
+          return !in_array($field['name'], $hide);
+        }
+      );
+    }
+
+    $form = array_map(function ($field) use ($disabled) {
+      if (in_array($field['name'], $disabled)) {
+        $field['attr'] .= ' disabled="disabled"';
+      }
+      return $field;
+    }, $form);
+
+    return $form;
   }
 }

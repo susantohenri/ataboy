@@ -55,4 +55,18 @@ class PengajuanBarangs extends MY_Model
 			->select('pengajuanbarang.barang');
 		return parent::dt();
 	}
+
+	function getKebutuhan($barang)
+	{
+		$kebutuhan = $this->db
+			->select('SUM(pengajuanbarang.jumlah * barangsatuan.skala) jumlah', false)
+			->from('pengajuanbarang')
+			->join('pengajuan', 'pengajuan.uuid = pengajuanbarang.pengajuan', 'right')
+			->join('barang', 'barang.uuid = pengajuanbarang.barang', 'right')
+			->join('barangsatuan', 'barangsatuan.uuid = pengajuanbarang.satuan', 'right')
+			->where('pengajuan.status', 'DITERIMA')
+			->where('barang.uuid', $barang)
+			->get()->row_array();
+		return $kebutuhan['jumlah'] ? $kebutuhan['jumlah'] : 0;
+	}
 }

@@ -39,10 +39,15 @@ class BarangSatuans extends MY_Model
     return parent::dt();
   }
 
-  function select2WithBarang ($field, $term, $brg)
+  function select2WithBarang($field, $term, $brg)
   {
     $this->db->where('barang', $brg);
     return parent::select2($field, $term);
   }
 
+  function getSmallest($barang)
+  {
+    $satuan = $this->findOne(array('barang' => $barang, 'skala' => 1));
+    return $satuan ? $satuan['nama'] : '*smallest-scale-notfound';
+  }
 }

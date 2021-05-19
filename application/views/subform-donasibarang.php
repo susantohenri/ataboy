@@ -31,7 +31,7 @@
           <input class="form-control" type="<?= $field['type'] ?>" value="<?= htmlentities($field['value']) ?>" name="<?= "{$controller}_" ?><?= $field['name'] ?>[<?= $uuid ?>]" <?= $field['attr'] ?> placeholder="<?= $field['label'] ?>">
           <?php if (strlen($field['value']) > 0): ?>
           <div class="input-group-append">
-            <a class="btn btn-info input-group-button btn-preview">Preview</a>
+            <a class="btn btn-info input-group-btn btn-preview">Preview</a>
           </div>
           <?php endif ?>
         </div>

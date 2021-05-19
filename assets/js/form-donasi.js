@@ -88,8 +88,16 @@ function formInit (scope) {
       })
       if ($(this).is('[name^="DonasiBarang_barang["]'))
       {
+        $(this).parent().append('<small class="kebutuhan"></small>')
+        $('.input-group-text, .input-group-btn').css('height', $('[name^="DonasiBarang_jumlah"]').css('height'))
         $(this).change(function () {
+          var dropdownBarang = $(this)
+          $.get(`${site_url}PengajuanBarang/getKebutuhan/${$(this).val()}`, function (sekian) {
+            dropdownBarang.parent().find('.kebutuhan').html(`kebutuhan saat ini  ${sekian}`)
+          })
+          let jumlah = $(this).parent().parent().find('[name^="DonasiBarang_jumlah"]')
           let satuan = $(this).parent().parent().find('[name^="DonasiBarang_satuan"]')
+          jumlah.val('')
           satuan.val('')
           satuan.trigger('change.select2')
         })

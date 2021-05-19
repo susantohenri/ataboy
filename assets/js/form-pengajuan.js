@@ -118,7 +118,9 @@ function formInit(scope) {
       if ($(this).is('[name^="PengajuanBarang_barang["]'))
       {
         $(this).change(function () {
+          let jumlah = $(this).parent().parent().find('[name^="PengajuanBarang_jumlah"]')
           let satuan = $(this).parent().parent().find('[name^="PengajuanBarang_satuan"]')
+          jumlah.val('')
           satuan.val('')
           satuan.trigger('change.select2')
         })

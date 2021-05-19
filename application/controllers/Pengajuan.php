@@ -21,7 +21,6 @@ class Pengajuan extends MY_Controller
 				{
 					$created = $this->$model->findOne($uuid);
 					$vars['tiket_id'] = $created['tiket_id'];
-					redirect(site_url('Pengajuan?status=Diajukan'));
 				}
 			}
 		}

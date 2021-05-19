@@ -61,7 +61,23 @@ function formInit (scope) {
     $(this).parent().parent().remove()
   })
   scope.find('select').not('.select2-hidden-accessible').each(function () {
-    if ($(this).is ('[data-autocomplete]')) {
+    if ($(this).is('[name^="DonasiBarang_satuan"]')) {
+      var model = $(this).attr('data-model')
+      var field = $(this).attr('data-field')
+      $(this).select2({
+        ajax: {
+          url: current_controller_url + '/select2/' + model + '/' + field,
+          data: function (params) {
+            var query = {
+              search: params.term,
+              barang: $(this).parent().parent().find('[name^="DonasiBarang_barang["]').val()
+            }
+            return query;
+          },
+          type: 'POST', dataType: 'json'
+        }
+      })
+    } else if ($(this).is ('[data-autocomplete]')) {
       var model = $(this).attr('data-model')
       var field = $(this).attr('data-field')
       $(this).select2({
@@ -70,6 +86,14 @@ function formInit (scope) {
           type: 'POST', dataType: 'json'
         }
       })
+      if ($(this).is('[name^="DonasiBarang_barang["]'))
+      {
+        $(this).change(function () {
+          let satuan = $(this).parent().parent().find('[name^="DonasiBarang_satuan"]')
+          satuan.val('')
+          satuan.trigger('change.select2')
+        })
+      }
     } else if ($(this).is ('[data-suggestion]')) {
       $(this).select2({
         tags: true,
@@ -106,9 +130,16 @@ function formInit (scope) {
     $(this).summernote()
   })
 
-  scope.find('img').each(function () {
-    $(this).css('cursor', 'pointer').click(function () {
-      var src = $(this).attr('src')
+  scope.find('[type="file"]').each(function () {
+    $(this).change(function () {
+      let localFileName = $(this).val().split('\\').pop()
+      $(this).parent().parent().find('[name*="localFileName["').val(localFileName)
+    })
+  })
+
+  scope.find('.btn-preview').each(function () {
+    $(this).click(function () {
+      var src = $(this).parent().parent().parent().find('img').attr('src')
       $('body').append(`
         <div class="modal" tabindex="-1" role="dialog" id="preview">
           <div class="modal-dialog modal-lg" role="document">

@@ -69,7 +69,7 @@ class Donasis extends MY_Model
     );
     $this->childs = array(
       array(
-        'label' => 'Item',
+        'label' => 'Detail Donasi',
         'controller' => 'DonasiBarang',
         'model' => 'DonasiBarangs'
       )
@@ -109,5 +109,33 @@ class Donasis extends MY_Model
     }, $form);
 
     return $form;
+  }
+
+  function create($record)
+  {
+    // $record['status'] = 'DIAJUKAN';
+    $record['tiket_id'] = $this->generate_tiket_id();
+    $record['createdBy'] = $this->session->userdata('uuid');
+    return parent::create($record);
+  }
+
+  private function generate_tiket_id()
+  {
+    $tiket_id = $this->generate_random_alphanumeric();
+    while ($this->is_tiket_id_exists($tiket_id)) {
+      $tiket_id = $this->generate_random_alphanumeric();
+    }
+    return $tiket_id;
+  }
+
+  private function generate_random_alphanumeric()
+  {
+    return strtoupper(substr(uniqid(), 0, 11));
+  }
+
+  function is_tiket_id_exists($tiket_id)
+  {
+    $found = $this->findOne(array('tiket_id' => $tiket_id));
+    return isset($found['uuid']);
   }
 }

@@ -15,6 +15,7 @@ class Migration_donasibarang extends CI_Migration {
         `barang` varchar(36) NOT NULL,
         `jumlah` INT(11) NOT NULL,
         `satuan` varchar(36) NOT NULL,
+        `gambar` varchar(255) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `barang` (`barang`),
         KEY `satuan` (`satuan`)
@@ -25,6 +26,11 @@ class Migration_donasibarang extends CI_Migration {
 
   function down () {
     $this->db->query("DROP TABLE IF EXISTS `donasibarang`");
+    $dir = 'foto-donasi';
+    foreach (scandir($dir) as $file)
+    {
+      if (!in_array($file, array('.', '..'))) unlink("{$dir}/$file");
+    }
   }
 
 }

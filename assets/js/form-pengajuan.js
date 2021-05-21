@@ -1,5 +1,6 @@
 window.onload = function () {
 
+  $('.fa.fa-arrow-left').parent('.btn.btn-warning').attr('href', document.referrer)
   setupMap()
 
   formInit($(`[data-controller="${current_controller}"]`))

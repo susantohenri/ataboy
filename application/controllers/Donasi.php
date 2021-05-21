@@ -11,6 +11,11 @@ class Donasi extends MY_Controller
 
 	public function index()
 	{
+		if (!$status = $this->input->get('status'))
+		{
+			$status = 'Saya';
+		}
+		$this->page_title = "Donasi {$status}";
 		$vars = array();
 		$model = $this->model;
 		if ($post = $this->$model->lastSubmit($this->input->post())) {
@@ -36,6 +41,7 @@ class Donasi extends MY_Controller
 
 	function create()
 	{
+		$this->page_title = 'Formulir Donasi';
 		$model = $this->model;
 		$vars = array();
 		$vars['page_name'] = 'form';
@@ -58,6 +64,7 @@ class Donasi extends MY_Controller
 
 	function read($id)
 	{
+		$this->page_title = 'Detail Donasi';
 		$vars = array();
 		$vars['page_name'] = 'form';
 		$model = $this->model;

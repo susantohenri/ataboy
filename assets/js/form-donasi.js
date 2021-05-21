@@ -1,5 +1,6 @@
 window.onload = function () {
 
+  $('.fa.fa-arrow-left').parent('.btn.btn-warning').attr('href', document.referrer)
   $('[name="no_resi"]').after('<small>*masukkan nomor resi agar donasi berstatus "dalam proses pengiriman"</small>')
 
   formInit($(`[data-controller="${current_controller}"]`))

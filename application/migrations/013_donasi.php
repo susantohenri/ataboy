@@ -12,7 +12,7 @@ class Migration_donasi extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `createdBy` varchar(36) NOT NULL,
-        `status` enum('MENUNGGU PEMBAYARAN', 'MENUNGGU PENGIRIMAN', 'PROSES PENGIRIMAN', 'SAMPAI TUJUAN', 'VERIFIKASI', 'SELESAI') NOT NULL,
+        `status` enum('MENUNGGU PEMBAYARAN', 'MENUNGGU PENGIRIMAN', 'MENUNGGU PENGAMBILAN', 'PROSES PENGIRIMAN', 'SAMPAI TUJUAN', 'VERIFIKASI', 'SELESAI') NOT NULL,
         `metode` enum('DIKIRIM', 'DIAMBIL') NOT NULL,
         `rekening_tujuan` varchar(255) NOT NULL,
         `alamat_tujuan` varchar(255) NOT NULL,

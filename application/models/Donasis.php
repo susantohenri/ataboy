@@ -53,7 +53,7 @@ class Donasis extends MY_Model
       array(
         'name' => 'no_resi',
         'width' => 2,
-        'label' => 'No. Resi (Optional)',
+        'label' => 'Kurir / No. Resi (Optional)',
       ),
       array(
         'name' => 'updatedAt',
@@ -69,7 +69,7 @@ class Donasis extends MY_Model
     );
     $this->childs = array(
       array(
-        'label' => 'Detail Donasi',
+        'label' => 'Item Donasi',
         'controller' => 'DonasiBarang',
         'model' => 'DonasiBarangs'
       )
@@ -78,6 +78,18 @@ class Donasis extends MY_Model
 
   function dt()
   {
+		$this->load->model('Roles');
+		if ($this->Roles->getRole() === 'Donatur') {
+			$this->datatables->where('createdBy', $this->session->userdata('uuid'));
+		}
+
+		foreach (array('status') as $filter) {
+			if ($parameter = $this->input->get($filter)) {
+				if (strlen($parameter) > 0) {
+					$this->datatables->where($filter, $parameter);
+				}
+			}
+		}
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")

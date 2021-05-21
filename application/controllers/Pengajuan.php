@@ -11,6 +11,11 @@ class Pengajuan extends MY_Controller
 
 	public function index()
 	{
+		if (!$status = $this->input->get('status'))
+		{
+			$status = 'Saya';
+		}
+		$this->page_title = "Pengajuan {$status}";
 		$vars = array();
 		$model = $this->model;
 		if ($post = $this->$model->lastSubmit($this->input->post())) {
@@ -38,6 +43,7 @@ class Pengajuan extends MY_Controller
 
 	function create()
 	{
+		$this->page_title = 'Formulir Pengajuan';
 		$model = $this->model;
 		$vars = array();
 		$vars['page_name'] = 'form';
@@ -62,6 +68,7 @@ class Pengajuan extends MY_Controller
 
 	function read($id)
 	{
+		$this->page_title = 'Detail Pengajuan';
 		$vars = array();
 		$vars['page_name'] = 'form';
 		$model = $this->model;

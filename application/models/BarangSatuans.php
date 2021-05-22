@@ -48,6 +48,13 @@ class BarangSatuans extends MY_Model
   function getSmallest($barang)
   {
     $satuan = $this->findOne(array('barang' => $barang, 'skala' => 1));
-    return $satuan ? $satuan['nama'] : '*smallest-scale-notfound';
+    return $satuan ? $satuan['nama'] : '';
+  }
+
+  function getUuid($uuid, $barang)
+  {
+    $found = $this->findOne(array('uuid' => $uuid, 'barang' => $barang));
+    if (isset($found['uuid'])) return $uuid;
+    else return $this->create(array('nama' => $uuid, 'barang' => $barang, 'skala' => 1));
   }
 }

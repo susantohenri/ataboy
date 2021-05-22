@@ -76,7 +76,57 @@ function formInit (scope) {
             return query;
           },
           type: 'POST', dataType: 'json'
+        },
+        tags: true,
+        createTag: function (params) {
+          return {
+            id: params.term,
+            text: params.term,
+            newOption: true
+          }
+        },
+         templateResult: function (data) {
+          var $result = $('<span></span>')
+          $result.text(data.text)
+          if (data.newOption) $result.append('<em> (add new)</em>')
+          return $result
         }
+      })
+    } else if ($(this).is('[name^="DonasiBarang_barang["]')) {
+      var model = $(this).attr('data-model')
+      var field = $(this).attr('data-field')
+      $(this).select2({
+        ajax: {
+          url: current_controller_url + '/select2/' + model + '/' + field,
+          type: 'POST', dataType: 'json'
+        },
+        tags: true,
+        createTag: function (params) {
+          return {
+            id: params.term,
+            text: params.term,
+            newOption: true
+          }
+        },
+         templateResult: function (data) {
+          var $result = $('<span></span>')
+          $result.text(data.text)
+          if (data.newOption) $result.append('<em> (add new)</em>')
+          return $result
+        }
+      })
+      $(this).parent().append('<small class="kebutuhan"></small>')
+      $('.input-group-text, .input-group-btn').css('height', $('[name^="DonasiBarang_jumlah"]').css('height'))
+      $(this).change(function () {
+        var dropdownBarang = $(this)
+        $.get(`${site_url}PengajuanBarang/getKebutuhan/${$(this).val()}`, function (sekian) {
+          dropdownBarang.parent().find('.kebutuhan').html(`kebutuhan saat ini  ${sekian}`)
+        })
+        let jumlah = $(this).parent().parent().find('[name^="DonasiBarang_jumlah"]')
+        let satuan = $(this).parent().parent().find('[name^="DonasiBarang_satuan"]')
+        jumlah.val('')
+        satuan.val('')
+        satuan.trigger('change.select2')
       })
     } else if ($(this).is ('[data-autocomplete]')) {
       var model = $(this).attr('data-model')
@@ -87,22 +137,6 @@ function formInit (scope) {
           type: 'POST', dataType: 'json'
         }
       })
-      if ($(this).is('[name^="DonasiBarang_barang["]'))
-      {
-        $(this).parent().append('<small class="kebutuhan"></small>')
-        $('.input-group-text, .input-group-btn').css('height', $('[name^="DonasiBarang_jumlah"]').css('height'))
-        $(this).change(function () {
-          var dropdownBarang = $(this)
-          $.get(`${site_url}PengajuanBarang/getKebutuhan/${$(this).val()}`, function (sekian) {
-            dropdownBarang.parent().find('.kebutuhan').html(`kebutuhan saat ini  ${sekian}`)
-          })
-          let jumlah = $(this).parent().parent().find('[name^="DonasiBarang_jumlah"]')
-          let satuan = $(this).parent().parent().find('[name^="DonasiBarang_satuan"]')
-          jumlah.val('')
-          satuan.val('')
-          satuan.trigger('change.select2')
-        })
-      }
     } else if ($(this).is ('[data-suggestion]')) {
       $(this).select2({
         tags: true,

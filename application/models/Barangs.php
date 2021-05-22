@@ -36,4 +36,11 @@ class Barangs extends MY_Model
       ->select('barang.nama');
     return parent::dt();
   }
+
+  function getUuid($uuid)
+  {
+    $found = $this->findOne($uuid);
+    if (isset($found['uuid'])) return $uuid;
+    else return $this->create(array('nama' => $uuid));
+  }
 }

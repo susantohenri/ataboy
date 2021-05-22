@@ -72,6 +72,9 @@ class DonasiBarangs extends MY_Model
 
 	function save($record)
 	{
+		$this->load->model(array('Barangs', 'BarangSatuans'));
+		$record['barang'] = $this->Barangs->getUuid($record['barang']);
+		$record['satuan'] = $this->BarangSatuans->getUuid($record['satuan'], $record['barang']);
 		$index = array_search($record['localFileName'], $_FILES['DonasiBarang_gambar']['name']);
 		unset($record['localFileName']);
 		foreach ($record as $field => &$value) {

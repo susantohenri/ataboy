@@ -156,13 +156,6 @@ class Pengajuans extends MY_Model
 					return !in_array($field['name'], $hide);
 				}
 			);
-		} else {
-			$form = array_map(function ($field) use ($hide) {
-				if ('jumlah_kk_jiwa' === $field['name']) {
-					$field['value'] = number_format($field['value'], 0);
-				}
-				return $field;
-			}, $form);
 		}
 
 		$form = array_map(function ($field) use ($disabled) {

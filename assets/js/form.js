@@ -96,8 +96,11 @@ function formInit (scope) {
     locale: {format: 'YYYY-MM-DD HH:mm'},
     // startDate: moment().format('YYYY-MM-DD HH:mm')
   })
-  scope.find('[data-number="true"]').keyup(function () {
+  scope.find('[data-number="true"]').each(function () {
     $(this).val(currency(getNumber($(this))))
+    $(this).keyup(function () {
+      $(this).val(currency(getNumber($(this))))
+    })
   })
 
   scope.find('textarea').each(function () {

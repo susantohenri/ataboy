@@ -26,27 +26,48 @@ scratch. This page gets rid of all links and provides the needed markup only.
         .form-child .form-group.row>div {
             margin: 5px 0
         }
+
+        .nav-link {
+            cursor: pointer;
+        }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
-    <script src="<?= base_url('assets/js/leaflet.js') ?>" ></script>
+    <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/select2.min.css') ?>">
 </head>
 
 <body class="hold-transition layout-top-nav">
     <div class="wrapper">
 
-        <!-- Navbar -->
-        <nav class="main-header navbar navbar-expand navbar-light navbar-white">
-            <div class="container">
-                <a href="<?= base_url() ?>" class="navbar-brand">
-                    <!-- <img src="../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-             style="opacity: .8"> -->
-                    <H2><span class="brand-text font-weight-light"><b>ATA</b>boy</span></H2>
+        <div class="container">
+            <!-- Navbar -->
+            <nav class="navbar navbar-expand-md navbar-light" style="background-color: #fff;">
+                <a class="navbar-brand" href="<?= base_url() ?>">
+                    <h2><span class="brand-text font-weight-light"><b>ATA</b>boy</span></h2>
                 </a>
-
-                <a class="nav-link" data-toggle="modal" data-target="#exampleModal" style="cursor: pointer">Login</a>
-            </div>
-        </nav>
-        <!-- /.navbar -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav mr-auto"></div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#donaturModal">Registrasi Donatur</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#kelurahanModal">Registrasi Kelurahan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="modal" data-target="#forgotModal">Reset Password</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!-- /.navbar -->
+        </div>
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
@@ -72,9 +93,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="row">
 
                         <?php foreach ($blogs as $blog) : ?>
-                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer"
-                                onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')"
-                            >
+                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
                                 <div class="card card-outline">
                                     <div class="card-body">
 
@@ -112,74 +131,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- ./wrapper -->
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="post">
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Alamat Email" name="username">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-envelope"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="password" class="form-control" placeholder="Kata Sandi" name="password">
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-lock"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-4 offset-8">
-                                <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <center>
-                                <h2 id="judul"></h2>
-                            </center>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="card card-outline">
-                                <div class="card-body">
-                                    <img id="gambar" src="" style="width: 100%;">
-                                </div>
-                            </div><!-- /.card -->
-                        </div>
-                        <div class="col-sm-12" id="isi">
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <?php foreach (array('blog', 'error-message', 'forgot-password', 'login', 'registrasi-donatur', 'registrasi-kelurahan') as $home_element) include(APPPATH . "views/homepage/{$home_element}.php") ?>
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -189,7 +141,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>
     <!-- AdminLTE App -->
     <!-- <script src="../../dist/js/adminlte.min.js"></script> -->
+    <script type="text/javascript" src="<?= base_url('assets/js/select2.full.min.js') ?>"></script>
     <script>
+        $('[name="desa"]').select2()
+        $('.show-password').each(function() {
+            $(this).click(function() {
+                let input = $(this).parent().parent().find('[name="password"]')
+                let icon = $(this).find('i')
+                if (input.is('[type="password"]')) {
+                    input.attr('type', 'text')
+                    icon.attr('class', 'fa fa-eye-slash')
+                } else {
+                    input.attr('type', 'password')
+                    icon.attr('class', 'fa fa-eye')
+                }
+            })
+        })
+
         const token = 'pk.eyJ1IjoibGllbWdpb2t0aWFuIiwiYSI6ImNrbWJmcjJuYzIxNXcyd3FyajloZ3IxencifQ.DX3ZeWJ7I7nGUhTupCABXQ'
         const boyolali = [-7.517198764411566, 110.59333666185161]
 
@@ -202,12 +170,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             zoomOffset: -1
         }).addTo(mymap)
 
-        <?php foreach ($mapMarkers as $marker): ?>
-        try {
-            let marker = L.marker([<?= $marker['lat'] ?>, <?= $marker['lng'] ?>]).addTo(mymap)
-        } catch (e) {
+        <?php foreach ($mapMarkers as $marker) : ?>
+            try {
+                let marker = L.marker([<?= $marker['lat'] ?>, <?= $marker['lng'] ?>]).addTo(mymap)
+            } catch (e) {
 
-        }
+            }
         <?php endforeach ?>
     </script>
 </body>

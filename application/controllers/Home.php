@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Home extends CI_Controller {
 
 	function index () {
 		if ($post = $this->input->post()) {
@@ -15,7 +15,7 @@ class Login extends CI_Controller {
 				redirect(base_url());
 			}
 		}
-		$this->load->model(array('Blogs', 'Pengajuans'));
+		$this->load->model(array('Blogs', 'Pengajuans', 'Desas'));
 		$params['blogs'] = $this->Blogs->find(array('status' => 1));
 		$params['mapMarkers'] = array_map(function ($pengajuan) {
 			return array (
@@ -23,7 +23,10 @@ class Login extends CI_Controller {
 				'lng' => $pengajuan->longitude
 			);
 		}, $this->Pengajuans->find(array('status' => 'DITERIMA')));
-		$this->load->view('login', $params);
+		$params['desas'] = array_map(function ($desa) {
+			return array('uuid' => $desa->uuid, 'nama' => $desa->nama);
+		}, $this->Desas->find());
+		$this->load->view('home', $params);
 	}
 
 	function Migrate ($version = null) {

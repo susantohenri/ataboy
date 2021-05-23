@@ -38,7 +38,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </a>
 
       <a>Halo, <b><?= $this->session->userdata('nama') ?></b></a>
-      <a class="nav-link"style="cursor: pointer" href="<?= site_url('Login/Logout') ?>">Logout</a>
+      <a class="nav-link"style="cursor: pointer" href="<?= site_url('Home/Logout') ?>">Logout</a>
     </div>
   </nav>
   <!-- /.navbar -->

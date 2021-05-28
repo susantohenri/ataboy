@@ -42,8 +42,7 @@ class Users extends MY_Model {
 
   function save ($data) {
     if (strlen ($data['password']) > 0) {
-      if ($data['password'] !== $data['confirm_password']) return array('error' => array('message' => 'Password tidak sesuai'));
-      else $data['password'] = md5($data['password']);
+      $data['password'] = md5($data['password']);
     } else unset ($data['password']);
     unset ($data['confirm_password']);
 
@@ -56,7 +55,6 @@ class Users extends MY_Model {
 
   function findOne ($param) {
     $record = parent::findOne ($param);
-    $record['confirm_password'] = '';
     return $record;
   }
 

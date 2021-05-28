@@ -26,14 +26,12 @@ class Home extends CI_Controller {
 				case 'registrasi-donatur':
 					$this->load->model('Donaturs');
 					unset($post['action']);
-					$post['confirm_password'] = $post['password'];
 					$this->Donaturs->save($post);
 					$params['error_message'] = 'Pendaftaran Sukses';
 					break;
 				case 'registrasi-kelurahan':
 					$this->load->model('Kelurahans');
 					unset($post['action']);
-					$post['confirm_password'] = $post['password'];
 					$this->Kelurahans->save($post);
 					$params['error_message'] = 'Pendaftaran Sukses, Silakan Tunggu Proses Validasi Selesai';
 					break;

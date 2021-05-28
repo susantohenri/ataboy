@@ -107,6 +107,30 @@ function formInit (scope) {
     $(this).summernote()
   })
 
+  scope.find('[type="password"]').each(function () {
+    $(this).parent().addClass('input-group')
+    $(this).after(`
+      <div class="input-group-append">
+          <span class="input-group-text show-password">
+              <i class="fa fa-eye-slash"></i>
+          </span>
+      </div>
+    `)
+  })
+  scope.find('.show-password').each(function() {
+    $(this).click(function() {
+      let input = $(this).parent().parent().find('[name="password"]')
+      let icon = $(this).find('i')
+      if (input.is('[type="password"]')) {
+        input.attr('type', 'text')
+        icon.attr('class', 'fa fa-eye-slash')
+      } else {
+        input.attr('type', 'password')
+        icon.attr('class', 'fa fa-eye')
+      }
+    })
+  })
+
   scope.find('img').each(function () {
     $(this).css('cursor', 'pointer').click(function () {
       var src = $(this).attr('src')

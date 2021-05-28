@@ -14,17 +14,40 @@ class Donasis extends MY_Model
     );
     $this->form = array(
       array(
+        'name' => 'donatur',
+        'width' => 2,
+        'label' => 'Donatur',
+        'value' => '',
+        'attributes' => array(
+          array('disabled' => 'disabled')
+        )
+      ),
+			array(
+				'name' => 'tiket_id',
+				'width' => 2,
+				'label' => 'ID Tiket'
+			),
+      array(
         'name' => 'status',
         'width' => 2,
         'label' => 'Status',
+        'options' => array(
+          array('text' => 'MENUNGGU PEMBAYARAN', 'value' => 'MENUNGGU PEMBAYARAN'),
+          array('text' => 'MENUNGGU PENGIRIMAN', 'value' => 'MENUNGGU PENGIRIMAN'),
+          array('text' => 'MENUNGGU PENGAMBILAN', 'value' => 'MENUNGGU PENGAMBILAN'),
+          array('text' => 'PROSES PENGIRIMAN', 'value' => 'PROSES PENGIRIMAN'),
+          array('text' => 'SAMPAI TUJUAN', 'value' => 'SAMPAI TUJUAN'),
+          array('text' => 'VERIFIKASI', 'value' => 'VERIFIKASI'),
+          array('text' => 'SELESAI', 'value' => 'SELESAI'),
+        )
       ),
       array(
         'name' => 'metode',
         'width' => 2,
         'label' => 'Metode Donasi',
         'options' => array(
-          array('value' => 'DIKIRIM', 'text' => 'Dikirim'),
-          array('value' => 'DIAMBIL', 'text' => 'Diambil')
+          array('value' => 'DIKIRIM', 'text' => 'DIKIRIM'),
+          array('value' => 'DIAMBIL', 'text' => 'DIAMBIL')
         )
       ),
       array(
@@ -78,18 +101,18 @@ class Donasis extends MY_Model
 
   function dt()
   {
-		$this->load->model('Roles');
-		if ($this->Roles->getRole() === 'Donatur') {
-			$this->datatables->where('createdBy', $this->session->userdata('uuid'));
-		}
+    $this->load->model('Roles');
+    if ($this->Roles->getRole() === 'Donatur') {
+      $this->datatables->where('createdBy', $this->session->userdata('uuid'));
+    }
 
-		foreach (array('status') as $filter) {
-			if ($parameter = $this->input->get($filter)) {
-				if (strlen($parameter) > 0) {
-					$this->datatables->where($filter, $parameter);
-				}
-			}
-		}
+    foreach (array('status') as $filter) {
+      if ($parameter = $this->input->get($filter)) {
+        if (strlen($parameter) > 0) {
+          $this->datatables->where($filter, $parameter);
+        }
+      }
+    }
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
@@ -101,7 +124,7 @@ class Donasis extends MY_Model
   function getForm($uuid = false, $isSubform = false)
   {
     $form = parent::getForm($uuid, $isSubform);
-    $hide = array('status', 'tiket_id', 'updatedAt');
+    $hide = array('donatur', 'status', 'tiket_id', 'updatedAt');
     $disabled = array('status', 'tiket_id', 'updatedAt');
 
     if (false === $uuid) {
@@ -111,6 +134,16 @@ class Donasis extends MY_Model
           return !in_array($field['name'], $hide);
         }
       );
+    } else {
+      $form = array_map(function ($field) use ($uuid) {
+        if ('donatur' === $field['name']) {
+          $donasi = parent::findOne($uuid);
+          $this->load->model('Donaturs');
+          $donatur = $this->Donaturs->findOne($donasi['createdBy']);
+          $field['value'] = "{$donatur['nama']} {$donatur['nohp']}";
+        }
+        return $field;
+      }, $form);
     }
 
     $form = array_map(function ($field) use ($disabled) {
@@ -125,10 +158,37 @@ class Donasis extends MY_Model
 
   function create($record)
   {
-    // $record['status'] = 'DIAJUKAN';
+    if ('DIAMBIL' === $record['metode']) {
+      $record['status'] = 'MENUNGGU PENGAMBILAN';
+    } else if ('DIKIRIM' === $record['metode']) {
+      if (strlen($record['no_resi']) < 1) {
+        $record['status'] = 'MENUNGGU PENGIRIMAN';
+      } else {
+        $record['status'] = 'PROSES PENGIRIMAN';
+      }
+    }
+
     $record['tiket_id'] = $this->generate_tiket_id();
     $record['createdBy'] = $this->session->userdata('uuid');
     return parent::create($record);
+  }
+
+  function update($next)
+  {
+    $prev = parent::findOne($next['uuid']);
+    if (!isset($next['status'])) {
+      if ('DIKIRIM' === $prev['metode'] && 'DIAMBIL' === $next['metode']) {
+        $next['status'] = 'MENUNGGU PENGAMBILAN';
+      }
+      if ('DIAMBIL' === $prev['metode'] && 'DIKIRIM' === $next['metode']) {
+        $next['status'] = strlen($next['no_resi']) < 1 ? 'MENUNGGU PENGIRIMAN' : 'PROSES PENGIRIMAN';
+      }
+
+      if (strlen($next['no_resi']) > 0 && 'MENUNGGU PENGIRIMAN' === $prev['status'] && strlen($prev['no_resi']) < 1) {
+        $next['status'] = 'PROSES PENGIRIMAN';
+      }
+    }
+    return parent::update($next);
   }
 
   private function generate_tiket_id()

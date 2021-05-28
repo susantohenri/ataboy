@@ -11,8 +11,10 @@ class Donasi extends MY_Controller
 
 	public function index()
 	{
-		if (!$status = $this->input->get('status'))
-		{
+		$this->load->model('Roles');
+		if (strpos($this->Roles->getRole(), 'Admin') > -1) {
+			$status = '';
+		} else if (!$status = $this->input->get('status')) {
 			$status = 'Saya';
 		}
 		$this->page_title = "Donasi {$status}";

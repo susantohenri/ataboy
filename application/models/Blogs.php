@@ -36,8 +36,9 @@ class Blogs extends MY_Model
         'width' => 2,
         'label' => 'Status',
         'options' => array(
-          array('value' => '1', 'text' => 'active'),
-          array('value' => '0', 'text' => 'inactive')
+          array('value' => '-1', 'text' => 'UNVERIFIED'),
+          array('value' => '1', 'text' => 'VERIFIED'),
+          array('value' => '0', 'text' => 'BLOCKED')
         )
       ),
     );

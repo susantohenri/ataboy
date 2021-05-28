@@ -27,8 +27,9 @@ class AdminWarehouses extends MY_Model
         'width' => 2,
         'label' => 'Status',
         'options' => array(
-          array('value' => '1', 'text' => 'active'),
-          array('value' => '0', 'text' => 'inactive')
+          array('value' => '-1', 'text' => 'UNVERIFIED'),
+          array('value' => '1', 'text' => 'VERIFIED'),
+          array('value' => '0', 'text' => 'BLOCKED')
         )
       ),
       array(
@@ -65,7 +66,7 @@ class AdminWarehouses extends MY_Model
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
       ->select('nama')
-      ->select("IF(1=status, 'active', 'inactive') status")
+      ->select("IF(-1 = status, 'UNVERIFIED', IF(0 = status, 'BLOCKED', 'VERIFIED')) status")
       ->join('role', 'user.role = role.uuid', 'left')
       ->where('role.name', 'Admin Warehouse');
     return parent::dt();

@@ -9,17 +9,26 @@ class Home extends CI_Controller {
 				case 'login':
 					$this->load->model('Users');
 					$login = $this->Users->findOne(array(
-						'username' => $post['username'],
-						'password' => md5($post['password'])
+						'username' => $post['username']
 					));
-					if (isset ($login['uuid'])) {
-						if ('1' === $login['status'])
+					if (!isset ($login['uuid'])) {
+						$params['error_message'] = 'Akun Tidak Ditemukan';
+					} else if ($login['password'] !== md5($post['password'])) {
+						$params['error_message'] = 'Password Tidak Sesuai';
+					} else {
+						switch ($login['status'])
 						{
-							$this->load->library('session');
-							$this->session->set_userdata($login);
-							redirect(base_url());
-						} else {
-							$params['error_message'] = 'Akun Anda Belum Aktif';
+							case '-1':
+								$params['error_message'] = 'Akun Anda Belum Diverifikasi';
+								break;
+							case '0':
+								$params['error_message'] = 'Akun Anda Diblokir';
+								break;
+							case '1':
+								$this->load->library('session');
+								$this->session->set_userdata($login);
+								redirect(base_url());
+								break;
 						}
 					}
 					break;

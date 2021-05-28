@@ -30,7 +30,8 @@ class Migration_seeds extends CI_Migration
       'username' => 'admin',
       'password' => md5('admin'),
       'nama' => 'Super Admin',
-      'role' => $admin
+      'role' => $admin,
+      'status' => 1
     ));
     // DEFAULT END
 

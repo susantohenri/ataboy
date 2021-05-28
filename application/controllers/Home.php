@@ -4,15 +4,39 @@ class Home extends CI_Controller {
 
 	function index () {
 		if ($post = $this->input->post()) {
-			$this->load->model('Users');
-			$login = $this->Users->findOne(array(
-				'username' => $post['username'],
-				'password' => md5($post['password'])
-			));
-			if (isset ($login['uuid'])) {
-				$this->load->library('session');
-				$this->session->set_userdata($login);
-				redirect(base_url());
+			switch ($post['action'])
+			{
+				case 'login':
+					$this->load->model('Users');
+					$login = $this->Users->findOne(array(
+						'username' => $post['username'],
+						'password' => md5($post['password'])
+					));
+					if (isset ($login['uuid'])) {
+						if ('1' === $login['status'])
+						{
+							$this->load->library('session');
+							$this->session->set_userdata($login);
+							redirect(base_url());
+						} else {
+							$params['error_message'] = 'Akun Anda Belum Aktif';
+						}
+					}
+					break;
+				case 'registrasi-donatur':
+					$this->load->model('Donaturs');
+					unset($post['action']);
+					$post['confirm_password'] = $post['password'];
+					$this->Donaturs->save($post);
+					$params['error_message'] = 'Pendaftaran Sukses';
+					break;
+				case 'registrasi-kelurahan':
+					$this->load->model('Kelurahans');
+					unset($post['action']);
+					$post['confirm_password'] = $post['password'];
+					$this->Kelurahans->save($post);
+					$params['error_message'] = 'Pendaftaran Sukses, Silakan Tunggu Proses Validasi Selesai';
+					break;
 			}
 		}
 		$this->load->model(array('Blogs', 'Pengajuans', 'Desas'));

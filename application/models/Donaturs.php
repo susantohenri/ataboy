@@ -67,6 +67,12 @@ class Donaturs extends MY_Model {
     return parent::save($data);
   }
 
+  function create ($data)
+  {
+    if (!isset ($data['status'])) $data['status'] = 1;
+    return parent::create($data);
+  }
+
   function findOne($param)
   {
     $record = parent::findOne($param);

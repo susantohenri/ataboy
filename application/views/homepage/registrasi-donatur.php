@@ -11,7 +11,7 @@
                 <form enctype='multipart/form-data' method="POST" class="main-form col-sm-12">
                     <div class="">
                         <div class="form-horizontal form-groups">
-                            <input type="hidden" name="last_submit" value="<?= time() ?>">
+                            <input type="hidden" name="action" value="registrasi-donatur">
 
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">Alamat Email</label>

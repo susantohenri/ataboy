@@ -61,7 +61,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a class="nav-link" data-toggle="modal" data-target="#kelurahanModal">Registrasi Kelurahan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-toggle="modal" data-target="#forgotModal">Reset Password</a>
+                            <a class="nav-link disabled" data-toggle="modal" data-target="#forgotModal">Reset Password</a>
                         </li>
                     </ul>
                 </div>
@@ -143,6 +143,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- <script src="../../dist/js/adminlte.min.js"></script> -->
     <script type="text/javascript" src="<?= base_url('assets/js/select2.full.min.js') ?>"></script>
     <script>
+        // PREVENT FORM RESUBMISSION ON REFRESH OR BACK
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
         $('[name="desa"]').select2()
         $('.show-password').each(function() {
             $(this).click(function() {

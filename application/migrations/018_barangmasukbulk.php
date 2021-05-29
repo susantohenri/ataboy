@@ -12,7 +12,8 @@ class Migration_barangmasukbulk extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `donasi` varchar(36) NOT NULL,
-        `keterangan` varchar(255) NOT NULL,
+        `keterangan` text NOT NULL,
+        `createdBy` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `donasi` (`donasi`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8

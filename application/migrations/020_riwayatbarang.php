@@ -11,11 +11,11 @@ class Migration_riwayatbarang extends CI_Migration {
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
-        `barangMasuk` varchar(255) NOT NULL,
-        `barangKeluar` varchar(255) NOT NULL,
-        `barang` varchar(255) NOT NULL,
+        `barangMasuk` varchar(36) NOT NULL,
+        `barangKeluar` varchar(36) NOT NULL,
+        `barang` varchar(36) NOT NULL,
         `jumlah` INT(11) NOT NULL,
-        `satuan` varchar(255) NOT NULL,
+        `satuan` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

@@ -10,7 +10,7 @@ class Desas extends MY_Model
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
       (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
-
+      (object) array('mData' => 'namakec', 'sTitle' => 'Kecamatan'),
     );
     $this->form = array(
       array(
@@ -36,10 +36,21 @@ class Desas extends MY_Model
   function dt()
   {
     $this->datatables
-      ->select("{$this->table}.uuid")
-      ->select("{$this->table}.orders")
-      ->select('desa.nama');
-    return parent::dt();
+      ->select('uuid')
+      ->select('orders')
+      ->select('nama')
+      ->select('namakec')
+      ->from("
+        (SELECT
+          desa.uuid
+          , desa.orders
+          , desa.nama
+          , kecamatan.nama namakec
+        FROM desa
+        LEFT JOIN kecamatan ON desa.kec = kecamatan.uuid) desakec
+      ")
+      ;
+    return $this->datatables->generate();
   }
 
   function select2WithKec ($field, $term, $kec)

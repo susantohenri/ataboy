@@ -22,11 +22,11 @@ class Donasis extends MY_Model
           array('disabled' => 'disabled')
         )
       ),
-			array(
-				'name' => 'tiket_id',
-				'width' => 2,
-				'label' => 'ID Tiket'
-			),
+      array(
+        'name' => 'tiket_id',
+        'width' => 2,
+        'label' => 'ID Tiket'
+      ),
       array(
         'name' => 'status',
         'width' => 2,
@@ -38,7 +38,7 @@ class Donasis extends MY_Model
           array('text' => 'PROSES PENGIRIMAN', 'value' => 'PROSES PENGIRIMAN'),
           array('text' => 'SAMPAI TUJUAN', 'value' => 'SAMPAI TUJUAN'),
           array('text' => 'VERIFIKASI', 'value' => 'VERIFIKASI'),
-          array('text' => 'SELESAI', 'value' => 'SELESAI'),
+          // array('text' => 'SELESAI', 'value' => 'SELESAI'), ONLY IF BARANG MASUK
         )
       ),
       array(
@@ -127,6 +127,12 @@ class Donasis extends MY_Model
     $hide = array('donatur', 'status', 'tiket_id', 'updatedAt');
     $disabled = array('status', 'tiket_id', 'updatedAt');
 
+    $this->load->model('Roles');
+    if (strpos($this->Roles->getRole(), 'Admin') > -1) {
+      $hide = array('donatur', 'tiket_id', 'updatedAt');
+      $disabled = array('tiket_id', 'updatedAt');
+    }
+
     if (false === $uuid) {
       $form = array_filter(
         $form,
@@ -158,13 +164,15 @@ class Donasis extends MY_Model
 
   function create($record)
   {
-    if ('DIAMBIL' === $record['metode']) {
-      $record['status'] = 'MENUNGGU PENGAMBILAN';
-    } else if ('DIKIRIM' === $record['metode']) {
-      if (strlen($record['no_resi']) < 1) {
-        $record['status'] = 'MENUNGGU PENGIRIMAN';
-      } else {
-        $record['status'] = 'PROSES PENGIRIMAN';
+    if (!isset($record['status'])) {
+      if ('DIAMBIL' === $record['metode']) {
+        $record['status'] = 'MENUNGGU PENGAMBILAN';
+      } else if ('DIKIRIM' === $record['metode']) {
+        if (strlen($record['no_resi']) < 1) {
+          $record['status'] = '--' === $record['rekening_tujuan'] ? 'MENUNGGU PENGIRIMAN' : 'MENUNGGU PEMBAYARAN';
+        } else {
+          $record['status'] = 'PROSES PENGIRIMAN';
+        }
       }
     }
 

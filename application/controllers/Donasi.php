@@ -34,7 +34,7 @@ class Donasi extends MY_Controller
 		$vars['js'] = array(
 			'jquery.dataTables.min.js',
 			'dataTables.bootstrap4.js',
-			'table.js'
+			'table-donasi.js'
 		);
 		$vars['css'] = array('select2.min.css');
 		$vars['thead'] = $this->$model->thead;
@@ -84,6 +84,17 @@ class Donasi extends MY_Controller
 			'summernote.min.js',
 			'form-donasi.js'
 		);
+
+		$donasi = $this->{$this->model}->findOne($id);
+		if (in_array($donasi['status'], array('SAMPAI TUJUAN', 'VERIFIKASI', 'SELESAI'))) {
+			$this->load->model(array('Permissions', 'Roles'));
+			if (!strpos($this->Roles->getRole(), 'Admin')) {
+				$vars['permission'] = array_filter($this->Permissions->getPermissions(), function ($perm) {
+					return !in_array($perm, array('update_Donasi', 'delete_Donasi'));
+				});
+			}
+		}
+
 		$this->loadview('index', $vars);
 	}
 

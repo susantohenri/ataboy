@@ -9,10 +9,11 @@ class RiwayatBarangs extends MY_Model
     $this->table = 'riwayatbarang';
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
-      (object) array('mData' => 'tanggal', 'sTitle' => 'Tanggal', 'width' => '20%'),
+      (object) array('mData' => 'tanggal', 'sTitle' => 'Tanggal', 'width' => '15%'),
       (object) array('mData' => 'namabarang', 'sTitle' => 'Barang'),
-      (object) array('mData' => 'jenis', 'sTitle' => 'Jenis'),
-      (object) array('mData' => 'jumlah', 'sTitle' => 'Jumlah', 'width' => '20%'),
+      (object) array('mData' => 'jenis', 'sTitle' => 'Jenis', 'width' => '10%'),
+      (object) array('mData' => 'jumlah', 'sTitle' => 'Jumlah', 'width' => '15%'),
+      (object) array('mData' => 'tiket_id', 'sTitle' => 'Donasi / Pengajuan', 'width' => '20%')
     );
     $this->form = array(
       array(
@@ -56,6 +57,7 @@ class RiwayatBarangs extends MY_Model
       ->select('namabarang')
       ->select('jenis')
       ->select('jumlah')
+      ->select('tiket_id')
       ->from("
         (
           SELECT
@@ -64,10 +66,17 @@ class RiwayatBarangs extends MY_Model
             , riwayatbarang.createdAt tanggal
             , barang.nama namabarang
             , IF(LENGTH(riwayatbarang.barangMasuk) > 0, 'MASUK', IF(LENGTH(riwayatbarang.barangKeluar) > 0, 'KELUAR', 'UNDEFINED')) jenis
-            , CONCAT(riwayatbarang.jumlah, ' ', barangsatuan.nama) jumlah
+            , CONCAT(FORMAT(riwayatbarang.jumlah, 0), ' ', barangsatuan.nama) jumlah
+            , IF(donasi.tiket_id IS NOT NULL, donasi.tiket_id, IF(pengajuan.tiket_id IS NOT NULL, pengajuan.tiket_id, 'MANUAL')) tiket_id
           FROM riwayatbarang
           LEFT JOIN barang ON riwayatbarang.barang = barang.uuid
           LEFT JOIN barangsatuan ON barangsatuan.uuid = riwayatbarang.satuan
+          LEFT JOIN barangMasuk ON riwayatbarang.barangMasuk = barangmasuk.uuid
+          LEFT JOIN barangKeluar ON riwayatbarang.barangKeluar = barangKeluar.uuid
+          LEFT JOIN barangmasukbulk ON barangmasuk.barangMasukBulk = barangmasukbulk.uuid
+          LEFT JOIN barangkeluarbulk ON barangkeluar.barangKeluarBulk = barangkeluarbulk.uuid
+          LEFT JOIN donasi ON barangmasukbulk.donasi = donasi.uuid
+          LEFT JOIN pengajuan ON barangkeluarbulk.pengajuan = pengajuan.uuid
         ) riwayatBarangBarang
       ");
     return $this->datatables->generate();

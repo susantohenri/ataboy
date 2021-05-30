@@ -14,8 +14,8 @@ class Migration_barangkeluar extends CI_Migration {
         `barang` varchar(36) NOT NULL,
         `jumlah` INT(11) NOT NULL,
         `satuan` varchar(36) NOT NULL,
-        `keterangan` varchar(255) NOT NULL,
-        `pengajuan` varchar(255) NOT NULL,
+        `keterangan` text NOT NULL,
+        `barangKeluarBulk` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `barang` (`barang`),
         KEY `satuan` (`satuan`)

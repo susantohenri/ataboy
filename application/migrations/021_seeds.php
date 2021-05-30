@@ -120,6 +120,12 @@ class Migration_seeds extends CI_Migration
     }
     // DELETE PERMISSION FOR DELETING USERS END
 
+    // RiwayatBarang ONLY TABLE
+    $this->db
+    ->where('entity', 'RiwayatBarang')
+    ->where('action !=', 'index')
+    ->delete('permission');
+
     // SETUP MENU START
     foreach (array(
       'User'

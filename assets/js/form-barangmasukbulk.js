@@ -77,6 +77,33 @@ function formInit(scope) {
           type: 'POST', dataType: 'json'
         }
       })
+    } else if ($(this).is('[name="donasi"]')) {
+      var model = $(this).attr('data-model')
+      var field = $(this).attr('data-field')
+      $(this).select2({
+        ajax: {
+          url: current_controller_url + '/select2/' + model + '/' + field,
+          type: 'POST', dataType: 'json'
+        }
+      })
+      $(this).change(function () {
+        var donasi = $(this).val()
+        $.get(`${site_url}DonasiBarang/getUuidByDonasi/${donasi}`, function (result) {
+          $('.btn-delete').click()
+          var uuids = JSON.parse(result)
+          generateSubForm(0)
+
+          function generateSubForm(index) {
+            console.log(site_url + 'BarangMasuk/subformcreate/' + uuids[index])
+            $.get(site_url + 'BarangMasuk/subformcreate/' + uuids[index], function (form) {
+              var created = $('[data-controller="BarangMasuk"]').prepend(form)
+              formInit(created)
+              index++
+              if (uuids[index]) generateSubForm (index)
+            })
+          }
+        })
+      })
     } else if ($(this).is('[name^="BarangMasuk_barang["]')) {
       var model = $(this).attr('data-model')
       var field = $(this).attr('data-field')

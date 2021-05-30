@@ -81,6 +81,11 @@ class BarangMasukBulks extends MY_Model
   function create ($data)
   {
     $data['createdBy'] = $this->session->userdata('uuid');
+    if (isset($data['donasi']) && strlen($data['donasi']) > 0)
+    {
+      $this->load->model('Donasis');
+      $this->Donasis->selesai($data['donasi']);
+    }
     return parent::create($data);
   }
 }

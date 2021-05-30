@@ -20,4 +20,12 @@ class DonasiBarang extends MY_Controller
 		$data['item'] = $this->{$this->model}->findOne($uuid);
 		$this->loadview('subform-donasibarang', $data);
 	}
+
+	function getUuidByDonasi($donasi)
+	{
+		$uuids = array_map(function ($rec) {
+			return $rec->uuid;
+		}, $this->{$this->model}->find(array('donasi' => $donasi)));
+		echo json_encode($uuids);
+	}
 }

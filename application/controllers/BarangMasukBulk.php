@@ -57,6 +57,7 @@ class BarangMasukBulk extends MY_Controller
 	{
 		$this->load->model($model);
 		if ('BarangSatuans' === $model) echo '{"results":' . json_encode($this->$model->select2WithBarang($field, $this->input->post('term'), $this->input->post('barang'))) . '}';
+		else if ('Donasis' === $model) echo '{"results":' . json_encode($this->$model->select2forBarangMasukBulk($field, $this->input->post('term'))) . '}';
 		else echo '{"results":' . json_encode($this->$model->select2($field, $this->input->post('term'))) . '}';
 	}
 }

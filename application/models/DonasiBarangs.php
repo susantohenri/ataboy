@@ -119,4 +119,10 @@ class DonasiBarangs extends MY_Model
 		if (!is_null($oldfile) && file_exists($oldfile)) unlink($oldfile);
 		return $new_file_location;
 	}
+
+	function find($param = array())
+	{
+		$this->db->order_by('orders', 'desc');
+		return parent::find($param);
+	}
 }

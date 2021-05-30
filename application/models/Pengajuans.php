@@ -49,7 +49,8 @@ class Pengajuans extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Kecamatans'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 			array(
@@ -60,7 +61,8 @@ class Pengajuans extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Desas'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 			array(
@@ -89,7 +91,8 @@ class Pengajuans extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Bencanas'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 			array(

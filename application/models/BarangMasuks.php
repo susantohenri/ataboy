@@ -64,7 +64,7 @@ class BarangMasuks extends MY_Model
 		return parent::dt();
 	}
 
-	function create ($data)
+	function create($data)
 	{
 		$result = parent::create($data);
 		$this->load->model('RiwayatBarangs');
@@ -77,7 +77,7 @@ class BarangMasuks extends MY_Model
 		return $result;
 	}
 
-	function update ($data)
+	function update($data)
 	{
 		$result = parent::update($data);
 		$this->load->model('RiwayatBarangs');
@@ -92,7 +92,7 @@ class BarangMasuks extends MY_Model
 		return $result;
 	}
 
-	function delete ($uuid)
+	function delete($uuid)
 	{
 		$this->load->model('RiwayatBarangs');
 		$found = $this->RiwayatBarangs->findOne(array('barangMasuk' => $uuid));

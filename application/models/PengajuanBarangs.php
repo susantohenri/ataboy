@@ -21,7 +21,8 @@ class PengajuanBarangs extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Barangs'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 			array(
@@ -29,7 +30,8 @@ class PengajuanBarangs extends MY_Model
 				'label' => 'Jumlah',
 				'width' => 2,
 				'attributes' => array(
-					array('data-number' => 'true')
+					array('data-number' => 'true'),
+					array('required' => 'required')
 				)
 			),
 			array(
@@ -40,7 +42,8 @@ class PengajuanBarangs extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'BarangSatuans'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 		);

@@ -12,8 +12,8 @@ class Migration_barangsatuan extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `barang` varchar(36) NOT NULL,
-        `nama` varchar(255) NOT NULL,
-        `skala` varchar(255) NOT NULL,
+        `nama` varchar(100) NOT NULL,
+        `skala` double NOT NULL DEFAULT '0',
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

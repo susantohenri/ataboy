@@ -17,6 +17,9 @@ class Barangs extends MY_Model
         'name' => 'nama',
         'width' => 2,
         'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       )
     );
     $this->childs = array(

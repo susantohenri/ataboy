@@ -17,6 +17,9 @@ class Desas extends MY_Model
         'name' => 'nama',
         'width' => 2,
         'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       ),
       array(
         'name' => 'kec',
@@ -26,7 +29,8 @@ class Desas extends MY_Model
         'attributes' => array(
           array('data-autocomplete' => 'true'),
           array('data-model' => 'Kecamatans'),
-          array('data-field' => 'nama')
+          array('data-field' => 'nama'),
+          array('required' => 'required')
         )
       )
     );

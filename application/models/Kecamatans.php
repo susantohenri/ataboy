@@ -1,8 +1,10 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Kecamatans extends MY_Model {
+class Kecamatans extends MY_Model
+{
 
-  function __construct () {
+  function __construct()
+  {
     parent::__construct();
     $this->table = 'kecamatan';
     $this->thead = array(
@@ -10,23 +12,25 @@ class Kecamatans extends MY_Model {
       (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
 
     );
-    $this->form = array (
-        array (
-				      'name' => 'nama',
-				      'width' => 2,
-		      		'label'=> 'Nama',
-					  ),
+    $this->form = array(
+      array(
+        'name' => 'nama',
+        'width' => 2,
+        'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
+      ),
     );
-    $this->childs = array (
-    );
+    $this->childs = array();
   }
 
-  function dt () {
+  function dt()
+  {
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
       ->select('kecamatan.nama');
     return parent::dt();
   }
-
 }

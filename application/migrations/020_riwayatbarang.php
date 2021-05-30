@@ -14,7 +14,7 @@ class Migration_riwayatbarang extends CI_Migration {
         `barangMasuk` varchar(36) NOT NULL,
         `barangKeluar` varchar(36) NOT NULL,
         `barang` varchar(36) NOT NULL,
-        `jumlah` INT(11) NOT NULL,
+        `jumlah` double NOT NULL DEFAULT '0',
         `satuan` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8

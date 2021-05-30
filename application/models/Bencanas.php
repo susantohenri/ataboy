@@ -17,15 +17,17 @@ class Bencanas extends MY_Model
         'name' => 'nama',
         'width' => 2,
         'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       ),
       array(
         'name' => 'status',
         'width' => 2,
         'label' => 'Status',
         'options' => array(
-          array('value' => '-1', 'text' => 'UNVERIFIED'),
-          array('value' => '1', 'text' => 'VERIFIED'),
-          array('value' => '0', 'text' => 'BLOCKED')
+          array('value' => '1', 'text' => 'ACTIVE'),
+          array('value' => '0', 'text' => 'INACTIVE')
         )
       ),
     );

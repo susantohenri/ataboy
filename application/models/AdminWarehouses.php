@@ -15,27 +15,36 @@ class AdminWarehouses extends MY_Model
     $this->form = array(
       array(
         'name' => 'username',
-        'label' => 'Alamat Email'
+        'label' => 'Alamat Email',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       ),
       array(
         'name' => 'nama',
         'width' => 2,
         'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       ),
       array(
         'name' => 'status',
         'width' => 2,
         'label' => 'Status',
         'options' => array(
-          array('value' => '-1', 'text' => 'UNVERIFIED'),
           array('value' => '1', 'text' => 'VERIFIED'),
+          array('value' => '-1', 'text' => 'UNVERIFIED'),
           array('value' => '0', 'text' => 'BLOCKED')
         )
       ),
       array(
         'type' => 'password',
         'name' => 'password',
-        'label' => 'Password'
+        'label' => 'Password',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       )
     );
     $this->childs = array();

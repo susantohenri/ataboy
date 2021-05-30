@@ -17,13 +17,17 @@ class BarangSatuans extends MY_Model
         'name' => 'nama',
         'width' => 4,
         'label' => 'Nama',
+        'attributes' => array(
+          array('required' => 'required')
+        )
       ),
       array(
         'name' => 'skala',
         'width' => 2,
         'label' => 'Skala',
         'attributes' => array(
-          array('data-number' => 'true')
+          array('data-number' => 'true'),
+          array('required' => 'required')
         )
       ),
     );

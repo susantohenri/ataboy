@@ -14,12 +14,18 @@ class Kelurahans extends MY_Model
 		$this->form = array(
 			array(
 				'name' => 'username',
-				'label' => 'Alamat Email'
+				'label' => 'Alamat Email',
+				'attributes' => array(
+				  array('required' => 'required')
+				)
 			),
 			array(
 				'name' => 'nama',
 				'width' => 2,
 				'label' => 'Nama',
+				'attributes' => array(
+				  array('required' => 'required')
+				)
 			),
 			array(
 				'name' => 'desa',
@@ -29,27 +35,34 @@ class Kelurahans extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Desas'),
-					array('data-field' => 'nama')
+					array('data-field' => 'nama'),
+					array('required' => 'required')
 				)
 			),
 			array(
 				'name' => 'nohp',
-				'label' => 'No. Handphone'
+				'label' => 'No. Handphone',
+				'attributes' => array(
+				  array('required' => 'required')
+				)
 			),
 			array(
 				'name' => 'status',
 				'width' => 2,
 				'label' => 'Status',
 				'options' => array(
-					array('value' => '-1', 'text' => 'UNVERIFIED'),
 					array('value' => '1', 'text' => 'VERIFIED'),
+					array('value' => '-1', 'text' => 'UNVERIFIED'),
 					array('value' => '0', 'text' => 'BLOCKED')
 				)
 			),
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'label' => 'Password'
+				'label' => 'Password',
+				'attributes' => array(
+				  array('required' => 'required')
+				)
 			)
 		);
 		$this->childs = array();

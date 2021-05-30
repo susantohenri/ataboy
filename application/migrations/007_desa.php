@@ -12,7 +12,7 @@ class Migration_desa extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `kec` varchar(36) NOT NULL,
-        `nama` varchar(255) NOT NULL,
+        `nama` varchar(100) NOT NULL,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

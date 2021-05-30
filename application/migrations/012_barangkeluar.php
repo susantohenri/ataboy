@@ -12,7 +12,7 @@ class Migration_barangkeluar extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `barang` varchar(36) NOT NULL,
-        `jumlah` INT(11) NOT NULL,
+        `jumlah` double NOT NULL DEFAULT '0',
         `satuan` varchar(36) NOT NULL,
         `keterangan` text NOT NULL,
         `barangKeluarBulk` varchar(36) NOT NULL,

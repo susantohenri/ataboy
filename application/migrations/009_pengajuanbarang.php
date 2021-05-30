@@ -13,7 +13,7 @@ class Migration_pengajuanbarang extends CI_Migration {
         `updatedAt` datetime DEFAULT NULL,
         `pengajuan` varchar(36) NOT NULL,
         `barang` varchar(36) NOT NULL,
-        `jumlah` INT(11) NOT NULL,
+        `jumlah` double NOT NULL DEFAULT '0',
         `satuan` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `barang` (`barang`),

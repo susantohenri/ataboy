@@ -35,16 +35,12 @@ class Kelurahans extends MY_Model
 				'attributes' => array(
 					array('data-autocomplete' => 'true'),
 					array('data-model' => 'Desas'),
-					array('data-field' => 'nama'),
-					array('required' => 'required')
+					array('data-field' => 'nama')
 				)
 			),
 			array(
 				'name' => 'nohp',
-				'label' => 'No. Handphone',
-				'attributes' => array(
-				  array('required' => 'required')
-				)
+				'label' => 'No. Handphone'
 			),
 			array(
 				'name' => 'status',
@@ -59,10 +55,7 @@ class Kelurahans extends MY_Model
 			array(
 				'type' => 'password',
 				'name' => 'password',
-				'label' => 'Password',
-				'attributes' => array(
-				  array('required' => 'required')
-				)
+				'label' => 'Password'
 			)
 		);
 		$this->childs = array();

@@ -43,7 +43,7 @@ class Migration_seeds extends CI_Migration
       ));
     }
     // ADMIN WAREHOUSE PERMISSION
-    foreach (array('Pengajuan', 'Kecamatan', 'Desa', 'Bencana', 'PengajuanBarang', 'PengajuanPhoto', 'BarangKeluarBulk', 'BarangKeluar', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Blog', 'Barang', 'BarangSatuan', 'BarangMasukBulk', 'BarangMasuk', 'RiwayatBarang', 'Donatur', 'Kelurahan') as $entity) {
+    foreach (array('Pengajuan', 'PengajuanBarang', 'PengajuanPhoto', 'Donasi', 'DonasiBarang', 'DonasiPhoto', 'Barang', 'BarangSatuan', 'RiwayatBarang', 'BarangKeluarBulk', 'BarangKeluar', 'BarangMasukBulk', 'BarangMasuk', 'Blog', 'Kecamatan', 'Desa', 'Bencana', 'Donatur', 'Kelurahan') as $entity) {
       foreach (array('index', 'create', 'read', 'update', 'delete') as $action) {
         $this->Permissions->create(array(
           'role' => $appRole['Admin Warehouse'],

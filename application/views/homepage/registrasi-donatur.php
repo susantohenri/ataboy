@@ -16,31 +16,31 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">Alamat Email</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="username">
+                                    <input class="form-control" type="text" value="" name="username" required="required">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">Nama</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="nama">
+                                    <input class="form-control" type="text" value="" name="nama" required="required">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">Alamat</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="alamat">
+                                    <input class="form-control" type="text" value="" name="alamat" required="required">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">No. HP</label>
                                 <div class="col-sm-9">
-                                    <input class="form-control" type="text" value="" name="nohp">
+                                    <input class="form-control" type="text" value="" name="nohp" required="required">
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-sm-3 control-label">Kata Sandi</label>
                                 <div class="col-sm-9 input-group">
-                                    <input class="form-control" type="password" value="" name="password">
+                                    <input class="form-control" type="password" value="" name="password" required="required">
                                     <div class="input-group-append">
                                         <span class="input-group-text show-password">
                                             <i class="fa fa-eye-slash"></i>

@@ -10,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-    <title>PrototypeApp</title>
+    <title>ATAboy</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="<?= base_url('assets/css/all.min.css') ?>">

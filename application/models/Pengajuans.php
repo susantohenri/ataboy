@@ -22,6 +22,13 @@ class Pengajuans extends MY_Model
 				'name' => 'status',
 				'width' => 2,
 				'label' => 'Status',
+				'options' => array(
+					array('text' => 'DIAJUKAN', 'value' => 'DIAJUKAN'),
+					array('text' => 'DIVERIFIKASI', 'value' => 'DIVERIFIKASI'),
+					array('text' => 'DITERIMA', 'value' => 'DITERIMA'),
+					array('text' => 'DITOLAK', 'value' => 'DITOLAK'),
+					array('text' => 'SELESAI', 'value' => 'SELESAI')
+				)
 			),
 			array(
 				'name' => 'propinsi',
@@ -150,7 +157,10 @@ class Pengajuans extends MY_Model
 	{
 		$form = parent::getForm($uuid, $isSubform);
 		$hide = array('status', 'tiket_id');
-		$disabled = array('status', 'tiket_id');
+		$this->load->model('Roles');
+		if (strpos($this->Roles->getRole(), 'Admin') > -1) {
+			$disabled = array('tiket_id');
+		} else $disabled = array('status', 'tiket_id');
 
 		if (false === $uuid) {
 			$form = array_filter(
@@ -205,15 +215,15 @@ class Pengajuans extends MY_Model
 		$found = $this->findOne(array('tiket_id' => $tiket_id));
 		return isset($found['uuid']);
 	}
-        
-        function select2forBarangKeluarBulk($field, $term)
-        {
-            $this->db->where('status', 'DITERIMA');
-            return parent::select2($field, $term);
-        }
-        
-        function selesai ($uuid)
-        {
-            return $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
-        }
+
+	function select2forBarangKeluarBulk($field, $term)
+	{
+		$this->db->where('status', 'DITERIMA');
+		return parent::select2($field, $term);
+	}
+
+	function selesai($uuid)
+	{
+		return $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+	}
 }

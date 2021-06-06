@@ -11,6 +11,7 @@ class Migration_barangkeluarbulk extends CI_Migration {
         `orders` INT(11) UNIQUE NOT NULL AUTO_INCREMENT,
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
+        `createdBy` varchar(36) NOT NULL,
         `pengajuan` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `pengajuan` (`pengajuan`)

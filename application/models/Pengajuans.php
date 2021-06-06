@@ -205,4 +205,15 @@ class Pengajuans extends MY_Model
 		$found = $this->findOne(array('tiket_id' => $tiket_id));
 		return isset($found['uuid']);
 	}
+        
+        function select2forBarangKeluarBulk($field, $term)
+        {
+            $this->db->where('status', 'DITERIMA');
+            return parent::select2($field, $term);
+        }
+        
+        function selesai ($uuid)
+        {
+            return $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+        }
 }

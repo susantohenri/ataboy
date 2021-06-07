@@ -12,6 +12,7 @@ class Migration_barangkeluarbulk extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `pengajuan` varchar(36) NOT NULL,
+        `createdBy` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `pengajuan` (`pengajuan`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8

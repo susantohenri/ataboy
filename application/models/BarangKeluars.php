@@ -16,7 +16,7 @@ class BarangKeluars extends MY_Model {
                 'name' => 'barang',
                 'label' => 'Barang',
                 'options' => array(),
-                'width' => 2,
+                'width' => 4,
                 'attributes' => array(
                     array('data-autocomplete' => 'true'),
                     array('data-model' => 'Barangs'),
@@ -47,7 +47,7 @@ class BarangKeluars extends MY_Model {
             ),
             array(
                 'name' => 'keterangan',
-                'width' => 2,
+                'width' => 3,
                 'label' => 'Keterangan',
             )
         );
@@ -77,7 +77,7 @@ class BarangKeluars extends MY_Model {
     function update($data) {
         $result = parent::update($data);
         $this->load->model('RiwayatBarangs');
-        $found = $this->RiwayatBarangs->findOne(array('barangKeluar' => $result));
+        $found = $this->RiwayatBarangs->findOne(array('barangMasuk' => $result));
         $this->RiwayatBarangs->update(array(
             'uuid' => $found['uuid'],
             'barangKeluar' => $result,

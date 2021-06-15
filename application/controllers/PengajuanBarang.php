@@ -16,4 +16,12 @@ class PengajuanBarang extends MY_Controller
 		$satuan = $this->BarangSatuans->getSmallest($barang);
 		echo "{$kebutuhan} {$satuan}";
 	}
+        
+        function getUuidByPengajuan($pengajuan)
+	{
+		$uuids = array_map(function ($rec) {
+			return $rec->uuid;
+		}, $this->{$this->model}->find(array('pengajuan' => $pengajuan)));
+		echo json_encode($uuids);
+	}
 }

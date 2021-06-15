@@ -77,7 +77,7 @@ class BarangKeluars extends MY_Model {
     function update($data) {
         $result = parent::update($data);
         $this->load->model('RiwayatBarangs');
-        $found = $this->RiwayatBarangs->findOne(array('barangMasuk' => $result));
+        $found = $this->RiwayatBarangs->findOne(array('barangKeluar' => $result));
         $this->RiwayatBarangs->update(array(
             'uuid' => $found['uuid'],
             'barangKeluar' => $result,

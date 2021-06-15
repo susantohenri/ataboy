@@ -68,7 +68,7 @@ class BarangKeluars extends MY_Model {
         $this->RiwayatBarangs->create(array(
             'barangKeluar' => $result,
             'barang' => $data['barang'],
-            'jumlah' => $data['jumlah'],
+            'jumlah' => $data['jumlah'] * -1,
             'satuan' => $data['satuan']
         ));
         return $result;
@@ -82,7 +82,7 @@ class BarangKeluars extends MY_Model {
             'uuid' => $found['uuid'],
             'barangKeluar' => $result,
             'barang' => $data['barang'],
-            'jumlah' => $data['jumlah'],
+            'jumlah' => $data['jumlah'] * -1,
             'satuan' => $data['satuan']
         ));
         return $result;

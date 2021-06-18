@@ -27,8 +27,12 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-4 offset-8">
+                        <div class="col-4"></div>
+                        <div class="col-4">
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
+                        </div>
+                        <div class="col-4">
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
                         </div>
                     </div>
                 </form>

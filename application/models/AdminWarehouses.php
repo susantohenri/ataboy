@@ -41,10 +41,7 @@ class AdminWarehouses extends MY_Model
       array(
         'type' => 'password',
         'name' => 'password',
-        'label' => 'Password',
-        'attributes' => array(
-          array('required' => 'required')
-        )
+        'label' => 'Password'
       )
     );
     $this->childs = array();

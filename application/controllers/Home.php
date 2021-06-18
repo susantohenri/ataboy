@@ -72,4 +72,20 @@ class Home extends CI_Controller {
 	    redirect(base_url());
 	}
 
+	function loginWithGoogle ()
+	{
+		$this->load->model('Users');
+		$email = $this->input->post('email');
+		$user = $this->Users->findOne(array('username' => $email));
+		if ($user)
+		{
+			$this->load->library('session');
+			$this->session->set_userdata($user);
+			echo true;
+		}
+		else
+		{
+			echo false;
+		}
+	}
 }

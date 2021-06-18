@@ -9,7 +9,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-
+    <meta name="google-signin-client_id" content="476916537848-qghfl63a34icmknbf3s5afeibd9g02ts.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <title>ATAboy</title>
 
     <!-- Font Awesome Icons -->
@@ -161,6 +162,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
             })
         })
+
+        function onSignIn(googleUser) {
+            var profile = googleUser.getBasicProfile()
+            var email = profile.getEmail()
+            $.post('Home/loginWithGoogle', {
+                email
+            }, function(resp) {
+                if ('1' === resp) {
+                    window.location = window.location.href.replace('Home', '')
+                } else {
+                    $('#loginModal').modal('hide')
+                    $('#donaturModal').modal('show')
+                    $('[name="username"]').val(email)
+                }
+            })
+        }
 
         const token = 'pk.eyJ1IjoibGllbWdpb2t0aWFuIiwiYSI6ImNrbWJmcjJuYzIxNXcyd3FyajloZ3IxencifQ.DX3ZeWJ7I7nGUhTupCABXQ'
         const boyolali = [-7.517198764411566, 110.59333666185161]

@@ -103,13 +103,19 @@ class PengajuanBarangs extends MY_Model
 		$brgnext = $this->Barangs->findOne($next['barang']);
 		$satprev = $this->BarangSatuans->findOne($prev['satuan']);
 		$satnext = $this->BarangSatuans->findOne($next['satuan']);
-		$this->PengajuanLogs->create(array(
-			'pengajuan' => $data['pengajuan'],
-			'actor' => $this->session->userdata('uuid'),
-			'field' => "EDIT BARANG",
-			'prev' => "{$brgprev['nama']} {$prev['jumlah']} {$satprev['nama']}",
-			'next' => "{$brgnext['nama']} {$next['jumlah']} {$satnext['nama']}"
-		));
+		if (
+			$brgprev['nama'] !== $brgnext['nama'] ||
+			$prev['jumlah'] !== $next['jumlah'] ||
+			$satprev['nama'] !== $satnext['nama']
+		) {
+			$this->PengajuanLogs->create(array(
+				'pengajuan' => $data['pengajuan'],
+				'actor' => $this->session->userdata('uuid'),
+				'field' => "EDIT BARANG",
+				'prev' => "{$brgprev['nama']} {$prev['jumlah']} {$satprev['nama']}",
+				'next' => "{$brgnext['nama']} {$next['jumlah']} {$satnext['nama']}"
+			));
+		}
 
 		return $uuid;
 	}

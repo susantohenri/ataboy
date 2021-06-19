@@ -1,12 +1,12 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class DonasiLogs extends MY_Model
+class BarangKeluarBulkLogs extends MY_Model
 {
 
     function __construct()
     {
         parent::__construct();
-        $this->table = 'donasilog';
+        $this->table = 'barangkeluarbulklog';
         $this->thead = array(
             (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
             (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
@@ -68,9 +68,9 @@ class DonasiLogs extends MY_Model
                     return $field;
                     break;
                 case 'field':
-                    $this->load->model('Donasis');
+                    $this->load->model('BarangKeluarBulks');
                     $value = $field['value'];
-                    $target = array_filter($this->Donasis->getForm(), function ($donfield) use ($value) {
+                    $target = array_filter($this->BarangKeluarBulks->getForm(), function ($donfield) use ($value) {
                         return $donfield['name'] === $value;
                     });
                     $target = array_values($target);

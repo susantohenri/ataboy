@@ -34,6 +34,11 @@ class BarangKeluarBulks extends MY_Model
                 'controller' => 'BarangKeluar',
                 'model' => 'BarangKeluars'
             ),
+            array(
+                'label' => 'Log History',
+                'controller' => 'BarangKeluarBulkLog',
+                'model' => 'BarangKeluarBulkLogs'
+            ),
         );
     }
 
@@ -70,8 +75,16 @@ class BarangKeluarBulks extends MY_Model
                 }
                 return $field;
             }, $form);
+        } else {
+            unset($this->childs[1]); // HIDE LOG
         }
         return $form;
+    }
+
+    function save($data)
+    {
+        unset($this->childs[1]);
+        return parent::save($data);
     }
 
     function create($data)
@@ -82,7 +95,7 @@ class BarangKeluarBulks extends MY_Model
             $this->Pengajuans->selesai($data['pengajuan']);
         }
         $uuid = parent::create($data);
-        if (strlen($data['pengajuan']) > 0) {
+        if (isset($data['pengajuan']) && strlen($data['pengajuan']) > 0) {
             $this->load->model('BarangKeluars');
             $this->BarangKeluars->setPengajuan($uuid, $data['pengajuan']);
         }

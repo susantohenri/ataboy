@@ -107,8 +107,7 @@ function formInit(scope) {
         }
       })
 
-      if ($(this).is('[name="kecamatan"]'))
-      {
+      if ($(this).is('[name="kecamatan"]')) {
         $(this).change(function () {
           let kelurahan = $('[name="kelurahan"]')
           kelurahan.val('')
@@ -116,8 +115,7 @@ function formInit(scope) {
         })
       }
 
-      if ($(this).is('[name^="PengajuanBarang_barang["]'))
-      {
+      if ($(this).is('[name^="PengajuanBarang_barang["]')) {
         $(this).change(function () {
           let jumlah = $(this).parent().parent().find('[name^="PengajuanBarang_jumlah"]')
           let satuan = $(this).parent().parent().find('[name^="PengajuanBarang_satuan"]')
@@ -198,7 +196,7 @@ function formInit(scope) {
       })
     })
   })
-  handleDataChild()
+  handleDisableChild()
 }
 
 function getNumber(element) {
@@ -275,13 +273,10 @@ function setupMap() {
   })
 }
 
-function handleDataChild ()
-{
-  for (var dataChild of ['BarangKeluar', 'PengajuanLog'])
-  {
-    $(`[data-controller="${dataChild}"] .btn-add`).remove()
-    $(`[data-controller="${dataChild}"] .btn-delete`).remove()
-    $(`[data-controller="${dataChild}"] select`).attr('disabled', 'disabled')
-    $(`[data-controller="${dataChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
-  }
+function handleDisableChild() {
+  var disableChild = 'BarangKeluar'
+  $(`[data-controller="${disableChild}"] .btn-add`).remove()
+  $(`[data-controller="${disableChild}"] .btn-delete`).remove()
+  $(`[data-controller="${disableChild}"] select`).attr('disabled', 'disabled')
+  $(`[data-controller="${disableChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
 }

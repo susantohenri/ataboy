@@ -38,6 +38,11 @@ class BarangMasukBulks extends MY_Model
         'controller' => 'BarangMasuk',
         'model' => 'BarangMasuks'
       ),
+      array(
+        'label' => 'Log History',
+        'controller' => 'BarangMasukBulkLog',
+        'model' => 'BarangMasukBulkLogs'
+      ),
     );
   }
 
@@ -74,8 +79,16 @@ class BarangMasukBulks extends MY_Model
         }
         return $field;
       }, $form);
+    } else {
+      unset($this->childs[1]); // HIDE LOG
     }
     return $form;
+  }
+
+  function save ($data)
+  {
+    unset($this->childs[1]); // HIDE LOG
+    return parent::save($data);
   }
 
   function create($data)
@@ -86,7 +99,7 @@ class BarangMasukBulks extends MY_Model
       $this->Donasis->selesai($data['donasi']);
     }
     $uuid = parent::create($data);
-    if (strlen($data['donasi']) > 0) {
+    if (isset($data['donasi']) && strlen($data['donasi']) > 0) {
       $this->load->model('BarangMasuks');
       $this->BarangMasuks->setDonasi($uuid, $data['donasi']);
     }

@@ -58,7 +58,8 @@ class PengajuanLogs extends MY_Model
 
     function getForm($uuid = false, $isSubform = false)
     {
-        return array_map(function ($field) {
+        $form = parent::getForm($uuid, $isSubform);
+        $form = array_map(function ($field) {
             switch ($field['name']) {
                 case 'actor':
                     $this->load->model('Users');
@@ -80,6 +81,13 @@ class PengajuanLogs extends MY_Model
                     return $field;
                     break;
             }
-        }, parent::getForm($uuid, $isSubform));
+        }, $form);
+
+        // PREVENT SUBMITTING
+        $form = array_filter($form, function ($field) {
+            return $field['name'] !== 'uuid';
+        });
+
+        return $form;
     }
 }

@@ -5,40 +5,42 @@ window.onload = function () {
 
   formInit($(`[data-controller="${current_controller}"]`))
   $('.main-form').submit(function () {
-    $('[data-number]').each (function () {
+    $('[data-number]').each(function () {
       $(this).val(getNumber($(this)))
     })
     return true
   })
 
-  $('.form-child').each (function () {
+  $('.form-child').each(function () {
     var fchild = $(this)
     var child_controller = fchild.attr('data-controller')
     var child_controller_url = site_url + child_controller
     var uuids = JSON.parse(fchild.attr('data-uuids').split("'").join('"'))
-    for (var u in uuids) $.ajax({url: child_controller_url + '/subformread/' + uuids[u], success: function (form) {
-      fchild.prepend(form)
-      if (uuids.length === fchild.find('[data-orders]').length) {
-        var elements = fchild.find('[data-orders]')
-        var elems = []
-        for( var i = 0; i < elements.length; ++i ) {
-          var el = elements[i]
-          elems.push(el)
+    for (var u in uuids) $.ajax({
+      url: child_controller_url + '/subformread/' + uuids[u], success: function (form) {
+        fchild.prepend(form)
+        if (uuids.length === fchild.find('[data-orders]').length) {
+          var elements = fchild.find('[data-orders]')
+          var elems = []
+          for (var i = 0; i < elements.length; ++i) {
+            var el = elements[i]
+            elems.push(el)
+          }
+          var sorted = elems.sort(function (a, b) {
+            var aValue = parseInt(a.getAttribute('data-orders'), 10)
+            var bValue = parseInt(b.getAttribute('data-orders'), 10)
+            return aValue - bValue
+          })
+          var html = ''
+          elements.remove()
+          for (var i = 0; i < sorted.length; ++i) html += sorted[i].outerHTML
+          var fetched = fchild.prepend(html)
+          fetched.find('[data-orders]').each(function () {
+            formInit($(this))
+          })
         }
-        var sorted = elems.sort(function (a, b) {
-          var aValue = parseInt(a.getAttribute('data-orders'), 10)
-          var bValue = parseInt(b.getAttribute('data-orders'), 10)
-          return aValue - bValue
-        })
-        var html = ''
-        elements.remove()
-        for( var i = 0; i < sorted.length; ++i ) html += sorted[i].outerHTML
-        var fetched = fchild.prepend(html)
-        fetched.find('[data-orders]').each(function () {
-          formInit($(this))
-        })
       }
-    }})
+    })
     fchild.find('.btn-add').click(function () {
       var beforeButton = $(this).parents('.form-group');
       $.get(child_controller_url + '/subformcreate/', function (form) {
@@ -48,16 +50,16 @@ window.onload = function () {
     })
   })
 
-  $('.select2-selection__rendered .select2-selection__choice').each(function(){
-      atr = this.getAttribute('title');
-      if (atr === ''){ $(this).remove(); }
-      else if (atr === null){ $(this).remove(); }
+  $('.select2-selection__rendered .select2-selection__choice').each(function () {
+    atr = this.getAttribute('title');
+    if (atr === '') { $(this).remove(); }
+    else if (atr === null) { $(this).remove(); }
   });
 
   if (window.location.href.indexOf('ChangePassword') > -1) $('form a[href*="ChangePassword/delete"]').hide()
 }
 
-function formInit (scope) {
+function formInit(scope) {
   scope.find('.btn-delete[data-uuid]').click(function () {
     $(this).parent().parent().remove()
   })
@@ -85,7 +87,7 @@ function formInit (scope) {
             newOption: true
           }
         },
-         templateResult: function (data) {
+        templateResult: function (data) {
           var $result = $('<span></span>')
           $result.text(data.text)
           if (data.newOption) $result.append('<em> (add new)</em>')
@@ -108,7 +110,7 @@ function formInit (scope) {
             newOption: true
           }
         },
-         templateResult: function (data) {
+        templateResult: function (data) {
           var $result = $('<span></span>')
           $result.text(data.text)
           if (data.newOption) $result.append('<em> (add new)</em>')
@@ -128,7 +130,7 @@ function formInit (scope) {
         satuan.val('')
         satuan.trigger('change.select2')
       })
-    } else if ($(this).is ('[data-autocomplete]')) {
+    } else if ($(this).is('[data-autocomplete]')) {
       var model = $(this).attr('data-model')
       var field = $(this).attr('data-field')
       $(this).select2({
@@ -137,7 +139,7 @@ function formInit (scope) {
           type: 'POST', dataType: 'json'
         }
       })
-    } else if ($(this).is ('[data-suggestion]')) {
+    } else if ($(this).is('[data-suggestion]')) {
       $(this).select2({
         tags: true,
         createTag: function (params) {
@@ -147,7 +149,7 @@ function formInit (scope) {
             newOption: true
           }
         },
-         templateResult: function (data) {
+        templateResult: function (data) {
           var $result = $('<span></span>')
           $result.text(data.text)
           if (data.newOption) $result.append('<em> (add new)</em>')
@@ -156,13 +158,13 @@ function formInit (scope) {
       })
     } else $(this).select2()
   })
-  scope.find('[data-date="datepicker"]').attr('autocomplete', 'off').datepicker({format: 'yyyy-mm-dd', autoclose: true})
+  scope.find('[data-date="datepicker"]').attr('autocomplete', 'off').datepicker({ format: 'yyyy-mm-dd', autoclose: true })
   // scope.find('[data-date="timepicker"]').timepicker({defaultTime: false, showMeridian: false})
   scope.find('[data-date="datetimepicker"]').attr('autocomplete', 'off').daterangepicker({
     singleDatePicker: true,
     timePicker: true,
     timePicker24Hour: true,
-    locale: {format: 'YYYY-MM-DD HH:mm'},
+    locale: { format: 'YYYY-MM-DD HH:mm' },
     // startDate: moment().format('YYYY-MM-DD HH:mm')
   })
   scope.find('[data-number="true"]').each(function () {
@@ -209,28 +211,25 @@ function formInit (scope) {
     })
   })
 
-  handleDataChild()
+  handleDisableChild()
 }
 
-function getNumber (element) {
+function getNumber(element) {
   var val = element.val() || element.html()
   val = val.split(',').join('')
-  return isNaN(val) || val.length < 1 ? 0 : parseInt (val)
+  return isNaN(val) || val.length < 1 ? 0 : parseInt(val)
 }
 
-function currency (number) {
+function currency(number) {
   var reverse = number.toString().split('').reverse().join(''),
-  currency  = reverse.match(/\d{1,3}/g)
+    currency = reverse.match(/\d{1,3}/g)
   return currency.join(',').split('').reverse().join('')
 }
 
-function handleDataChild ()
-{
-  for (var dataChild of ['BarangMasuk', 'DonasiLog'])
-  {
-    $(`[data-controller="${dataChild}"] .btn-add`).remove()
-    $(`[data-controller="${dataChild}"] .btn-delete`).remove()
-    $(`[data-controller="${dataChild}"] select`).attr('disabled', 'disabled')
-    $(`[data-controller="${dataChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
-  }
+function handleDisableChild() {
+  var disableChild = 'BarangMasuk'
+  $(`[data-controller="${disableChild}"] .btn-add`).remove()
+  $(`[data-controller="${disableChild}"] .btn-delete`).remove()
+  $(`[data-controller="${disableChild}"] select`).attr('disabled', 'disabled')
+  $(`[data-controller="${disableChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
 }

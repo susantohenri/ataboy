@@ -38,7 +38,7 @@ class Donasis extends MY_Model
           array('text' => 'PROSES PENGIRIMAN', 'value' => 'PROSES PENGIRIMAN'),
           array('text' => 'SAMPAI TUJUAN', 'value' => 'SAMPAI TUJUAN'),
           array('text' => 'VERIFIKASI', 'value' => 'VERIFIKASI'),
-          // array('text' => 'SELESAI', 'value' => 'SELESAI'), ONLY IF BARANG MASUK
+          array('text' => 'SELESAI', 'value' => 'SELESAI')
         )
       ),
       array(
@@ -95,6 +95,11 @@ class Donasis extends MY_Model
         'label' => 'Item Donasi',
         'controller' => 'DonasiBarang',
         'model' => 'DonasiBarangs'
+      ),
+      array(
+        'label' => 'Item Diterima',
+        'controller' => 'BarangMasuk',
+        'model' => 'BarangMasuks'
       )
     );
   }
@@ -134,6 +139,7 @@ class Donasis extends MY_Model
     }
 
     if (false === $uuid) {
+      unset($this->childs[1]);// HIDE BARANGMASUK
       $form = array_filter(
         $form,
         function ($field) use ($hide) {
@@ -183,6 +189,7 @@ class Donasis extends MY_Model
 
   function update($next)
   {
+    unset($this->childs[1]);// HIDE BARANGMASUK
     $prev = parent::findOne($next['uuid']);
     if (!isset($next['status'])) {
       if ('DIKIRIM' === $prev['metode'] && 'DIAMBIL' === $next['metode']) {

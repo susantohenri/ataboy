@@ -16,8 +16,10 @@ class Migration_barangmasuk extends CI_Migration {
         `satuan` varchar(36) NOT NULL,
         `keterangan` text NOT NULL,
         `barangmasukbulk` varchar(36) NOT NULL,
+        `donasi` varchar(36) NOT NULL,
         PRIMARY KEY (`uuid`),
         KEY `barang` (`barang`),
+        KEY `donasi` (`donasi`),
         KEY `satuan` (`satuan`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

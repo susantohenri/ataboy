@@ -208,6 +208,8 @@ function formInit (scope) {
       })
     })
   })
+
+  handleDataChild()
 }
 
 function getNumber (element) {
@@ -220,4 +222,15 @@ function currency (number) {
   var reverse = number.toString().split('').reverse().join(''),
   currency  = reverse.match(/\d{1,3}/g)
   return currency.join(',').split('').reverse().join('')
+}
+
+function handleDataChild ()
+{
+  for (var dataChild of ['BarangMasuk'])
+  {
+    $(`[data-controller="${dataChild}"] .btn-add`).remove()
+    $(`[data-controller="${dataChild}"] .btn-delete`).remove()
+    $(`[data-controller="${dataChild}"] select`).attr('disabled', 'disabled')
+    $(`[data-controller="${dataChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
+  }
 }

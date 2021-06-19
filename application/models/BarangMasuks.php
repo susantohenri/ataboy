@@ -100,4 +100,12 @@ class BarangMasuks extends MY_Model
 		$this->RiwayatBarangs->delete($found['uuid']);
 		return $result;
 	}
+
+	function setDonasi($bulkId, $donasiId)
+	{
+		return $this->db
+			->set('donasi', $donasiId)
+			->where('barangMasukBulk', $bulkId)
+			->update($this->table);
+	}
 }

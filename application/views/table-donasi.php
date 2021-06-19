@@ -11,6 +11,35 @@
                 </div>
             <?php endif ?>
         </div>
+        <div class="card-header">
+            <div class="form-horizontal form-groups">
+                <form class="form-filter-pengajuan">
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">ID Tiket</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" type="text" name="tiket_id">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Status</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" name="status">
+                                <?php foreach (array('Menunggu Pembayaran', 'Menunggu Pengiriman', 'Menunggu Pengambilan', 'Proses Pengiriman', 'Sampai Tujuan', 'Verifikasi', 'Selesai') as $index => $statusPengajuan) : ?>
+                                    <option value="<?= $statusPengajuan ?>"><?= $statusPengajuan ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 text-right">
+                            <a class="btn btn-info btn-submit-filter">Search</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
         <div class="card-body">
 
             <table class="table table-bordered table-striped datatable table-model">

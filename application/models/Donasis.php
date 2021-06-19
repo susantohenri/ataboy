@@ -106,7 +106,7 @@ class Donasis extends MY_Model
       $this->datatables->where('createdBy', $this->session->userdata('uuid'));
     }
 
-    foreach (array('status') as $filter) {
+    foreach (array('status', 'tiket_id') as $filter) {
       if ($parameter = $this->input->get($filter)) {
         if (strlen($parameter) > 0) {
           $this->datatables->where($filter, $parameter);

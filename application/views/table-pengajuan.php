@@ -59,7 +59,7 @@
                         <label class="col-sm-3 control-label">Status</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="status">
-                                <?php foreach (array('Diajukan', 'Diverifikasi', 'Diterima', 'Ditolak') as $index => $statusPengajuan) : ?>
+                                <?php foreach (array('Diajukan', 'Diverifikasi', 'Diterima', 'Ditolak', 'Selesai') as $index => $statusPengajuan) : ?>
                                     <option value="<?= $statusPengajuan ?>"><?= $statusPengajuan ?></option>
                                 <?php endforeach ?>
                             </select>

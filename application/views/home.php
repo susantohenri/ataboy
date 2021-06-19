@@ -62,7 +62,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a class="nav-link" data-toggle="modal" data-target="#kelurahanModal">Registrasi Kelurahan</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" data-toggle="modal" data-target="#forgotModal">Reset Password</a>
+                            <a class="nav-link" data-toggle="modal" data-target="#forgotModal">Reset Password</a>
                         </li>
                     </ul>
                 </div>
@@ -132,7 +132,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </div>
     <!-- ./wrapper -->
 
-    <?php foreach (array('blog', 'error-message', 'forgot-password', 'login', 'registrasi-donatur', 'registrasi-kelurahan') as $home_element) include(APPPATH . "views/homepage/{$home_element}.php") ?>
+    <?php foreach (array('blog', 'error-message', 'forgot-password', 'login', 'registrasi-donatur', 'registrasi-kelurahan', 'reset-password') as $home_element) include(APPPATH . "views/homepage/{$home_element}.php") ?>
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -166,7 +166,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         function onSignIn(googleUser) {
             var profile = googleUser.getBasicProfile()
             var email = profile.getEmail()
-            $.post('Home/loginWithGoogle', {
+            $.post('Home/LoginWithGoogle', {
                 email
             }, function(resp) {
                 if ('1' === resp) {

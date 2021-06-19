@@ -9,6 +9,7 @@
             </div>
             <div class="modal-body">
                 <form method="post">
+                    <input type="hidden" name="action" value="forgot-password">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="Alamat Email" name="username">
                         <div class="input-group-append">

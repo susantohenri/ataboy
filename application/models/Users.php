@@ -68,4 +68,9 @@ class Users extends MY_Model {
     return parent::dt();
   }
 
+  function ChangePassword ($uuid, $password)
+  {
+    return $this->db->set('password', md5($password))->where('uuid', $uuid)->update($this->table);
+  }
+
 }

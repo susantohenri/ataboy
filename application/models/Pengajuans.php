@@ -132,6 +132,11 @@ class Pengajuans extends MY_Model
 				'label' => 'Item Disalurkan',
 				'controller' => 'BarangKeluar',
 				'model' => 'BarangKeluars'
+			),
+			array(
+				'label' => 'Log History',
+				'controller' => 'PengajuanLog',
+				'model' => 'PengajuanLogs'
 			)
 		);
 	}
@@ -168,7 +173,8 @@ class Pengajuans extends MY_Model
 		} else $disabled = array('status', 'tiket_id');
 
 		if (false === $uuid) {
-			unset($this->childs[2]);// HIDE BARANGKELUAR
+			unset($this->childs[2]); // HIDE BARANGKELUAR
+			unset($this->childs[3]); // HIDE PENGAJUANLOG
 			$form = array_filter(
 				$form,
 				function ($field) use ($hide) {
@@ -189,7 +195,8 @@ class Pengajuans extends MY_Model
 
 	function save($record)
 	{
-		unset($this->childs[2]);// HIDE BARANGKELUAR
+		unset($this->childs[2]); // HIDE BARANGKELUAR
+		unset($this->childs[3]); // HIDE PENGAJUANLOG
 		unset($record['propinsi']);
 		unset($record['kabupaten']);
 		return parent::save($record);
@@ -200,7 +207,38 @@ class Pengajuans extends MY_Model
 		$record['status'] = 'DIAJUKAN';
 		$record['tiket_id'] = $this->generate_tiket_id();
 		$record['createdBy'] = $this->session->userdata('uuid');
-		return parent::create($record);
+		$uuid = parent::create($record);
+		$this->load->model('PengajuanLogs');
+		$this->PengajuanLogs->create(array(
+			'pengajuan' => $uuid,
+			'actor' => $this->session->userdata('uuid'),
+			'field' => 'SUBMIT PENGAJUAN'
+		));
+		return $uuid;
+	}
+
+	function update($data)
+	{
+		$this->load->model('PengajuanLogs');
+		$prev = parent::findOne($data['uuid']);
+		$uuid = parent::update($data);
+
+		$this->load->model('PengajuanLogs');
+		$fieldToScan = array_map(function ($field) {
+			return $field['name'];
+		}, parent::getForm());
+		foreach ($fieldToScan as $field) {
+			if (isset($next[$field]) && $prev[$field] !== $next[$field]) {
+				$this->PengajuanLogs->create(array(
+					'pengajuan' => $next['uuid'],
+					'actor' => $this->session->userdata('uuid'),
+					'field' => $field,
+					'prev' => $prev[$field],
+					'next' => $next[$field]
+				));
+			}
+		}
+		return $uuid;
 	}
 
 	private function generate_tiket_id()
@@ -231,6 +269,16 @@ class Pengajuans extends MY_Model
 
 	function selesai($uuid)
 	{
-		return $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+		$prev = parent::findOne($uuid);
+		$done =  $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+		$this->load->model('PengajuanLogs');
+		$this->PengajuanLogs->create(array(
+			'pengajuan' => $uuid,
+			'actor' => $this->session->userdata('uuid'),
+			'field' => 'status',
+			'prev' => $prev['status'],
+			'next' => 'SELESAI'
+		));
+		return $done;
 	}
 }

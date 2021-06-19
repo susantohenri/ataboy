@@ -73,6 +73,47 @@ class DonasiBarangs extends MY_Model
 		return parent::dt();
 	}
 
+	function create($data)
+	{
+		$uuid = parent::create($data);
+
+		// RECORD DONASILOG
+		$this->load->model(array('DonasiLogs', 'Barangs', 'BarangSatuans'));
+		$barang = $this->Barangs->findOne($data['barang']);
+		$satuan = $this->BarangSatuans->findOne($data['satuan']);
+		$this->DonasiLogs->create(array(
+			'donasi' => $data['donasi'],
+			'actor' => $this->session->userdata('uuid'),
+			'field' => "INPUT BARANG",
+			'next' => "{$barang['nama']} {$data['jumlah']} {$satuan['nama']}"
+		));
+
+		return $uuid;
+	}
+
+	function update($data)
+	{
+		$prev = parent::findOne($data['uuid']);
+		$uuid = parent::update($data);
+		$next = parent::findOne($uuid);
+
+		// RECORD DONASILOG
+		$this->load->model(array('Barangs', 'BarangSatuans', 'DonasiLogs'));
+		$brgprev = $this->Barangs->findOne($prev['barang']);
+		$brgnext = $this->Barangs->findOne($next['barang']);
+		$satprev = $this->BarangSatuans->findOne($prev['satuan']);
+		$satnext = $this->BarangSatuans->findOne($next['satuan']);
+		$this->DonasiLogs->create(array(
+			'donasi' => $data['donasi'],
+			'actor' => $this->session->userdata('uuid'),
+			'field' => "EDIT BARANG",
+			'prev' => "{$brgprev['nama']} {$prev['jumlah']} {$satprev['nama']}",
+			'next' => "{$brgnext['nama']} {$next['jumlah']} {$satnext['nama']}"
+		));
+
+		return $uuid;
+	}
+
 	function save($record)
 	{
 		$this->load->model(array('Barangs', 'BarangSatuans'));
@@ -105,6 +146,18 @@ class DonasiBarangs extends MY_Model
 		}
 		$donasiBarang = self::findOne($uuid);
 		$this->fileupload('', null, $donasiBarang['gambar']);
+
+		// RECORD DONASILOG
+		$this->load->model(array('DonasiLogs', 'Barangs', 'BarangSatuans'));
+		$barang = $this->Barangs->findOne($donasiBarang['barang']);
+		$satuan = $this->BarangSatuans->findOne($donasiBarang['satuan']);
+		$this->DonasiLogs->create(array(
+			'donasi' => $donasiBarang['donasi'],
+			'actor' => $this->session->userdata('uuid'),
+			'field' => "HAPUS BARANG",
+			'prev' => "{$barang['nama']} {$donasiBarang['jumlah']} {$satuan['nama']}"
+		));
+
 		return $this->db->where('uuid', $uuid)->delete($this->table);
 	}
 

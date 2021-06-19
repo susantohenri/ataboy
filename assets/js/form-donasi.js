@@ -226,7 +226,7 @@ function currency (number) {
 
 function handleDataChild ()
 {
-  for (var dataChild of ['BarangMasuk'])
+  for (var dataChild of ['BarangMasuk', 'DonasiLog'])
   {
     $(`[data-controller="${dataChild}"] .btn-add`).remove()
     $(`[data-controller="${dataChild}"] .btn-delete`).remove()

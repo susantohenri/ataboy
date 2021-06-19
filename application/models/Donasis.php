@@ -100,6 +100,11 @@ class Donasis extends MY_Model
         'label' => 'Item Diterima',
         'controller' => 'BarangMasuk',
         'model' => 'BarangMasuks'
+      ),
+      array(
+        'label' => 'Log History',
+        'controller' => 'DonasiLog',
+        'model' => 'DonasiLogs'
       )
     );
   }
@@ -139,7 +144,8 @@ class Donasis extends MY_Model
     }
 
     if (false === $uuid) {
-      unset($this->childs[1]);// HIDE BARANGMASUK
+      unset($this->childs[1]); // HIDE BARANGMASUK
+      unset($this->childs[2]); // HIDE DONASILOG
       $form = array_filter(
         $form,
         function ($field) use ($hide) {
@@ -184,12 +190,21 @@ class Donasis extends MY_Model
 
     $record['tiket_id'] = $this->generate_tiket_id();
     $record['createdBy'] = $this->session->userdata('uuid');
-    return parent::create($record);
+
+    $uuid = parent::create($record);
+    $this->load->model('DonasiLogs');
+    $this->DonasiLogs->create(array(
+      'donasi' => $uuid,
+      'actor' => $this->session->userdata('uuid'),
+      'field' => 'SUBMIT DONASI'
+    ));
+    return $uuid;
   }
 
   function update($next)
   {
-    unset($this->childs[1]);// HIDE BARANGMASUK
+    unset($this->childs[1]); // HIDE BARANGMASUK
+    unset($this->childs[2]); // HIDE DONASILOG
     $prev = parent::findOne($next['uuid']);
     if (!isset($next['status'])) {
       if ('DIKIRIM' === $prev['metode'] && 'DIAMBIL' === $next['metode']) {
@@ -203,7 +218,26 @@ class Donasis extends MY_Model
         $next['status'] = 'PROSES PENGIRIMAN';
       }
     }
-    return parent::update($next);
+
+    $uuid = parent::update($next);
+
+    $this->load->model('DonasiLogs');
+    $fieldToScan = array_map(function ($field) {
+      return $field['name'];
+    }, parent::getForm());
+    foreach ($fieldToScan as $field) {
+      if (isset($next[$field]) && $prev[$field] !== $next[$field]) {
+        $this->DonasiLogs->create(array(
+          'donasi' => $next['uuid'],
+          'actor' => $this->session->userdata('uuid'),
+          'field' => $field,
+          'prev' => $prev[$field],
+          'next' => $next[$field]
+        ));
+      }
+    }
+
+    return $uuid;
   }
 
   private function generate_tiket_id()
@@ -232,8 +266,18 @@ class Donasis extends MY_Model
     return parent::select2($field, $term);
   }
 
-  function selesai ($uuid)
+  function selesai($uuid)
   {
-    return $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+    $prev = parent::findOne($uuid);
+    $done = $this->db->set('status', 'SELESAI')->where('uuid', $uuid)->update($this->table);
+    $this->load->model('DonasiLogs');
+    $this->DonasiLogs->create(array(
+      'donasi' => $uuid,
+      'actor' => $this->session->userdata('uuid'),
+      'field' => 'status',
+      'prev' => $prev['status'],
+      'next' => 'SELESAI'
+    ));
+    return $done;
   }
 }

@@ -277,7 +277,7 @@ function setupMap() {
 
 function handleDataChild ()
 {
-  for (var dataChild of ['BarangKeluar'])
+  for (var dataChild of ['BarangKeluar', 'PengajuanLog'])
   {
     $(`[data-controller="${dataChild}"] .btn-add`).remove()
     $(`[data-controller="${dataChild}"] .btn-delete`).remove()

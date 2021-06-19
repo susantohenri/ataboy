@@ -2,9 +2,11 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class BarangKeluars extends MY_Model {
+class BarangKeluars extends MY_Model
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->table = 'barangkeluar';
         $this->thead = array(
@@ -54,15 +56,17 @@ class BarangKeluars extends MY_Model {
         $this->childs = array();
     }
 
-    function dt() {
+    function dt()
+    {
         $this->datatables
-                ->select("{$this->table}.uuid")
-                ->select("{$this->table}.orders")
-                ->select('barangkeluar.barang');
+            ->select("{$this->table}.uuid")
+            ->select("{$this->table}.orders")
+            ->select('barangkeluar.barang');
         return parent::dt();
     }
 
-    function create($data) {
+    function create($data)
+    {
         $result = parent::create($data);
         $this->load->model('RiwayatBarangs');
         $this->RiwayatBarangs->create(array(
@@ -74,7 +78,8 @@ class BarangKeluars extends MY_Model {
         return $result;
     }
 
-    function update($data) {
+    function update($data)
+    {
         $result = parent::update($data);
         $this->load->model('RiwayatBarangs');
         $found = $this->RiwayatBarangs->findOne(array('barangKeluar' => $result));
@@ -88,7 +93,8 @@ class BarangKeluars extends MY_Model {
         return $result;
     }
 
-    function delete($uuid) {
+    function delete($uuid)
+    {
         $this->load->model('RiwayatBarangs');
         $found = $this->RiwayatBarangs->findOne(array('barangKeluar' => $uuid));
         $result = parent::delete($uuid);
@@ -96,4 +102,11 @@ class BarangKeluars extends MY_Model {
         return $result;
     }
 
+    function setPengajuan($bulkId, $pengajuanId)
+    {
+        return $this->db
+            ->set('pengajuan', $pengajuanId)
+            ->where('barangKeluarBulk', $bulkId)
+            ->update($this->table);
+    }
 }

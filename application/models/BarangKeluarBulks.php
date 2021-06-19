@@ -81,6 +81,11 @@ class BarangKeluarBulks extends MY_Model
             $this->load->model('Pengajuans');
             $this->Pengajuans->selesai($data['pengajuan']);
         }
-        return parent::create($data);
+        $uuid = parent::create($data);
+        if (strlen($data['pengajuan']) > 0) {
+            $this->load->model('BarangKeluars');
+            $this->BarangKeluars->setPengajuan($uuid, $data['pengajuan']);
+        }
+        return $uuid;
     }
 }

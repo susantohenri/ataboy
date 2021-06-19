@@ -198,6 +198,7 @@ function formInit(scope) {
       })
     })
   })
+  handleDataChild()
 }
 
 function getNumber(element) {
@@ -272,4 +273,15 @@ function setupMap() {
   $('#show_map').click(function () {
     $('#map').modal('show')
   })
+}
+
+function handleDataChild ()
+{
+  for (var dataChild of ['BarangKeluar'])
+  {
+    $(`[data-controller="${dataChild}"] .btn-add`).remove()
+    $(`[data-controller="${dataChild}"] .btn-delete`).remove()
+    $(`[data-controller="${dataChild}"] select`).attr('disabled', 'disabled')
+    $(`[data-controller="${dataChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
+  }
 }

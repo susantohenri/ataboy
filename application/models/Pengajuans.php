@@ -119,15 +119,20 @@ class Pengajuans extends MY_Model
 		);
 		$this->childs = array(
 			array(
+				'label' => 'Bukti Foto',
+				'controller' => 'PengajuanPhoto',
+				'model' => 'PengajuanPhotos'
+			),
+			array(
 				'label' => 'Kebutuhan',
 				'controller' => 'PengajuanBarang',
 				'model' => 'PengajuanBarangs'
 			),
 			array(
-				'label' => 'Bukti Foto',
-				'controller' => 'PengajuanPhoto',
-				'model' => 'PengajuanPhotos'
-			),
+				'label' => 'Item Disalurkan',
+				'controller' => 'BarangKeluar',
+				'model' => 'BarangKeluars'
+			)
 		);
 	}
 
@@ -163,6 +168,7 @@ class Pengajuans extends MY_Model
 		} else $disabled = array('status', 'tiket_id');
 
 		if (false === $uuid) {
+			unset($this->childs[2]);// HIDE BARANGKELUAR
 			$form = array_filter(
 				$form,
 				function ($field) use ($hide) {
@@ -183,6 +189,7 @@ class Pengajuans extends MY_Model
 
 	function save($record)
 	{
+		unset($this->childs[2]);// HIDE BARANGKELUAR
 		unset($record['propinsi']);
 		unset($record['kabupaten']);
 		return parent::save($record);

@@ -52,15 +52,15 @@ class BarangKeluarBulks extends MY_Model
             ->select('kelurahan')
             ->from("
           (SELECT
-            barangKeluarBulk.orders
-            , barangKeluarBulk.uuid
-            , barangKeluarBulk.createdAt
+            {$this->table}.orders
+            , {$this->table}.uuid
+            , {$this->table}.createdAt
             , admin.nama admin
             , kelurahan.nama kelurahan
-          FROM barangKeluarBulk
-          LEFT JOIN user admin ON admin.uuid = barangKeluarBulk.createdBy
-          LEFT JOIN pengajuan ON pengajuan.uuid = barangKeluarBulk.pengajuan
-          LEFT JOIN user kelurahan ON pengajuan.createdBy = kelurahan.uuid) barangKeluarBulkAdminkelurahan
+          FROM {$this->table}
+          LEFT JOIN user admin ON admin.uuid = {$this->table}.createdBy
+          LEFT JOIN pengajuan ON pengajuan.uuid = {$this->table}.pengajuan
+          LEFT JOIN user kelurahan ON pengajuan.createdBy = kelurahan.uuid) {$this->table}Adminkelurahan
         ")
             ->generate();
     }

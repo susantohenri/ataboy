@@ -56,15 +56,15 @@ class BarangMasukBulks extends MY_Model
       ->select('donatur')
       ->from("
         (SELECT
-          barangMasukBulk.orders
-          , barangMasukBulk.uuid
-          , barangMasukBulk.createdAt
+          {$this->table}.orders
+          , {$this->table}.uuid
+          , {$this->table}.createdAt
           , admin.nama admin
           , donatur.nama donatur
-        FROM barangMasukBulk
-        LEFT JOIN user admin ON admin.uuid = barangMasukBulk.createdBy
-        LEFT JOIN donasi ON donasi.uuid = barangMasukBulk.donasi
-        LEFT JOIN user donatur ON donasi.createdBy = donatur.uuid) barangMasukBulkAdminDonatur
+        FROM {$this->table}
+        LEFT JOIN user admin ON admin.uuid = {$this->table}.createdBy
+        LEFT JOIN donasi ON donasi.uuid = {$this->table}.donasi
+        LEFT JOIN user donatur ON donasi.createdBy = donatur.uuid) {$this->table}AdminDonatur
       ")
       ->generate();
   }

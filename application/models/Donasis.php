@@ -280,4 +280,15 @@ class Donasis extends MY_Model
     ));
     return $done;
   }
+
+  function delete($uuid)
+  {
+    parent::delete($uuid);
+
+    // DELETE BARANG-RELATED RECORDS
+    $this->load->model('BarangMasukBulks');
+    foreach ($this->BarangMasukBulks->find(array('donasi' => $uuid)) as $record) {
+      $this->BarangMasukBulks->delete($record->uuid);
+    }
+  }
 }

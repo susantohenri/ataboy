@@ -281,4 +281,15 @@ class Pengajuans extends MY_Model
 		));
 		return $done;
 	}
+
+	function delete($uuid)
+	{
+	  parent::delete($uuid);
+  
+	  // DELETE BARANG-RELATED RECORDS
+	  $this->load->model('BarangKeluarBulks');
+	  foreach ($this->BarangKeluarBulks->find(array('pengajuan' => $uuid)) as $record) {
+		$this->BarangKeluarBulks->delete($record->uuid);
+	  }
+	}
 }

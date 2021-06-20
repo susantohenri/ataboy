@@ -32,7 +32,7 @@
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
                         </div>
                         <div class="col-4">
-                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            <div class="g-signin2" onclick="google_btn_clicked=true" data-onsuccess="onSignIn"></div>
                         </div>
                     </div>
                 </form>

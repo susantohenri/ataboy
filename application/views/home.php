@@ -163,7 +163,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             })
         })
 
+        var google_btn_clicked = false
         function onSignIn(googleUser) {
+            if (!google_btn_clicked) return false
             var profile = googleUser.getBasicProfile()
             var email = profile.getEmail()
             $.post('Home/LoginWithGoogle', {

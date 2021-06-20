@@ -87,7 +87,7 @@ class Donasi extends MY_Controller
 		);
 
 		$donasi = $this->{$this->model}->findOne($id);
-		if (in_array($donasi['status'], array('SAMPAI TUJUAN', 'VERIFIKASI', 'SELESAI'))) {
+		if (in_array($donasi['status'], array('SAMPAI TUJUAN', 'DIVERIFIKASI', 'SELESAI'))) {
 			$this->load->model(array('Permissions', 'Roles'));
 			if (!strpos($this->Roles->getRole(), 'Admin')) {
 				$vars['permission'] = array_filter($this->Permissions->getPermissions(), function ($perm) {

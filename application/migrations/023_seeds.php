@@ -75,7 +75,7 @@ class Migration_seeds extends CI_Migration
       'icon' => 'file-medical'
     ));
     $iconDonasis = array ('credit-card', 'business-time', 'boxes', 'shipping-fast', 'map-marker-alt', 'clipboard-check', 'check-circle');
-    foreach (array('Menunggu Pembayaran', 'Menunggu Pengiriman', 'Menunggu Pengambilan', 'Proses Pengiriman', 'Sampai Tujuan', 'Verifikasi', 'Selesai') as $index => $statusDonasi)
+    foreach (array('Menunggu Pembayaran', 'Menunggu Pengiriman', 'Menunggu Pengambilan', 'Proses Pengiriman', 'Sampai Tujuan', 'Diverifikasi', 'Selesai') as $index => $statusDonasi)
     {
       $this->Menus->create(array(
         'role' => $appRole['Donatur'],

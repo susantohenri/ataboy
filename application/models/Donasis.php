@@ -37,7 +37,7 @@ class Donasis extends MY_Model
           array('text' => 'MENUNGGU PENGAMBILAN', 'value' => 'MENUNGGU PENGAMBILAN'),
           array('text' => 'PROSES PENGIRIMAN', 'value' => 'PROSES PENGIRIMAN'),
           array('text' => 'SAMPAI TUJUAN', 'value' => 'SAMPAI TUJUAN'),
-          array('text' => 'VERIFIKASI', 'value' => 'VERIFIKASI'),
+          array('text' => 'DIVERIFIKASI', 'value' => 'DIVERIFIKASI'),
           array('text' => 'SELESAI', 'value' => 'SELESAI')
         )
       ),
@@ -262,7 +262,7 @@ class Donasis extends MY_Model
 
   function select2forBarangMasukBulk($field, $term)
   {
-    $this->db->where('status', 'VERIFIKASI');
+    $this->db->where('status', 'DIVERIFIKASI');
     return parent::select2($field, $term);
   }
 
@@ -277,6 +277,21 @@ class Donasis extends MY_Model
       'field' => 'status',
       'prev' => $prev['status'],
       'next' => 'SELESAI'
+    ));
+    return $done;
+  }
+
+  function rollBackToDiverfifikasi ($uuid)
+  {
+    $prev = parent::findOne($uuid);
+    $done = $this->db->set('status', 'DIVERIFIKASI')->where('uuid', $uuid)->update($this->table);
+    $this->load->model('DonasiLogs');
+    $this->DonasiLogs->create(array(
+      'donasi' => $uuid,
+      'actor' => $this->session->userdata('uuid'),
+      'field' => 'status',
+      'prev' => $prev['status'],
+      'next' => 'DIVERIFIKASI'
     ));
     return $done;
   }

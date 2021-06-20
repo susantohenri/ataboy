@@ -25,7 +25,7 @@
                         <label class="col-sm-3 control-label">Status</label>
                         <div class="col-sm-9">
                             <select class="form-control" name="status">
-                                <?php foreach (array('Menunggu Pembayaran', 'Menunggu Pengiriman', 'Menunggu Pengambilan', 'Proses Pengiriman', 'Sampai Tujuan', 'Verifikasi', 'Selesai') as $index => $statusPengajuan) : ?>
+                                <?php foreach (array('Menunggu Pembayaran', 'Menunggu Pengiriman', 'Menunggu Pengambilan', 'Proses Pengiriman', 'Sampai Tujuan', 'Diverifikasi', 'Selesai') as $index => $statusPengajuan) : ?>
                                     <option value="<?= $statusPengajuan ?>"><?= $statusPengajuan ?></option>
                                 <?php endforeach ?>
                             </select>

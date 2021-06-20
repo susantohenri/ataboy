@@ -101,4 +101,15 @@ class BarangKeluarBulks extends MY_Model
         }
         return $uuid;
     }
+
+    function delete($uuid)
+    {
+      $data = parent::findOne($uuid);
+      $result = parent::delete($uuid);
+      if (isset($data['pengajuan']) && strlen($data['pengajuan']) > 0) {
+        $this->load->model('Pengajuans');
+        $this->Pengajuans->rollBackToDiverfifikasi($data['pengajuan']);
+      }
+      return $result;
+    }
 }

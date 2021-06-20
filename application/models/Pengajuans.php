@@ -168,8 +168,10 @@ class Pengajuans extends MY_Model
 		$form = parent::getForm($uuid, $isSubform);
 		$hide = array('status', 'tiket_id');
 		$this->load->model('Roles');
+
 		if (strpos($this->Roles->getRole(), 'Admin') > -1) {
 			$disabled = array('tiket_id');
+			$hide = array('tiket_id');
 		} else $disabled = array('status', 'tiket_id');
 
 		if (false === $uuid) {
@@ -204,7 +206,7 @@ class Pengajuans extends MY_Model
 
 	function create($record)
 	{
-		$record['status'] = 'DIAJUKAN';
+		if (!isset($record['status'])) $record['status'] = 'DIAJUKAN';
 		$record['tiket_id'] = $this->generate_tiket_id();
 		$record['createdBy'] = $this->session->userdata('uuid');
 		$uuid = parent::create($record);
@@ -282,14 +284,29 @@ class Pengajuans extends MY_Model
 		return $done;
 	}
 
+	function rollBackToDiverfifikasi($uuid)
+	{
+		$prev = parent::findOne($uuid);
+		$done = $this->db->set('status', 'DIVERIFIKASI')->where('uuid', $uuid)->update($this->table);
+		$this->load->model('PengajuanLogs');
+		$this->PengajuanLogs->create(array(
+			'pengajuan' => $uuid,
+			'actor' => $this->session->userdata('uuid'),
+			'field' => 'status',
+			'prev' => $prev['status'],
+			'next' => 'DIVERIFIKASI'
+		));
+		return $done;
+	}
+
 	function delete($uuid)
 	{
-	  parent::delete($uuid);
-  
-	  // DELETE BARANG-RELATED RECORDS
-	  $this->load->model('BarangKeluarBulks');
-	  foreach ($this->BarangKeluarBulks->find(array('pengajuan' => $uuid)) as $record) {
-		$this->BarangKeluarBulks->delete($record->uuid);
-	  }
+		parent::delete($uuid);
+
+		// DELETE BARANG-RELATED RECORDS
+		$this->load->model('BarangKeluarBulks');
+		foreach ($this->BarangKeluarBulks->find(array('pengajuan' => $uuid)) as $record) {
+			$this->BarangKeluarBulks->delete($record->uuid);
+		}
 	}
 }

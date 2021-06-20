@@ -85,7 +85,7 @@ class BarangMasukBulks extends MY_Model
     return $form;
   }
 
-  function save ($data)
+  function save($data)
   {
     unset($this->childs[1]); // HIDE LOG
     return parent::save($data);
@@ -104,5 +104,16 @@ class BarangMasukBulks extends MY_Model
       $this->BarangMasuks->setDonasi($uuid, $data['donasi']);
     }
     return $uuid;
+  }
+
+  function delete($uuid)
+  {
+    $data = parent::findOne($uuid);
+    $result = parent::delete($uuid);
+    if (isset($data['donasi']) && strlen($data['donasi']) > 0) {
+      $this->load->model('Donasis');
+      $this->Donasis->rollBackToDiverfifikasi($data['donasi']);
+    }
+    return $result;
   }
 }

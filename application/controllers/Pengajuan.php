@@ -90,6 +90,17 @@ class Pengajuan extends MY_Controller
 			'summernote.min.css',
 			'leaflet.css'
 		);
+
+		$pengajuan = $this->{$this->model}->findOne($id);
+		if ($pengajuan['status'] !== 'DIAJUKAN') {
+			$this->load->model(array('Permissions', 'Roles'));
+			if (!strpos($this->Roles->getRole(), 'Admin')) {
+				$vars['permission'] = array_filter($this->Permissions->getPermissions(), function ($perm) {
+					return !in_array($perm, array('update_Pengajuan', 'delete_Pengajuan'));
+				});
+			}
+		}
+
 		$this->loadview('index', $vars);
 	}
 

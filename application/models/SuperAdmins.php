@@ -10,6 +10,7 @@ class SuperAdmins extends MY_Model
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
       (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
+			(object) array('mData' => 'status', 'sTitle' => 'Status')
     );
     $this->form = array(
       array(
@@ -73,7 +74,8 @@ class SuperAdmins extends MY_Model
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
       ->select('nama')
-      ->join('role', 'user.role = role.uuid', 'left')
+      ->select("IF(-1 = status, 'UNVERIFIED', IF(0 = status, 'INACTIVE', 'ACTIVE')) status")
+			->join('role', 'user.role = role.uuid', 'left')
       ->where('role.name', 'Super Admin');
     return parent::dt();
   }

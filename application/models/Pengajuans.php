@@ -217,11 +217,11 @@ class Pengajuans extends MY_Model
 		return $uuid;
 	}
 
-	function update($data)
+	function update($next)
 	{
 		$this->load->model('PengajuanLogs');
-		$prev = parent::findOne($data['uuid']);
-		$uuid = parent::update($data);
+		$prev = parent::findOne($next['uuid']);
+		$uuid = parent::update($next);
 
 		$this->load->model('PengajuanLogs');
 		$fieldToScan = array_map(function ($field) {

@@ -13,6 +13,7 @@ class Migration_barang extends CI_Migration {
         `updatedAt` datetime DEFAULT NULL,
         `nama` varchar(255) NOT NULL,
         `jenis` varchar(16) NOT NULL,
+        `status` TINYINT(1) NOT NULL DEFAULT 1,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

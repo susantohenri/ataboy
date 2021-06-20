@@ -10,7 +10,8 @@ class Barangs extends MY_Model
     $this->thead = array(
       (object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
       (object) array('mData' => 'nama', 'sTitle' => 'Nama'),
-      (object) array('mData' => 'stok', 'sTitle' => 'Stok'),
+      (object) array('mData' => 'status', 'sTitle' => 'Status'),
+      (object) array('mData' => 'stok', 'sTitle' => 'Stok')
     );
     $this->form = array(
       array(
@@ -19,6 +20,15 @@ class Barangs extends MY_Model
         'label' => 'Nama',
         'attributes' => array(
           array('required' => 'required')
+        )
+      ),
+      array(
+        'name' => 'status',
+        'width' => 2,
+        'label' => 'Status',
+        'options' => array(
+          array('value' => '1', 'text' => 'ACTIVE'),
+          array('value' => '0', 'text' => 'INACTIVE')
         )
       )
     );
@@ -38,11 +48,13 @@ class Barangs extends MY_Model
       ->select('orders')
       ->select('nama')
       ->select('stok')
+      ->select('status')
       ->from("
         (SELECT
           barang.uuid
           , barang.orders
           , barang.nama
+          , IF(0 = status, 'INACTIVE', 'ACTIVE') status
           , CONCAT(FORMAT(SUM(riwayatbarang.jumlah * barangsatuan.skala), 0), ' ', lowest.nama) stok
         FROM barang
         LEFT JOIN riwayatbarang ON riwayatbarang.barang = barang.uuid
@@ -54,6 +66,13 @@ class Barangs extends MY_Model
       ->generate();
   }
 
+  function select2($field, $term)
+  {
+    $this->db->where('status', 1);
+    return parent::select2($field, $term);
+  }
+
+  // BARANG CUSTOM BY DONATUR
   function getUuid($uuid)
   {
     $found = $this->findOne($uuid);

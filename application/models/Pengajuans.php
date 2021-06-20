@@ -284,17 +284,17 @@ class Pengajuans extends MY_Model
 		return $done;
 	}
 
-	function rollBackToDiverfifikasi($uuid)
+	function rollBackToDiterima($uuid)
 	{
 		$prev = parent::findOne($uuid);
-		$done = $this->db->set('status', 'DIVERIFIKASI')->where('uuid', $uuid)->update($this->table);
+		$done = $this->db->set('status', 'DITERIMA')->where('uuid', $uuid)->update($this->table);
 		$this->load->model('PengajuanLogs');
 		$this->PengajuanLogs->create(array(
 			'pengajuan' => $uuid,
 			'actor' => $this->session->userdata('uuid'),
 			'field' => 'status',
 			'prev' => $prev['status'],
-			'next' => 'DIVERIFIKASI'
+			'next' => 'DITERIMA'
 		));
 		return $done;
 	}

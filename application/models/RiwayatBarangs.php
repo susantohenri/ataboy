@@ -46,6 +46,25 @@ class RiwayatBarangs extends MY_Model
       ),
     );
     $this->childs = array();
+    $this->query = "
+      SELECT
+        riwayatbarang.orders
+        , riwayatbarang.uuid
+        , riwayatbarang.createdAt tanggal
+        , barang.nama namabarang
+        , IF(LENGTH(riwayatbarang.barangmasuk) > 0, 'MASUK', IF(LENGTH(riwayatbarang.barangkeluar) > 0, 'KELUAR', 'UNDEFINED')) jenis
+        , CONCAT(FORMAT(riwayatbarang.jumlah, 0), ' ', barangsatuan.nama) jumlah
+        , IF(donasi.tiket_id IS NOT NULL, donasi.tiket_id, IF(pengajuan.tiket_id IS NOT NULL, pengajuan.tiket_id, 'MANUAL')) tiket_id
+      FROM riwayatbarang
+      LEFT JOIN barang ON riwayatbarang.barang = barang.uuid
+      LEFT JOIN barangsatuan ON barangsatuan.uuid = riwayatbarang.satuan
+      LEFT JOIN barangmasuk ON riwayatbarang.barangmasuk = barangmasuk.uuid
+      LEFT JOIN barangkeluar ON riwayatbarang.barangKeluar = barangkeluar.uuid
+      LEFT JOIN barangmasukbulk ON barangmasuk.barangmasukbulk = barangmasukbulk.uuid
+      LEFT JOIN barangkeluarbulk ON barangkeluar.barangkeluarbulk = barangkeluarbulk.uuid
+      LEFT JOIN donasi ON barangmasukbulk.donasi = donasi.uuid
+      LEFT JOIN pengajuan ON barangkeluarbulk.pengajuan = pengajuan.uuid
+    ";
   }
 
   function dt()
@@ -58,27 +77,23 @@ class RiwayatBarangs extends MY_Model
       ->select('jenis')
       ->select('jumlah')
       ->select('tiket_id')
-      ->from("
-        (
-          SELECT
-            riwayatbarang.orders
-            , riwayatbarang.uuid
-            , riwayatbarang.createdAt tanggal
-            , barang.nama namabarang
-            , IF(LENGTH(riwayatbarang.barangmasuk) > 0, 'MASUK', IF(LENGTH(riwayatbarang.barangkeluar) > 0, 'KELUAR', 'UNDEFINED')) jenis
-            , CONCAT(FORMAT(riwayatbarang.jumlah, 0), ' ', barangsatuan.nama) jumlah
-            , IF(donasi.tiket_id IS NOT NULL, donasi.tiket_id, IF(pengajuan.tiket_id IS NOT NULL, pengajuan.tiket_id, 'MANUAL')) tiket_id
-          FROM riwayatbarang
-          LEFT JOIN barang ON riwayatbarang.barang = barang.uuid
-          LEFT JOIN barangsatuan ON barangsatuan.uuid = riwayatbarang.satuan
-          LEFT JOIN barangmasuk ON riwayatbarang.barangmasuk = barangmasuk.uuid
-          LEFT JOIN barangkeluar ON riwayatbarang.barangKeluar = barangkeluar.uuid
-          LEFT JOIN barangmasukbulk ON barangmasuk.barangmasukbulk = barangmasukbulk.uuid
-          LEFT JOIN barangkeluarbulk ON barangkeluar.barangkeluarbulk = barangkeluarbulk.uuid
-          LEFT JOIN donasi ON barangmasukbulk.donasi = donasi.uuid
-          LEFT JOIN pengajuan ON barangkeluarbulk.pengajuan = pengajuan.uuid
-        ) riwayatBarangBarang
-      ");
+      ->from("({$this->query}) riwayatBarangBarang");
     return $this->datatables->generate();
+  }
+
+  function excel()
+  {
+    $no = 0;
+    return array_map(function ($record) use (&$no) {
+      $no++;
+      return array(
+        'NO' => $no,
+        'TANGGAL' => $record->tanggal,
+        'BARANG' => $record->namabarang,
+        'JENIS' => $record->jenis,
+        'JUMLAH' => $record->jumlah,
+        'DONASI / PENGAJUAN' => $record->tiket_id
+      );
+    }, $this->db->query($this->query)->result());
   }
 }

@@ -47,15 +47,23 @@ class Home extends CI_Controller
 					break;
 				case 'registrasi-donatur':
 					$this->load->model('Donaturs');
-					unset($post['action']);
-					$this->Donaturs->save($post);
-					$params['error_message'] = 'Pendaftaran Sukses';
+					$already = $this->Donaturs->findOne(array('username' => $post['username']));
+					if (isset($already['uuid'])) $params['error_message'] = 'Pendaftaran Ditolak, Email Telah Terdaftar Sebelumnya';
+					else {
+						unset($post['action']);
+						$this->Donaturs->save($post);
+						$params['error_message'] = 'Pendaftaran Sukses';
+					}
 					break;
 				case 'registrasi-kelurahan':
 					$this->load->model('Kelurahans');
-					unset($post['action']);
-					$this->Kelurahans->save($post);
-					$params['error_message'] = 'Pendaftaran Sukses, Silakan Tunggu Proses Validasi Selesai';
+					$already = $this->Kelurahans->findOne(array('username' => $post['username']));
+					if (isset($already['uuid'])) $params['error_message'] = 'Pendaftaran Ditolak, Email Telah Terdaftar Sebelumnya';
+					else {
+						unset($post['action']);
+						$this->Kelurahans->save($post);
+						$params['error_message'] = 'Pendaftaran Sukses, Silakan Tunggu Proses Validasi Selesai';
+					}
 					break;
 				case 'forgot-password':
 					$this->load->model(array('Users', 'Emails'));

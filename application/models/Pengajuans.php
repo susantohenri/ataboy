@@ -231,6 +231,29 @@ class Pengajuans extends MY_Model
 		}, parent::getForm());
 		foreach ($fieldToScan as $field) {
 			if (isset($next[$field]) && $prev[$field] !== $next[$field]) {
+				switch ($field) {
+					case 'kecamatan':
+						$this->load->model('Kecamatans');
+						$prevkec = $this->Kecamatans->findOne($prev[$field]);
+						$nextkec = $this->Kecamatans->findOne($next[$field]);
+						$prev[$field] = $prevkec['nama'];
+						$next[$field] = $nextkec['nama'];
+						break;
+					case 'kelurahan':
+						$this->load->model('Desas');
+						$prevkel = $this->Desas->findOne($prev[$field]);
+						$nextkel = $this->Desas->findOne($next[$field]);
+						$prev[$field] = $prevkel['nama'];
+						$next[$field] = $nextkel['nama'];
+						break;
+					case 'bencana':
+						$this->load->model('Bencanas');
+						$prevbcn = $this->Bencanas->findOne($prev[$field]);
+						$nextbcn = $this->Bencanas->findOne($next[$field]);
+						$prev[$field] = $prevbcn['nama'];
+						$next[$field] = $nextbcn['nama'];
+						break;
+				}
 				$this->PengajuanLogs->create(array(
 					'pengajuan' => $next['uuid'],
 					'actor' => $this->session->userdata('uuid'),

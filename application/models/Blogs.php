@@ -35,10 +35,7 @@ class Blogs extends MY_Model
         'name' => 'gambar',
         'type' => 'file',
         'width' => 2,
-        'label' => 'Gambar',
-        'attributes' => array(
-          array('required' => 'required')
-        )
+        'label' => 'Gambar'
       ),
       array(
         'name' => 'status',

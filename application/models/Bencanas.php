@@ -39,7 +39,7 @@ class Bencanas extends MY_Model
     $this->datatables
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
-      ->select("IF(-1 = status, 'UNVERIFIED', IF(0 = status, 'BLOCKED', 'VERIFIED')) status")
+      ->select("IF(0 = status, 'INACTIVE', 'ACTIVE') status", false)
       ->select('bencana.nama');
     return parent::dt();
   }

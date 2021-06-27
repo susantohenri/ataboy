@@ -68,9 +68,9 @@ class PengajuanLogs extends MY_Model
                     return $field;
                     break;
                 case 'field':
-                    $this->load->model('Donasis');
+                    $this->load->model('Pengajuans');
                     $value = $field['value'];
-                    $target = array_filter($this->Donasis->getForm(), function ($donfield) use ($value) {
+                    $target = array_filter($this->Pengajuans->getForm(), function ($donfield) use ($value) {
                         return $donfield['name'] === $value;
                     });
                     $target = array_values($target);

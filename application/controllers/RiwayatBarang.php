@@ -4,6 +4,7 @@ require('./vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Dompdf\Dompdf;
 
 class RiwayatBarang extends MY_Controller
 {
@@ -34,7 +35,7 @@ class RiwayatBarang extends MY_Controller
 
 	function excel()
 	{
-		$rows = $this->{$this->model}->excel();
+		$rows = $this->{$this->model}->download();
 		$colnames = array_keys($rows[0]);
 
 		$spreadsheet = new Spreadsheet();
@@ -86,5 +87,20 @@ class RiwayatBarang extends MY_Controller
 		$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
 		$writer->save('php://output');
 		exit;
+	}
+
+	function pdf()
+	{
+		$data = array(
+			'rows' => $this->{$this->model}->download()
+		);
+		$viewer = 'pdf-riwayatbarang';
+		$filename = 'Riwayat Barang ATAboy';
+		$html = $this->load->view($viewer, $data, TRUE);
+
+		$pdf = new Dompdf();
+		$pdf->loadHtml($html);
+		$pdf->render();
+		$pdf->stream($filename, array("Attachment" => TRUE));
 	}
 }

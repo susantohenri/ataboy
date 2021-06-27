@@ -81,7 +81,7 @@ class RiwayatBarangs extends MY_Model
     return $this->datatables->generate();
   }
 
-  function excel()
+  function download ()
   {
     $no = 0;
     return array_map(function ($record) use (&$no) {

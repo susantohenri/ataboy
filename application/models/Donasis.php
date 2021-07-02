@@ -262,8 +262,13 @@ class Donasis extends MY_Model
 
   function select2forBarangMasukBulk($field, $term)
   {
-    $this->db->where('status', 'DIVERIFIKASI');
-    return parent::select2($field, $term);
+    $this->db->where("$this->table.status", 'DIVERIFIKASI');
+    return $this->db
+                ->select("$this->table.uuid as id", false)
+                ->select("CONCAT($field, ' - ', user.nama) as text", false)
+                ->join("user", "$this->table.createdBy = user.uuid", "left")
+                ->limit(10)
+                ->like($field, $term)->get($this->table)->result();
   }
 
   function selesai($uuid)

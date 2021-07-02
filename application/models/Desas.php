@@ -59,6 +59,15 @@ class Desas extends MY_Model
 
   function select2WithKec ($field, $term, $kec)
   {
+    $this->load->model('Roles');
+    if (strpos($this->Roles->getRole(), 'Kelurahan') > -1){
+        $desa[] = $this->db
+              ->select("$this->table.uuid as id", false)
+              ->select("$this->table.$field as text", false)
+              ->where("desa.uuid", $this->session->userdata('desa'))
+              ->get($this->table)->row();
+        return $desa;
+    }
     $this->db->where('kec', $kec);
     return parent::select2($field, $term);
   }

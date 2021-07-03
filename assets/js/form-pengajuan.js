@@ -73,7 +73,7 @@ function formInit(scope) {
           url: current_controller_url + '/select2/' + model + '/' + field,
           data: function (params) {
             var query = {
-              search: params.term,
+              term: params.term,
               kecamatan: $('[name="kecamatan"]').val()
             }
             return query;
@@ -89,7 +89,7 @@ function formInit(scope) {
           url: current_controller_url + '/select2/' + model + '/' + field,
           data: function (params) {
             var query = {
-              search: params.term,
+              term: params.term,
               barang: $(this).parent().parent().find('[name^="PengajuanBarang_barang["]').val()
             }
             return query;

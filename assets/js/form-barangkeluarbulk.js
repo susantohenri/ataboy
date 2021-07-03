@@ -76,7 +76,7 @@ function formInit(scope) {
                     url: current_controller_url + '/select2/' + model + '/' + field,
                     data: function (params) {
                         var query = {
-                            search: params.term,
+                            term: params.term,
                             barang: $(this).parent().parent().find('[name^="BarangKeluar_barang["]').val()
                         }
                         return query;

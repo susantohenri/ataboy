@@ -33,4 +33,19 @@ class Kecamatans extends MY_Model
       ->select('kecamatan.nama');
     return parent::dt();
   }
+  
+  function select2($field, $term)
+  {
+      $this->load->model('Roles');
+      if (strpos($this->Roles->getRole(), 'Kelurahan') > -1){
+          $kec[] = $this->db
+                ->where("desa.uuid", $this->session->userdata('desa'))
+                ->select("$this->table.uuid as id", false)
+                ->select("$this->table.$field as text", false)
+                ->join("desa", "$this->table.uuid = desa.kec", "left")
+                ->get($this->table)->row();
+          return $kec;
+      }
+      return parent::select2($field, $term);
+  }
 }

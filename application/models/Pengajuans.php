@@ -288,8 +288,14 @@ class Pengajuans extends MY_Model
 
 	function select2forBarangKeluarBulk($field, $term)
 	{
-		$this->db->where('status', 'DITERIMA');
-		return parent::select2($field, $term);
+		$this->db->where("$this->table.status", 'DITERIMA');
+                return $this->db
+                        ->select("$this->table.uuid as id", false)
+                        ->select("CONCAT($field, ' - ', desa.nama, ' - ', bencana.nama) as text", false)
+                        ->join("desa", "$this->table.kelurahan = desa.uuid", "left")
+                        ->join("bencana", "$this->table.bencana = bencana.uuid", "left")
+                        ->limit(10)
+                        ->like($field, $term)->get($this->table)->result();
 	}
 
 	function selesai($uuid)

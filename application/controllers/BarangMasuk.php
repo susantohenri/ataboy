@@ -25,9 +25,10 @@ class BarangMasuk extends MY_Controller
 					case 'barang':
 						$this->load->model('Barangs');
 						$brg = $this->Barangs->findOne($donbar['barang']);
+						$nm_brg = $brg['jenis'] === 'free-text' ? "{$brg['nama']} (free-text)": $brg['nama'];
 						$field['value'] = $brg['uuid'];
 						$field['options'] = array(
-							array('text' => $brg['nama'], 'value' => $brg['uuid'])
+							array('text' => $nm_brg, 'value' => $brg['uuid'])
 						);
 						break;
 					case 'satuan':

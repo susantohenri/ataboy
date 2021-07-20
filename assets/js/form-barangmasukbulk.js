@@ -5,7 +5,7 @@ window.onload = function () {
     $('[data-number]').each(function () {
       $(this).val(getNumber($(this)))
     })
-    return true
+    return validateBarangFreeText()
   })
 
   $('.form-child').each(function () {
@@ -54,6 +54,8 @@ window.onload = function () {
   });
 
   if (window.location.href.indexOf('ChangePassword') > -1) $('form a[href*="ChangePassword/delete"]').hide()
+
+  prepareModalErrorBarangFreeText()
 }
 
 function formInit(scope) {
@@ -94,12 +96,11 @@ function formInit(scope) {
           generateSubForm(0)
 
           function generateSubForm(index) {
-            console.log(site_url + 'BarangMasuk/subformcreate/' + uuids[index])
             $.get(site_url + 'BarangMasuk/subformcreate/' + uuids[index], function (form) {
               var created = $('[data-controller="BarangMasuk"]').prepend(form)
               formInit(created)
               index++
-              if (uuids[index]) generateSubForm (index)
+              if (uuids[index]) generateSubForm(index)
             })
           }
         })
@@ -229,4 +230,34 @@ function currency(number) {
   var reverse = number.toString().split('').reverse().join(''),
     currency = reverse.match(/\d{1,3}/g)
   return currency.join(',').split('').reverse().join('')
+}
+
+function prepareModalErrorBarangFreeText() {
+  $('body').append(`
+    <div class="modal" id="errorBarangFreeText" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Error</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            <p>Barang Free Text Tidak Dapat Diproses</p>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>  
+  `)
+}
+
+function validateBarangFreeText() {
+  if ($('.select2-selection__rendered:contains(free-text)').length > 0) {
+    $('#errorBarangFreeText').modal('show')
+    return false
+  } else return true
 }

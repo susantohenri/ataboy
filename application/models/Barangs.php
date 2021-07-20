@@ -40,14 +40,20 @@ class Barangs extends MY_Model {
             ),
         );
 
-        $this->query = "SELECT nama, stok, status from ("
-                . "SELECT barang.nama,"
-                . " IF(0 = status, 'INACTIVE', 'ACTIVE') status,"
-                . " CONCAT(FORMAT(SUM(riwayatbarang.jumlah * barangsatuan.skala), 0), ' ', lowest.nama) stok FROM barang "
-                . "LEFT JOIN riwayatbarang ON riwayatbarang.barang = barang.uuid "
-                . "LEFT JOIN barangsatuan ON riwayatbarang.satuan = barangsatuan.uuid "
-                . "LEFT JOIN barangsatuan lowest ON lowest.barang = barang.uuid AND lowest.skala = 1 "
-                . "GROUP BY barang.uuid) barangWithStock";
+        $this->query = "
+            SELECT
+            barang.uuid
+            , barang.orders
+            , barang.nama
+            , IF(0 = status, 'INACTIVE', 'ACTIVE') status
+            , CONCAT(FORMAT(SUM(riwayatbarang.jumlah * barangsatuan.skala), 0), ' ', lowest.nama) stok
+            FROM barang
+            LEFT JOIN riwayatbarang ON riwayatbarang.barang = barang.uuid
+            LEFT JOIN barangsatuan ON riwayatbarang.satuan = barangsatuan.uuid
+            LEFT JOIN barangsatuan lowest ON lowest.barang = barang.uuid AND lowest.skala = 1
+            WHERE jenis = ''
+            GROUP BY barang.uuid
+        ";
     }
 
     function dt() {
@@ -57,20 +63,7 @@ class Barangs extends MY_Model {
                         ->select('nama')
                         ->select('stok')
                         ->select('status')
-                        ->from("
-        (SELECT
-          barang.uuid
-          , barang.orders
-          , barang.nama
-          , IF(0 = status, 'INACTIVE', 'ACTIVE') status
-          , CONCAT(FORMAT(SUM(riwayatbarang.jumlah * barangsatuan.skala), 0), ' ', lowest.nama) stok
-        FROM barang
-        LEFT JOIN riwayatbarang ON riwayatbarang.barang = barang.uuid
-        LEFT JOIN barangsatuan ON riwayatbarang.satuan = barangsatuan.uuid
-        LEFT JOIN barangsatuan lowest ON lowest.barang = barang.uuid AND lowest.skala = 1
-        GROUP BY barang.uuid
-        ) barangWithStock
-      ")
+                        ->from("({$this->query}) barangWithStock")
                         ->generate();
     }
 

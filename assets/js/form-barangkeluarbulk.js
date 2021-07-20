@@ -2,11 +2,11 @@ window.onload = function () {
 
     formInit($(`[data-controller="${current_controller}"]`))
     $('.main-form').submit(function () {
-//        throw new Error("my error message");
+
         $('[data-number]').each(function () {
             $(this).val(getNumber($(this)))
         })
-        return true
+        return validateBarangFreeText()
     })
 
     $('.form-child').each(function () {
@@ -61,6 +61,8 @@ window.onload = function () {
 
     if (window.location.href.indexOf('ChangePassword') > -1)
         $('form a[href*="ChangePassword/delete"]').hide()
+
+    prepareModalErrorBarangFreeText()
 }
 
 function formInit(scope) {
@@ -101,7 +103,7 @@ function formInit(scope) {
                     generateSubForm(0)
 
                     function generateSubForm(index) {
-//                        console.log(site_url + 'BarangKeluar/subformcreate/' + uuids[index])
+                        //                        console.log(site_url + 'BarangKeluar/subformcreate/' + uuids[index])
                         $.get(site_url + 'BarangKeluar/subformcreate/' + uuids[index], function (form) {
                             var created = $('[data-controller="BarangKeluar"]').prepend(form)
                             formInit(created)
@@ -155,17 +157,17 @@ function formInit(scope) {
                     return $result
                 }
             })
-        } else{
+        } else {
             $(this).select2()
         }
     })
-    scope.find('[data-date="datepicker"]').attr('autocomplete', 'off').datepicker({format: 'yyyy-mm-dd', autoclose: true})
+    scope.find('[data-date="datepicker"]').attr('autocomplete', 'off').datepicker({ format: 'yyyy-mm-dd', autoclose: true })
     // scope.find('[data-date="timepicker"]').timepicker({defaultTime: false, showMeridian: false})
     scope.find('[data-date="datetimepicker"]').attr('autocomplete', 'off').daterangepicker({
         singleDatePicker: true,
         timePicker: true,
         timePicker24Hour: true,
-        locale: {format: 'YYYY-MM-DD HH:mm'},
+        locale: { format: 'YYYY-MM-DD HH:mm' },
         // startDate: moment().format('YYYY-MM-DD HH:mm')
     })
     scope.find('[data-number="true"]').each(function () {
@@ -238,6 +240,36 @@ function getNumber(element) {
 
 function currency(number) {
     var reverse = number.toString().split('').reverse().join(''),
-            currency = reverse.match(/\d{1,3}/g)
+        currency = reverse.match(/\d{1,3}/g)
     return currency.join(',').split('').reverse().join('')
+}
+
+function prepareModalErrorBarangFreeText() {
+    $('body').append(`
+        <div class="modal" id="errorBarangFreeText" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <p>Barang Free Text Tidak Dapat Diproses</p>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            </div>
+        </div>  
+    `)
+}
+
+function validateBarangFreeText () {
+    if ($('.select2-selection__rendered:contains(free-text)').length > 0) {
+        $('#errorBarangFreeText').modal('show')
+        return false
+    } else return true
 }

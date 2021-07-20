@@ -76,6 +76,7 @@ class Barangs extends MY_Model {
 
     function select2($field, $term) {
         $this->db->where('status', 1);
+        $this->db->where('jenis', '');
         return parent::select2($field, $term);
     }
 
@@ -85,7 +86,7 @@ class Barangs extends MY_Model {
         if (isset($found['uuid']))
             return $uuid;
         else
-            return $this->create(array('nama' => $uuid));
+            return $this->create(array('nama' => $uuid, 'jenis' => 'free-text'));
     }
 
     function download() {

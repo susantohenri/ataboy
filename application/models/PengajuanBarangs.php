@@ -73,6 +73,14 @@ class PengajuanBarangs extends MY_Model
 		return $kebutuhan['jumlah'] ? $kebutuhan['jumlah'] : 0;
 	}
 
+	function save ($record)
+	{
+		$this->load->model(array('Barangs', 'BarangSatuans'));
+		$record['barang'] = $this->Barangs->getUuid($record['barang']);
+		$record['satuan'] = $this->BarangSatuans->getUuid($record['satuan'], $record['barang']);
+		return parent::save($record);
+	}
+
 	function create($data)
 	{
 		$uuid = parent::create($data);

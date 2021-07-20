@@ -95,7 +95,52 @@ function formInit(scope) {
             return query;
           },
           type: 'POST', dataType: 'json'
+        },
+        tags: true,
+        createTag: function (params) {
+          return {
+            id: params.term,
+            text: params.term,
+            newOption: true
+          }
+        },
+        templateResult: function (data) {
+          var $result = $('<span></span>')
+          $result.text(data.text)
+          if (data.newOption) $result.append('<em> (add new)</em>')
+          return $result
         }
+      })
+    } else if ($(this).is('[name^="PengajuanBarang_barang["]')) {
+      var model = $(this).attr('data-model')
+      var field = $(this).attr('data-field')
+      $(this).select2({
+        ajax: {
+          url: current_controller_url + '/select2/' + model + '/' + field,
+          type: 'POST', dataType: 'json'
+        },
+        tags: true,
+        createTag: function (params) {
+          return {
+            id: params.term,
+            text: params.term,
+            newOption: true
+          }
+        },
+        templateResult: function (data) {
+          var $result = $('<span></span>')
+          $result.text(data.text)
+          if (data.newOption) $result.append('<em> (add new)</em>')
+          return $result
+        }
+      })
+      $('.input-group-text, .input-group-btn').css('height', $('[name^="PengajuanBarang_jumlah"]').css('height'))
+      $(this).change(function () {
+        let jumlah = $(this).parent().parent().find('[name^="PengajuanBarang_jumlah"]')
+        let satuan = $(this).parent().parent().find('[name^="PengajuanBarang_satuan"]')
+        jumlah.val('')
+        satuan.val('')
+        satuan.trigger('change.select2')
       })
     } else if ($(this).is('[data-autocomplete]')) {
       var model = $(this).attr('data-model')

@@ -7,6 +7,7 @@ class Pengajuans extends MY_Model
 	{
 		parent::__construct();
 		$this->table = 'pengajuan';
+		$this->file_location = 'dokumen-serah-terima';
 		$this->thead = array(
 			(object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
 			(object) array('mData' => 'tiket_id', 'sTitle' => 'ID Tiket'),
@@ -116,6 +117,12 @@ class Pengajuans extends MY_Model
 				'label' => 'Keterangan',
 				'type' => 'textarea'
 			),
+			array(
+				'name' => 'dokumen_serah_terima',
+				'width' => 2,
+				'label' => 'Dokumen Serah Terima',
+				'type' => 'file',
+			)
 		);
 		$this->childs = array(
 			array(
@@ -165,6 +172,14 @@ class Pengajuans extends MY_Model
 
 	function getForm($uuid = false, $isSubform = false)
 	{
+		// SHOW DOKUMEN SERAH TERIMA ON SELESAI ONLY
+		$pengajuan = $this->findOne($uuid);
+		if ($pengajuan['status'] !== 'SELESAI') {
+			$this->form = array_filter($this->form, function ($field) {
+				return $field['name'] !== 'dokumen_serah_terima';
+			});
+		}
+
 		$form = parent::getForm($uuid, $isSubform);
 		$hide = array('status', 'tiket_id');
 		$this->load->model('Roles');
@@ -223,6 +238,13 @@ class Pengajuans extends MY_Model
 	{
 		$this->load->model('PengajuanLogs');
 		$prev = parent::findOne($next['uuid']);
+
+		// UPLOAD DOKUMEN SERAH TERIMA
+		if ($prev['status'] === 'SELESAI' && strlen($_FILES['dokumen_serah_terima']['name']) > 0) {
+			$oldfile = $prev['dokumen_serah_terima'];
+			$next['dokumen_serah_terima'] = $this->fileupload($this->file_location, $_FILES['dokumen_serah_terima'], $oldfile);
+		}
+
 		$uuid = parent::update($next);
 
 		$this->load->model('PengajuanLogs');
@@ -289,13 +311,13 @@ class Pengajuans extends MY_Model
 	function select2forBarangKeluarBulk($field, $term)
 	{
 		$this->db->where("$this->table.status", 'DITERIMA');
-                return $this->db
-                        ->select("$this->table.uuid as id", false)
-                        ->select("CONCAT($field, ' - ', desa.nama, ' - ', bencana.nama) as text", false)
-                        ->join("desa", "$this->table.kelurahan = desa.uuid", "left")
-                        ->join("bencana", "$this->table.bencana = bencana.uuid", "left")
-                        ->limit(10)
-                        ->like($field, $term)->get($this->table)->result();
+		return $this->db
+			->select("$this->table.uuid as id", false)
+			->select("CONCAT($field, ' - ', desa.nama, ' - ', bencana.nama) as text", false)
+			->join("desa", "$this->table.kelurahan = desa.uuid", "left")
+			->join("bencana", "$this->table.bencana = bencana.uuid", "left")
+			->limit(10)
+			->like($field, $term)->get($this->table)->result();
 	}
 
 	function selesai($uuid)
@@ -330,6 +352,10 @@ class Pengajuans extends MY_Model
 
 	function delete($uuid)
 	{
+		// DELETE DOKUMEN SERAH TERIMA IF EXISTS
+		$record = parent::findOne($uuid);
+		$this->fileupload('', null, $record['dokumen_serah_terima']);
+
 		parent::delete($uuid);
 
 		// DELETE BARANG-RELATED RECORDS

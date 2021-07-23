@@ -54,13 +54,38 @@
                   <label class="col-sm-3 control-label"><?= $field['label']  ?></label>
                   <div class="col-sm-9">
                     <input class="form-control" type="<?= $field['type'] ?>" value="<?= htmlentities($field['value']) ?>" name="<?= $field['name'] ?>" <?= $field['attr'] ?>>
-                    <?php if (strlen($field['value']) > 0): ?>
-                    <br>
-                    <img src="<?= base_url($field['value']) ?>" width="200" height="100">
+                    <?php if (strlen($field['value']) > 0) : ?>
+                      <br>
+                      <?php if (substr($field['value'], -3) === 'pdf') : ?>
+                        <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#preview<?= $field['name'] ?>">
+                          <i class="fa fa-eye"></i> &nbsp;
+                          Preview <?= $field['label'] ?>
+                        </button>
+                        <div class="modal fade" id="preview<?= $field['name'] ?>" tabindex="-1" role="dialog" aria-labelledby="preview<?= $field['name'] ?>Label" aria-hidden="true">
+                          <div class="modal-dialog" role="document" style="display: table;">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">&nbsp;</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                <embed src="<?= base_url($field['value']) . '?token=' . time() ?>" width='800px' height='600px' />
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      <?php else : ?>
+                        <img src="<?= base_url($field['value']) ?>" width="200" height="100">
+                      <?php endif; ?>
                     <?php endif; ?>
                   </div>
                 </div>
-              <?php break; ?>
+                <?php break; ?>
               <?php
               default: ?>
                 <div class="form-group row">

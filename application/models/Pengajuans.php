@@ -7,7 +7,7 @@ class Pengajuans extends MY_Model
 	{
 		parent::__construct();
 		$this->table = 'pengajuan';
-		$this->file_location = 'dokumen-serah-terima';
+		$this->dir_dok_pengajuan = 'dokumen-pengajuan';
 		$this->thead = array(
 			(object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
 			(object) array('mData' => 'tiket_id', 'sTitle' => 'ID Tiket'),
@@ -118,10 +118,13 @@ class Pengajuans extends MY_Model
 				'type' => 'textarea'
 			),
 			array(
-				'name' => 'dokumen_serah_terima',
+				'name' => 'dokumen_pengajuan',
 				'width' => 2,
-				'label' => 'Dokumen Serah Terima',
+				'label' => 'Dokumen Pengajuan',
 				'type' => 'file',
+				'attributes' => array(
+					array('accept' => 'application/pdf')
+				)
 			)
 		);
 		$this->childs = array(
@@ -172,11 +175,11 @@ class Pengajuans extends MY_Model
 
 	function getForm($uuid = false, $isSubform = false)
 	{
-		// SHOW DOKUMEN SERAH TERIMA ON SELESAI ONLY
+		// SHOW PHOTO SERAH TERIMA ON SELESAI ONLY
 		$pengajuan = $this->findOne($uuid);
 		if ($pengajuan['status'] !== 'SELESAI') {
 			$this->form = array_filter($this->form, function ($field) {
-				return $field['name'] !== 'dokumen_serah_terima';
+				return $field['name'] !== 'photo_serah_terima';
 			});
 		}
 
@@ -216,6 +219,17 @@ class Pengajuans extends MY_Model
 		unset($this->childs[3]); // HIDE PENGAJUANLOG
 		unset($record['propinsi']);
 		unset($record['kabupaten']);
+
+		// UPLOAD DOKUMEN PENGAJUAN
+		if (strlen($_FILES['dokumen_pengajuan']['name']) > 0) {
+			$oldfile = null;
+			if (isset($record['uuid'])) {
+				$prev = parent::findOne($record['uuid']);
+				$oldfile = $prev['dokumen_pengajuan'];
+			}
+			$record['dokumen_pengajuan'] = $this->fileupload($this->dir_dok_pengajuan, $_FILES['dokumen_pengajuan'], $oldfile);
+		}
+
 		return parent::save($record);
 	}
 
@@ -239,11 +253,11 @@ class Pengajuans extends MY_Model
 		$this->load->model('PengajuanLogs');
 		$prev = parent::findOne($next['uuid']);
 
-		// UPLOAD DOKUMEN SERAH TERIMA
-		if ($prev['status'] === 'SELESAI' && strlen($_FILES['dokumen_serah_terima']['name']) > 0) {
-			$oldfile = $prev['dokumen_serah_terima'];
-			$next['dokumen_serah_terima'] = $this->fileupload($this->file_location, $_FILES['dokumen_serah_terima'], $oldfile);
-		}
+		// UPLOAD PHOTO SERAH TERIMA
+		// if ($prev['status'] === 'SELESAI' && strlen($_FILES['photo_serah_terima']['name']) > 0) {
+		// 	$oldfile = $prev['photo_serah_terima'];
+		// 	$next['photo_serah_terima'] = $this->fileupload($this->dir_dok_pengajuan, $_FILES['photo_serah_terima'], $oldfile);
+		// }
 
 		$uuid = parent::update($next);
 
@@ -352,9 +366,9 @@ class Pengajuans extends MY_Model
 
 	function delete($uuid)
 	{
-		// DELETE DOKUMEN SERAH TERIMA IF EXISTS
+		// DELETE DOKUMEN PENGAJUAN IF EXISTS
 		$record = parent::findOne($uuid);
-		$this->fileupload('', null, $record['dokumen_serah_terima']);
+		$this->fileupload('', null, $record['dokumen_pengajuan']);
 
 		parent::delete($uuid);
 

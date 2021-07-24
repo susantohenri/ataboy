@@ -39,6 +39,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
     <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
     <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/select2.min.css') ?>">
+    <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/dataTables.bootstrap4.css') ?>">
 </head>
 
 <body class="hold-transition layout-top-nav">
@@ -100,62 +101,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <div class="card card-outline">
                                 <div class="card-header">
                                     <h4>Penyaluran</h4>
                                 </div>
                                 <div class="card-body">
+                                    <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model">
+                                    </table>
+
+                                    <div class="modal" tabindex="-1" role="dialog" id="modalSerahTerima">
+                                        <div class="modal-dialog" role="document" style="display: table;">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"></h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img id="previewSerahTerima">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card card-outline">
+                                <div class="card-header">
+                                    <h4>Verifikasi</h4>
+                                </div>
+                                <div class="card-body">
                                     <table class="table table-bordered table-striped datatable table-model">
-                                        <thead>
-                                            <tr>
-                                                <th>DESA</th>
-                                                <th>BENCANA</th>
-                                                <th>KEBUTUHAN</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="card card-outline">
-                                <div class="card-body">
-                                    <table class="table table-bordered table-striped datatable table-model">
-                                        <thead>
-                                            <tr>
-                                                <th>DESA</th>
-                                                <th>BENCANA</th>
-                                                <th>KEBUTUHAN</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                                <div class="card-header">
+                                    <h4>Pengajuan</h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card card-outline">
                                 <div class="card-body">
                                     <table class="table table-bordered table-striped datatable table-model">
-                                        <thead>
-                                            <tr>
-                                                <th>DESA</th>
-                                                <th>BENCANA</th>
-                                                <th>KEBUTUHAN</th>
-                                            </tr>
-                                        </thead>
-                                        <tfoot>
-                                            <tr>
-                                            </tr>
-                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -247,6 +241,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- AdminLTE App -->
     <!-- <script src="../../dist/js/adminlte.min.js"></script> -->
     <script type="text/javascript" src="<?= base_url('assets/js/select2.full.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
+    <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.js') ?>"></script>
     <script>
         // PREVENT FORM RESUBMISSION ON REFRESH OR BACK
         if (window.history.replaceState) {
@@ -327,6 +323,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             }
         <?php endforeach ?>
+
+        $('#tablePenyaluran').DataTable({
+            processing: true,
+            serverSide: true,
+            columns: [{
+                    mData: 'desa',
+                    sTitle: 'DESA'
+                },
+                {
+                    mData: 'bencana',
+                    sTitle: 'BENCANA'
+                },
+                {
+                    mData: 'korban',
+                    sTitle: 'KORBAN'
+                },
+                {
+                    mData: 'bantuan',
+                    sTitle: 'BANTUAN'
+                },
+                {
+                    mData: 'button',
+                    sTitle: 'PHOTO'
+                }
+            ],
+            ajax: {
+                url: 'Home/dtPenyaluran',
+                type: 'POST'
+            },
+            fnRowCallback: function(nRow, aData, iDisplayIndex) {
+                $(nRow).find('.btn').click(function() {
+                    $('img#previewSerahTerima').attr('src', $(this).attr('data-img'))
+                    $('#modalSerahTerima').modal('show')
+                })
+            }
+        })
     </script>
 </body>
 

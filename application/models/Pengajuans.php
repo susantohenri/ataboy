@@ -8,6 +8,7 @@ class Pengajuans extends MY_Model
 		parent::__construct();
 		$this->table = 'pengajuan';
 		$this->dir_dok_pengajuan = 'dokumen-pengajuan';
+		$this->dir_photo_serter = 'photo-serah-terima';
 		$this->thead = array(
 			(object) array('mData' => 'orders', 'sTitle' => 'No', 'visible' => false),
 			(object) array('mData' => 'tiket_id', 'sTitle' => 'ID Tiket'),
@@ -265,7 +266,7 @@ class Pengajuans extends MY_Model
 		// UPLOAD PHOTO SERAH TERIMA
 		if ($prev['status'] === 'SELESAI' && strlen($_FILES['photo_serah_terima']['name']) > 0) {
 			$oldfile = $prev['photo_serah_terima'];
-			$next['photo_serah_terima'] = $this->fileupload($this->dir_dok_pengajuan, $_FILES['photo_serah_terima'], $oldfile);
+			$next['photo_serah_terima'] = $this->fileupload($this->dir_photo_serter, $_FILES['photo_serah_terima'], $oldfile);
 		}
 
 		$uuid = parent::update($next);
@@ -389,25 +390,46 @@ class Pengajuans extends MY_Model
 		}
 	}
 
-	function getMap ()
+	function getMap()
 	{
 		return $this
-		->db
-		->select('latitude lat', false)
-		->select('longitude lng', false)
-		->select('pengajuan.status')
-		->select('jumlah_kk_jiwa korban', false)
-		->select('bencana.nama bencana', false)
-		->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
-		->where_in('pengajuan.status', array(
-			'DIAJUKAN',
-			'DIVERIFIKASI',
-			'DITERIMA'
-		))
-		->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
-		->join('pengajuanbarang', 'pengajuan.uuid = pengajuanbarang.pengajuan', 'left')
-		->join('barang', 'barang.uuid = pengajuanbarang.barang', 'left')
-		->get($this->table)
-		->result_array();
+			->db
+			->select('latitude lat', false)
+			->select('longitude lng', false)
+			->select('pengajuan.status')
+			->select('jumlah_kk_jiwa korban', false)
+			->select('bencana.nama bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->where_in('pengajuan.status', array(
+				'DIAJUKAN',
+				'DIVERIFIKASI',
+				'DITERIMA'
+			))
+			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
+			->join('pengajuanbarang', 'pengajuan.uuid = pengajuanbarang.pengajuan', 'left')
+			->join('barang', 'barang.uuid = pengajuanbarang.barang', 'left')
+			->get($this->table)
+			->result_array();
+	}
+
+	function getDTPenyaluran()
+	{
+		$base_url = base_url();
+		return $this
+			->datatables
+			->select('desa.nama desa', false)
+			->select('bencana.nama bencana', false)
+			->select('jumlah_kk_jiwa korban', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") bantuan', false)
+			->select("CONCAT('<a class=\"btn btn-sm btn-info\" data-img=\"', '{$base_url}', photo_serah_terima, '\">preview</a>') button", false)
+			->from('pengajuan')
+			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
+			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
+			->join('barangkeluarbulk', 'barangkeluarbulk.pengajuan = pengajuan.uuid', 'left')
+			->join('barangkeluar', 'barangkeluar.barangkeluarbulk = barangkeluarbulk.uuid', 'left')
+			->join('barang', 'barangkeluar.barang = barang.uuid', 'left')
+			->where('pengajuan.status', 'SELESAI')
+			->group_by('pengajuan.uuid')
+			->generate();
 	}
 }

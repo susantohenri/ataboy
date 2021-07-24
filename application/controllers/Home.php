@@ -93,6 +93,12 @@ class Home extends CI_Controller
 		$this->load->view('home', $params);
 	}
 
+	function dtPenyaluran()
+	{
+		$this->load->model('Pengajuans');
+		echo $this->Pengajuans->getDTPenyaluran();
+	}
+
 	function Migrate($version = null)
 	{
 		$this->load->library('migration');

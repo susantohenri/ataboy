@@ -1,6 +1,7 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Donaturs extends MY_Model {
+class Donaturs extends MY_Model
+{
 
   function __construct()
   {
@@ -70,9 +71,9 @@ class Donaturs extends MY_Model {
     return parent::save($data);
   }
 
-  function create ($data)
+  function create($data)
   {
-    if (!isset ($data['status'])) $data['status'] = 1;
+    if (!isset($data['status'])) $data['status'] = 1;
     return parent::create($data);
   }
 
@@ -94,4 +95,20 @@ class Donaturs extends MY_Model {
     return parent::dt();
   }
 
+  function getDTDonatur()
+  {
+    return $this
+      ->datatables
+      ->select('user.nama donatur', false)
+      ->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") donasi', false)
+      ->select('DATE(donasi.createdAt) tanggal', false)
+      ->from('donasi')
+      ->join('user', 'donasi.createdBy = user.uuid', 'left')
+      ->join('barangmasukbulk', 'barangmasukbulk.donasi = donasi.uuid', 'left')
+      ->join('barangmasuk', 'barangmasuk.barangmasukbulk = barangmasukbulk.uuid', 'left')
+      ->join('barang', 'barangmasuk.barang = barang.uuid', 'left')
+      ->where('donasi.status', 'SELESAI')
+      ->group_by('donasi.uuid')
+      ->generate();
+  }
 }

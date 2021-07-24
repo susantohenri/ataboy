@@ -421,7 +421,7 @@ class Pengajuans extends MY_Model
 			->select('bencana.nama bencana', false)
 			->select('jumlah_kk_jiwa korban', false)
 			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") bantuan', false)
-			->select("CONCAT('<a class=\"btn btn-sm btn-info\" data-img=\"', '{$base_url}', photo_serah_terima, '\">preview</a>') button", false)
+			->select("CONCAT('<a class=\"btn btn-sm btn-warning\" data-img=\"', '{$base_url}', photo_serah_terima, '\">preview</a>') button", false)
 			->from('pengajuan')
 			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
 			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')

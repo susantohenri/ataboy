@@ -35,6 +35,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
         .card-body {
             padding: 5px;
         }
+
+        li.paginate_button.active a {
+            background-color: #ffc107 !important;
+            border-color: #ffc107 !important;
+        }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
     <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
@@ -102,9 +107,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                         <div class="col-sm-5">
-                            <div class="card card-outline">
+                            <div class="card card-outline" style="background-color: #00b050; color: white; font-size: small;">
                                 <div class="card-header">
-                                    <h4>Penyaluran</h4>
+                                    <h4 class="text-center">Penyaluran</h4>
                                 </div>
                                 <div class="card-body">
                                     <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model">
@@ -132,24 +137,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="card card-outline">
+                        <div class="col-sm-4">
+                            <div class="card card-outline" style="background-color: #ed7d31; color: white; font-size: small;">
                                 <div class="card-header">
-                                    <h4>Verifikasi</h4>
+                                    <h4 class="text-center">Donatur</h4>
                                 </div>
                                 <div class="card-body">
-                                    <table class="table table-bordered table-striped datatable table-model">
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="card card-outline">
-                                <div class="card-header">
-                                    <h4>Pengajuan</h4>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-bordered table-striped datatable table-model">
+                                    <table id="tableDonatur" class="table table-bordered table-striped datatable table-model">
                                     </table>
                                 </div>
                             </div>
@@ -357,6 +351,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $('img#previewSerahTerima').attr('src', $(this).attr('data-img'))
                     $('#modalSerahTerima').modal('show')
                 })
+            }
+        })
+
+        $('#tableDonatur').DataTable({
+            processing: true,
+            serverSide: true,
+            columns: [{
+                    mData: 'donatur',
+                    sTitle: 'DONATUR'
+                },
+                {
+                    mData: 'donasi',
+                    sTitle: 'DONASI'
+                },
+                {
+                    mData: 'tanggal',
+                    sTitle: 'TANGGAL'
+                }
+            ],
+            ajax: {
+                url: 'Home/dtDonatur',
+                type: 'POST'
             }
         })
     </script>

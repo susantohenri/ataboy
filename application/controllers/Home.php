@@ -99,6 +99,12 @@ class Home extends CI_Controller
 		echo $this->Pengajuans->getDTPenyaluran();
 	}
 
+	function dtDonatur()
+	{
+		$this->load->model('Donaturs');
+		echo $this->Donaturs->getDTDonatur();
+	}
+
 	function Migrate($version = null)
 	{
 		$this->load->library('migration');

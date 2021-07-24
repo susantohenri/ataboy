@@ -31,6 +31,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         .nav-link {
             cursor: pointer;
         }
+
+        .card-body {
+            padding: 5px;
+        }
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
     <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
@@ -76,10 +80,90 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <!-- Main content -->
             <div class="content">
-                <div class="container">
+                <div class="container-" style="padding: 10px">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                    <a class="weatherwidget-io" href="https://forecast7.com/en/n7d43110d69/boyolali-regency/" data-label_1="KABUPATEN" data-label_2="BOYOLALI" data-theme="original">BOYOLALI</a>
+                                    <script>
+                                        ! function(d, s, id) {
+                                            var js, fjs = d.getElementsByTagName(s)[0];
+                                            if (!d.getElementById(id)) {
+                                                js = d.createElement(s);
+                                                js.id = id;
+                                                js.src = 'https://weatherwidget.io/js/widget.min.js';
+                                                fjs.parentNode.insertBefore(js, fjs);
+                                            }
+                                        }(document, 'script', 'weatherwidget-io-js');
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card card-outline">
+                                <div class="card-header">
+                                    <h4>Penyaluran</h4>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped datatable table-model">
+                                        <thead>
+                                            <tr>
+                                                <th>DESA</th>
+                                                <th>BENCANA</th>
+                                                <th>KEBUTUHAN</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped datatable table-model">
+                                        <thead>
+                                            <tr>
+                                                <th>DESA</th>
+                                                <th>BENCANA</th>
+                                                <th>KEBUTUHAN</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                    <table class="table table-bordered table-striped datatable table-model">
+                                        <thead>
+                                            <tr>
+                                                <th>DESA</th>
+                                                <th>BENCANA</th>
+                                                <th>KEBUTUHAN</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
 
-                        <div class="col-sm-12">
+                        <div class="col-sm-8">
                             <div class="card card-outline">
                                 <div class="card-body">
 
@@ -88,30 +172,50 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </div>
                             </div><!-- /.card -->
                         </div>
+                        <div class="col-sm-4">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card card-outline">
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="card card-outline">
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                     <!-- /.row -->
                     <div class="row">
-
-                        <?php foreach ($blogs as $blog) : ?>
-                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
-                                <div class="card card-outline">
-                                    <div class="card-body">
-
-                                        <div class="row">
-                                            <div class="col-4 col-md-12">
-                                                <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
-                                            </div>
-                                            <div class="col-8 col-md-12">
-                                                <b><?= $blog->judul ?></b>
+                        <div class="col-md-6">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card card-outline">
+                                <div class="card-body">
+                                    <?php foreach ($blogs as $blog) : ?>
+                                        <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                            <div class="row">
+                                                <div class="col-4 col-md-12">
+                                                    <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                                </div>
+                                                <div class="col-8 col-md-12">
+                                                    <b><?= $blog->judul ?></b>
+                                                </div>
                                             </div>
                                         </div>
-
-                                    </div>
-                                </div><!-- /.card -->
+                                    <?php endforeach ?>
+                                </div>
                             </div>
-                        <?php endforeach ?>
-
+                        </div>
                     </div>
                     <!-- /.row -->
                 </div><!-- /.container-fluid -->
@@ -164,6 +268,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         })
 
         var google_btn_clicked = false
+
         function onSignIn(googleUser) {
             if (!google_btn_clicked) return false
             var profile = googleUser.getBasicProfile()
@@ -193,9 +298,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
             zoomOffset: -1
         }).addTo(mymap)
 
+        var iconDIAJUKAN = L.divIcon({
+            html: '<i class="fa fa-2x fa-map-marker-alt text-red"></i>',
+        })
+        var iconDIVERIFIKASI = L.divIcon({
+            html: '<i class="fa fa-2x fa-map-marker-alt text-info"></i>',
+        })
+        var iconDITERIMA = L.divIcon({
+            html: '<i class="fa fa-2x fa-map-marker-alt text-success"></i>',
+        })
+
         <?php foreach ($mapMarkers as $marker) : ?>
             try {
-                let marker = L.marker([<?= $marker['lat'] ?>, <?= $marker['lng'] ?>]).addTo(mymap)
+                let marker = L
+                    .marker(
+                        [<?= $marker['lat'] ?>, <?= $marker['lng'] ?>], {
+                            icon: icon<?= $marker['status'] ?>
+                        }
+                    )
+                    .addTo(mymap)
+                    .bindTooltip(`
+                        Jumlah Korban <b><?= $marker['korban'] ?></b>
+                        <br>Bencana <b><?= $marker['bencana'] ?></b>
+                        <br>Kebutuhan <b><?= $marker['kebutuhan'] ?></b>
+                        <br>Status <b><?= $marker['status'] ?></b>
+                    `)
             } catch (e) {
 
             }

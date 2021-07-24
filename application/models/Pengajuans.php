@@ -388,4 +388,26 @@ class Pengajuans extends MY_Model
 			$this->BarangKeluarBulks->delete($record->uuid);
 		}
 	}
+
+	function getMap ()
+	{
+		return $this
+		->db
+		->select('latitude lat', false)
+		->select('longitude lng', false)
+		->select('pengajuan.status')
+		->select('jumlah_kk_jiwa korban', false)
+		->select('bencana.nama bencana', false)
+		->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+		->where_in('pengajuan.status', array(
+			'DIAJUKAN',
+			'DIVERIFIKASI',
+			'DITERIMA'
+		))
+		->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
+		->join('pengajuanbarang', 'pengajuan.uuid = pengajuanbarang.pengajuan', 'left')
+		->join('barang', 'barang.uuid = pengajuanbarang.barang', 'left')
+		->get($this->table)
+		->result_array();
+	}
 }

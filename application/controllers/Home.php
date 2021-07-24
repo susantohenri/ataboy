@@ -86,12 +86,7 @@ class Home extends CI_Controller
 		}
 		$this->load->model(array('Blogs', 'Pengajuans', 'Desas'));
 		$params['blogs'] = $this->Blogs->find(array('status' => 1));
-		$params['mapMarkers'] = array_map(function ($pengajuan) {
-			return array(
-				'lat' => $pengajuan->latitude,
-				'lng' => $pengajuan->longitude
-			);
-		}, $this->Pengajuans->find(array('status' => 'DITERIMA')));
+		$params['mapMarkers'] = $this->Pengajuans->getMap();
 		$params['desas'] = array_map(function ($desa) {
 			return array('uuid' => $desa->uuid, 'nama' => $desa->nama);
 		}, $this->Desas->find());

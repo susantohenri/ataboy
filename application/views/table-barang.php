@@ -6,7 +6,7 @@
                 <a href="<?= site_url($current['controller'] . '/excel') ?>" class="btn btn-info">
                     <i class="fa fa-file-excel"></i>&nbsp; Download Excel
                 </a>
-                <a href="<?= site_url($current['controller'] . '/pdf') ?>" class="btn btn-primary">
+                <a href="<?= site_url($current['controller'] . '/pdf') ?>" class="btn btn-danger">
                     <i class="fa fa-file-pdf"></i>&nbsp; Download PDF
                 </a>
                 <?php if (in_array("create_{$current['controller']}", $permission)) : ?>

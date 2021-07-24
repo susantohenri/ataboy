@@ -125,6 +125,15 @@ class Pengajuans extends MY_Model
 				'attributes' => array(
 					array('accept' => 'application/pdf')
 				)
+			),
+			array(
+				'name' => 'photo_serah_terima',
+				'width' => 2,
+				'label' => 'Photo Serah Terima',
+				'type' => 'file',
+				'attributes' => array(
+					array('accept' => 'image/*')
+				)
 			)
 		);
 		$this->childs = array(
@@ -254,10 +263,10 @@ class Pengajuans extends MY_Model
 		$prev = parent::findOne($next['uuid']);
 
 		// UPLOAD PHOTO SERAH TERIMA
-		// if ($prev['status'] === 'SELESAI' && strlen($_FILES['photo_serah_terima']['name']) > 0) {
-		// 	$oldfile = $prev['photo_serah_terima'];
-		// 	$next['photo_serah_terima'] = $this->fileupload($this->dir_dok_pengajuan, $_FILES['photo_serah_terima'], $oldfile);
-		// }
+		if ($prev['status'] === 'SELESAI' && strlen($_FILES['photo_serah_terima']['name']) > 0) {
+			$oldfile = $prev['photo_serah_terima'];
+			$next['photo_serah_terima'] = $this->fileupload($this->dir_dok_pengajuan, $_FILES['photo_serah_terima'], $oldfile);
+		}
 
 		$uuid = parent::update($next);
 
@@ -369,6 +378,7 @@ class Pengajuans extends MY_Model
 		// DELETE DOKUMEN PENGAJUAN IF EXISTS
 		$record = parent::findOne($uuid);
 		$this->fileupload('', null, $record['dokumen_pengajuan']);
+		$this->fileupload('', null, $record['photo_serah_terima']);
 
 		parent::delete($uuid);
 

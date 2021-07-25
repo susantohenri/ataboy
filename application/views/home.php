@@ -165,12 +165,65 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 <div class="col-sm-12">
                                     <div class="card card-outline">
                                         <div class="card-body">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div class="card card-outline">
-                                        <div class="card-body">
+                                            <style>
+                                                .mySlides {
+                                                    display: none;
+                                                }
+
+                                                .btn-slider {
+                                                    color: #fff !important;
+                                                    background-color: #000 !important;
+                                                    border: none;
+                                                    display: inline-block;
+                                                    padding: 8px 16px;
+                                                    vertical-align: middle;
+                                                    overflow: hidden;
+                                                    text-decoration: none;
+                                                    color: inherit;
+                                                    background-color: inherit;
+                                                    text-align: center;
+                                                    cursor: pointer;
+                                                    white-space: nowrap;
+                                                }
+
+                                                .btn-slider-left {
+                                                    position: absolute;
+                                                    top: 50%;
+                                                    left: 0%;
+                                                    transform: translate(0%, -50%);
+                                                }
+
+                                                .btn-slider-right {
+                                                    position: absolute;
+                                                    top: 50%;
+                                                    right: 0%;
+                                                    transform: translate(0%, -50%);
+                                                }
+                                            </style>
+                                            <?php foreach ($slideshow as $img) : ?>
+                                                <img class="mySlides" src="<?= $img ?>" style="width:100%">
+                                            <?php endforeach ?>
+
+                                            <button class="btn-slider btn-slider-left" onclick="plusDivs(-1)">&#10094;</button>
+                                            <button class="btn-slider btn-slider-right" onclick="plusDivs(1)">&#10095;</button>
+                                            <script>
+                                                var myIndex = 0;
+                                                carousel();
+
+                                                function carousel() {
+                                                    var i;
+                                                    var x = document.getElementsByClassName("mySlides");
+                                                    for (i = 0; i < x.length; i++) {
+                                                        x[i].style.display = "none";
+                                                    }
+                                                    myIndex++;
+                                                    if (myIndex > x.length) {
+                                                        myIndex = 1
+                                                    }
+                                                    x[myIndex - 1].style.display = "block";
+                                                    setTimeout(carousel, 2000); // Change image every 2 seconds
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>

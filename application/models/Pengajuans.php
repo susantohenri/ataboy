@@ -432,4 +432,19 @@ class Pengajuans extends MY_Model
 			->group_by('pengajuan.uuid')
 			->generate();
 	}
+
+	function getSlideShowSerahTerima()
+	{
+		return array_map(
+			function ($record) {
+				return base_url($record->photo_serah_terima);
+			},
+			$this
+				->db
+				->select('photo_serah_terima')
+				->where('photo_serah_terima <>', '')
+				->get($this->table)
+				->result()
+		);
+	}
 }

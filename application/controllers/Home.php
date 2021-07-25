@@ -90,6 +90,7 @@ class Home extends CI_Controller
 		$params['desas'] = array_map(function ($desa) {
 			return array('uuid' => $desa->uuid, 'nama' => $desa->nama);
 		}, $this->Desas->find());
+		$params['slideshow'] = $this->Pengajuans->getSlideShowSerahTerima();
 		$this->load->view('home', $params);
 	}
 

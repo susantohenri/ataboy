@@ -28,14 +28,17 @@ class Blogs extends MY_Model
         'label' => 'Isi',
         'type' => 'textarea',
         'attributes' => array(
-          array('required' => 'required')
+          // array('required' => 'required')
         )
       ),
       array(
         'name' => 'gambar',
         'type' => 'file',
         'width' => 2,
-        'label' => 'Gambar'
+        'label' => 'Gambar',
+        'attributes' => array(
+          array('accept' => 'image/*')
+        )
       ),
       array(
         'name' => 'status',

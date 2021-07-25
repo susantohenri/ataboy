@@ -233,30 +233,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </div>
                     <!-- /.row -->
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card card-outline">
-                                <div class="card-body">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card card-outline">
-                                <div class="card-body">
-                                    <?php foreach ($blogs as $blog) : ?>
-                                        <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
-                                            <div class="row">
-                                                <div class="col-4 col-md-12">
-                                                    <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
-                                                </div>
-                                                <div class="col-8 col-md-12">
-                                                    <b><?= $blog->judul ?></b>
-                                                </div>
+
+                        <?php foreach ($blogs as $blog) : ?>
+                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                <div class="card card-outline">
+                                    <div class="card-body">
+
+                                        <div class="row">
+                                            <div class="col-4 col-md-12">
+                                                <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                            </div>
+                                            <div class="col-8 col-md-12">
+                                                <b><?= $blog->judul ?></b>
                                             </div>
                                         </div>
-                                    <?php endforeach ?>
-                                </div>
+
+                                    </div>
+                                </div><!-- /.card -->
                             </div>
-                        </div>
+                        <?php endforeach ?>
+
                     </div>
                     <!-- /.row -->
                 </div><!-- /.container-fluid -->

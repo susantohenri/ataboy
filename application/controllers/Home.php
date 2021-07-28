@@ -94,6 +94,18 @@ class Home extends CI_Controller
 		$this->load->view('home', $params);
 	}
 
+	function dtDiverifikasi()
+	{
+		$this->load->model('Pengajuans');
+		echo $this->Pengajuans->getDTDiverifikasi();
+	}
+
+	function dtDiajukan()
+	{
+		$this->load->model('Pengajuans');
+		echo $this->Pengajuans->getDTDiajukan();
+	}
+
 	function dtPenyaluran()
 	{
 		$this->load->model('Pengajuans');

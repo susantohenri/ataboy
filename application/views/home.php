@@ -32,8 +32,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
             cursor: pointer;
         }
 
-        .card-body {
-            padding: 5px;
+        div.contains-dt {
+            color: white;
+            font-size: small;
+            padding: 5px
         }
 
         li.paginate_button.active a {
@@ -80,188 +82,184 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- /.navbar -->
         </div>
 
-        <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             &nbsp;
 
-            <!-- Main content -->
             <div class="content">
                 <div class="container-" style="padding: 10px">
+
                     <div class="row">
-                        <div class="col-sm-3">
-                            <div class="card card-outline">
-                                <div class="card-body">
-                                    <a class="weatherwidget-io" href="https://forecast7.com/en/n7d43110d69/boyolali-regency/" data-label_1="KABUPATEN" data-label_2="BOYOLALI" data-theme="original">BOYOLALI</a>
+                        <div class="col-sm-12 col-md-4" style="background-color: #1f567c">
+                            <a class="weatherwidget-io" href="https://forecast7.com/en/n7d43110d69/boyolali-regency/" data-label_1="KABUPATEN" data-label_2="BOYOLALI" data-theme="original">BOYOLALI</a>
+                            <script>
+                                ! function(d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (!d.getElementById(id)) {
+                                        js = d.createElement(s);
+                                        js.id = id;
+                                        js.src = 'https://weatherwidget.io/js/widget.min.js';
+                                        fjs.parentNode.insertBefore(js, fjs);
+                                    }
+                                }(document, 'script', 'weatherwidget-io-js');
+                            </script>
+                        </div>
+                        <div class="col-sm-12 col-md-4 contains-dt" style="background-color: #ed7d31; max-width: 33%; margin: 0 2px">
+                            <h4 class="text-center">Verifikasi</h4>
+                            <table id="tableDiverifikasi" class="table table-bordered table-striped datatable table-model"></table>
+                        </div>
+                        <div class="col-sm-12 col-md-4 contains-dt" style="background-color: #c10100;">
+                            <h4 class="text-center">Pengajuan</h4>
+                            <table id="tableDiajukan" class="table table-bordered table-striped datatable table-model"></table>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px; margin-bottom: 5px">
+                        <div class="col-sm-12 col-md-8" style="background-color: white;">
+                            <div id="mapid" style="min-width:200px; height:450px; width: 100%; cursor: pointer"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-4">
+                            <div class="row">
+                                <div class="col-sm-12 contains-dt" style="background-color: white; color: black; height: 225px">
+                                    <table id="tableDonatur" class="table table-bordered table-striped datatable table-model"></table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12" style="background-color: white; height: 225px">
+                                    <style>
+                                        .mySlides {
+                                            display: none;
+                                        }
+
+                                        .btn-slider {
+                                            color: #fff !important;
+                                            background-color: #000 !important;
+                                            border: none;
+                                            display: inline-block;
+                                            padding: 8px 16px;
+                                            vertical-align: middle;
+                                            overflow: hidden;
+                                            text-decoration: none;
+                                            color: inherit;
+                                            background-color: inherit;
+                                            text-align: center;
+                                            cursor: pointer;
+                                            white-space: nowrap;
+                                        }
+
+                                        .btn-slider-left {
+                                            position: absolute;
+                                            top: 50%;
+                                            left: 0%;
+                                            transform: translate(0%, -50%);
+                                        }
+
+                                        .btn-slider-right {
+                                            position: absolute;
+                                            top: 50%;
+                                            right: 0%;
+                                            transform: translate(0%, -50%);
+                                        }
+                                    </style>
+                                    <?php foreach ($slideshow as $img) : ?>
+                                        <img class="mySlides" src="<?= $img ?>" style="width:100%; max-height: 220px">
+                                    <?php endforeach ?>
+
+                                    <button class="btn-slider btn-slider-left" onclick="plusDivs(-1)">&#10094;</button>
+                                    <button class="btn-slider btn-slider-right" onclick="plusDivs(1)">&#10095;</button>
                                     <script>
-                                        ! function(d, s, id) {
-                                            var js, fjs = d.getElementsByTagName(s)[0];
-                                            if (!d.getElementById(id)) {
-                                                js = d.createElement(s);
-                                                js.id = id;
-                                                js.src = 'https://weatherwidget.io/js/widget.min.js';
-                                                fjs.parentNode.insertBefore(js, fjs);
+                                        var myIndex = 0;
+                                        carousel();
+
+                                        function carousel() {
+                                            var i;
+                                            var x = document.getElementsByClassName("mySlides");
+                                            for (i = 0; i < x.length; i++) {
+                                                x[i].style.display = "none";
                                             }
-                                        }(document, 'script', 'weatherwidget-io-js');
+                                            myIndex++;
+                                            if (myIndex > x.length) {
+                                                myIndex = 1
+                                            }
+                                            x[myIndex - 1].style.display = "block";
+                                            setTimeout(carousel, 2500); // Change image every 2 seconds
+                                        }
                                     </script>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-5">
-                            <div class="card card-outline" style="background-color: #00b050; color: white; font-size: small;">
-                                <div class="card-header">
-                                    <h4 class="text-center">Penyaluran</h4>
-                                </div>
-                                <div class="card-body">
-                                    <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model">
-                                    </table>
-
-                                    <div class="modal" tabindex="-1" role="dialog" id="modalSerahTerima">
-                                        <div class="modal-dialog" role="document" style="display: table;">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img id="previewSerahTerima">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="card card-outline" style="background-color: #ed7d31; color: white; font-size: small;">
-                                <div class="card-header">
-                                    <h4 class="text-center">Donatur</h4>
-                                </div>
-                                <div class="card-body">
-                                    <table id="tableDonatur" class="table table-bordered table-striped datatable table-model">
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="row">
+                        <div class="col-sm-12 col-md-6 contains-dt" style="background-color: black; width: 32%">
+                            <h4 class="text-center">Bantuan Tersalurkan</h4>
+                            <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model"></table>
 
-                        <div class="col-sm-8">
-                            <div class="card card-outline">
-                                <div class="card-body">
-
-                                    <div id="mapid" style="min-width:200px; height:450px; width: 100%; cursor: pointer"></div>
-
+                            <div class="modal" tabindex="-1" role="dialog" id="modalSerahTerima">
+                                <div class="modal-dialog" role="document" style="display: table;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img id="previewSerahTerima">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div><!-- /.card -->
+                            </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-12 col-md-6" style="background-color: white; border-radius: 25px">
+                            <h4 class="text-center">Tahukah Anda?</h4>
                             <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="card card-outline">
-                                        <div class="card-body">
-                                            <style>
-                                                .mySlides {
-                                                    display: none;
-                                                }
+                                <?php foreach ($blogs as $blog) : ?>
+                                    <div class="col-sm-12 col-md-4" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                        <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                        <b><?= $blog->judul ?></b>
+                                    </div>
+                                <?php endforeach ?>
+                            </div>
+                            <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                .btn-slider {
-                                                    color: #fff !important;
-                                                    background-color: #000 !important;
-                                                    border: none;
-                                                    display: inline-block;
-                                                    padding: 8px 16px;
-                                                    vertical-align: middle;
-                                                    overflow: hidden;
-                                                    text-decoration: none;
-                                                    color: inherit;
-                                                    background-color: inherit;
-                                                    text-align: center;
-                                                    cursor: pointer;
-                                                    white-space: nowrap;
-                                                }
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <center>
+                                                        <h2 id="judul"></h2>
+                                                    </center>
+                                                </div>
+                                                <div class="col-sm-12">
+                                                    <div class="card card-outline">
+                                                        <div class="card-body">
+                                                            <img id="gambar" src="" style="width: 100%;">
+                                                        </div>
+                                                    </div><!-- /.card -->
+                                                </div>
+                                                <div class="col-sm-12" id="isi">
+                                                </div>
+                                            </div>
 
-                                                .btn-slider-left {
-                                                    position: absolute;
-                                                    top: 50%;
-                                                    left: 0%;
-                                                    transform: translate(0%, -50%);
-                                                }
-
-                                                .btn-slider-right {
-                                                    position: absolute;
-                                                    top: 50%;
-                                                    right: 0%;
-                                                    transform: translate(0%, -50%);
-                                                }
-                                            </style>
-                                            <?php foreach ($slideshow as $img) : ?>
-                                                <img class="mySlides" src="<?= $img ?>" style="width:100%">
-                                            <?php endforeach ?>
-
-                                            <button class="btn-slider btn-slider-left" onclick="plusDivs(-1)">&#10094;</button>
-                                            <button class="btn-slider btn-slider-right" onclick="plusDivs(1)">&#10095;</button>
-                                            <script>
-                                                var myIndex = 0;
-                                                carousel();
-
-                                                function carousel() {
-                                                    var i;
-                                                    var x = document.getElementsByClassName("mySlides");
-                                                    for (i = 0; i < x.length; i++) {
-                                                        x[i].style.display = "none";
-                                                    }
-                                                    myIndex++;
-                                                    if (myIndex > x.length) {
-                                                        myIndex = 1
-                                                    }
-                                                    x[myIndex - 1].style.display = "block";
-                                                    setTimeout(carousel, 2000); // Change image every 2 seconds
-                                                }
-                                            </script>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.row -->
-                    <div class="row">
 
-                        <?php foreach ($blogs as $blog) : ?>
-                            <div class="col-sm-12 col-md-3" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
-                                <div class="card card-outline">
-                                    <div class="card-body">
-
-                                        <div class="row">
-                                            <div class="col-4 col-md-12">
-                                                <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
-                                            </div>
-                                            <div class="col-8 col-md-12">
-                                                <b><?= $blog->judul ?></b>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div><!-- /.card -->
-                            </div>
-                        <?php endforeach ?>
-
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
+                </div>
             </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
 
-        <!-- Main Footer -->
+        </div>
+
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
@@ -271,9 +269,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <small><strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.</small>
         </footer>
     </div>
-    <!-- ./wrapper -->
 
-    <?php foreach (array('blog', 'error-message', 'forgot-password', 'login', 'registrasi-donatur', 'registrasi-kelurahan', 'reset-password') as $home_element) include(APPPATH . "views/homepage/{$home_element}.php") ?>
+    <?php foreach (array('error-message', 'forgot-password', 'login', 'registrasi-donatur', 'registrasi-kelurahan', 'reset-password') as $home_element) include(APPPATH . "views/homepage/{$home_element}.php") ?>
 
     <!-- REQUIRED SCRIPTS -->
 
@@ -367,9 +364,95 @@ scratch. This page gets rid of all links and provides the needed markup only.
             }
         <?php endforeach ?>
 
+        $('#tableDiverifikasi').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 1,
+            lengthMenu: [
+                [1, 5, -1],
+                [1, 5, 'Semua']
+            ],
+            columns: [{
+                    mData: 'desa',
+                    sTitle: 'DESA'
+                },
+                {
+                    mData: 'bencana',
+                    sTitle: 'BENCANA'
+                },
+                {
+                    mData: 'kebutuhan',
+                    sTitle: 'KEBUTUHAN'
+                }
+            ],
+            ajax: {
+                url: 'Home/dtDiverifikasi',
+                type: 'POST'
+            }
+        })
+
+        $('#tableDiajukan').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 1,
+            lengthMenu: [
+                [1, 5, -1],
+                [1, 5, 'Semua']
+            ],
+            columns: [{
+                    mData: 'desa',
+                    sTitle: 'DESA'
+                },
+                {
+                    mData: 'bencana',
+                    sTitle: 'BENCANA'
+                },
+                {
+                    mData: 'kebutuhan',
+                    sTitle: 'KEBUTUHAN'
+                }
+            ],
+            ajax: {
+                url: 'Home/dtDiajukan',
+                type: 'POST'
+            }
+        })
+
+        $('#tableDonatur').DataTable({
+            processing: true,
+            serverSide: true,
+            pageLength: 1,
+            lengthMenu: [
+                [1, 5, -1],
+                [1, 5, 'Semua']
+            ],
+            columns: [{
+                    mData: 'donatur',
+                    sTitle: 'DONATUR'
+                },
+                {
+                    mData: 'donasi',
+                    sTitle: 'DONASI'
+                },
+                {
+                    mData: 'tanggal',
+                    sTitle: 'TANGGAL'
+                }
+            ],
+            ajax: {
+                url: 'Home/dtDonatur',
+                type: 'POST'
+            }
+        })
+
         $('#tablePenyaluran').DataTable({
             processing: true,
             serverSide: true,
+            pageLength: 1,
+            lengthMenu: [
+                [1, 5, -1],
+                [1, 5, 'Semua']
+            ],
             columns: [{
                     mData: 'desa',
                     sTitle: 'DESA'
@@ -400,28 +483,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     $('img#previewSerahTerima').attr('src', $(this).attr('data-img'))
                     $('#modalSerahTerima').modal('show')
                 })
-            }
-        })
-
-        $('#tableDonatur').DataTable({
-            processing: true,
-            serverSide: true,
-            columns: [{
-                    mData: 'donatur',
-                    sTitle: 'DONATUR'
-                },
-                {
-                    mData: 'donasi',
-                    sTitle: 'DONASI'
-                },
-                {
-                    mData: 'tanggal',
-                    sTitle: 'TANGGAL'
-                }
-            ],
-            ajax: {
-                url: 'Home/dtDonatur',
-                type: 'POST'
             }
         })
     </script>

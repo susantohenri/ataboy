@@ -412,6 +412,40 @@ class Pengajuans extends MY_Model
 			->result_array();
 	}
 
+	function getDTDiverifikasi()
+	{
+		return $this
+			->datatables
+			->select('desa.nama desa', false)
+			->select('bencana.nama bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->from('pengajuan')
+			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
+			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
+			->join('pengajuanbarang', 'pengajuanbarang.pengajuan = pengajuan.uuid', 'left')
+			->join('barang', 'pengajuanbarang.barang = barang.uuid', 'left')
+			->where('pengajuan.status', 'DIVERIFIKASI')
+			->group_by('pengajuan.uuid')
+			->generate();
+	}
+
+	function getDTDiajukan()
+	{
+		return $this
+			->datatables
+			->select('desa.nama desa', false)
+			->select('bencana.nama bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->from('pengajuan')
+			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
+			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
+			->join('pengajuanbarang', 'pengajuanbarang.pengajuan = pengajuan.uuid', 'left')
+			->join('barang', 'pengajuanbarang.barang = barang.uuid', 'left')
+			->where('pengajuan.status', 'DIAJUKAN')
+			->group_by('pengajuan.uuid')
+			->generate();
+	}
+
 	function getDTPenyaluran()
 	{
 		$base_url = base_url();

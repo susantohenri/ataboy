@@ -386,7 +386,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
             ],
             ajax: {
-                url: 'Home/dtDiverifikasi',
+                url: '<?= site_url('Home/dtDiverifikasi') ?>',
                 type: 'POST'
             }
         })
@@ -413,7 +413,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
             ],
             ajax: {
-                url: 'Home/dtDiajukan',
+                url: '<?= site_url('Home/dtDiajukan') ?>',
                 type: 'POST'
             }
         })
@@ -440,7 +440,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
             ],
             ajax: {
-                url: 'Home/dtDonatur',
+                url: '<?= site_url('Home/dtDonatur') ?>',
                 type: 'POST'
             }
         })
@@ -475,7 +475,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 }
             ],
             ajax: {
-                url: 'Home/dtPenyaluran',
+                url: '<?= site_url('Home/dtPenyaluran') ?>',
                 type: 'POST'
             },
             fnRowCallback: function(nRow, aData, iDisplayIndex) {

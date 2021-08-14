@@ -48,6 +48,7 @@ window.onload = function () {
         formInit(created)
       })
     })
+    if (window.location.href.indexOf('/create') > -1) fchild.find('.btn-add').click()// show item donasi by default
   })
 
   $('.select2-selection__rendered .select2-selection__choice').each(function () {

@@ -70,7 +70,7 @@ class Barang extends MY_Controller {
 
     function excel() {
         $rows = $this->{$this->model}->download();
-        $colnames = array_keys($rows[0]);
+        $colnames = array('NO', 'BARANG', 'STATUS', 'STOK');
 
         $spreadsheet = new Spreadsheet();
         $spreadsheet->getProperties()

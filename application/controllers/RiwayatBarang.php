@@ -36,7 +36,7 @@ class RiwayatBarang extends MY_Controller
 	function excel()
 	{
 		$rows = $this->{$this->model}->download();
-		$colnames = array_keys($rows[0]);
+		$colnames = array('NO', 'TANGGAL', 'BARANG', 'JENIS', 'JUMLAH', 'DONASI / PENGAJUAN', 'DONATUR', 'KELURAHAN', 'BENCANA');
 
 		$spreadsheet = new Spreadsheet();
 		$spreadsheet->getProperties()

@@ -86,7 +86,33 @@ class RiwayatBarangs extends MY_Model {
         return $this->datatables->generate();
     }
 
-    function download() {
+    function download($start_date, $end_date) {
+        $this->query = "
+            SELECT
+              riwayatbarang.orders
+              , riwayatbarang.uuid
+              , riwayatbarang.createdAt tanggal
+              , barang.nama namabarang
+              , IF(LENGTH(riwayatbarang.barangmasuk) > 0, 'MASUK', IF(LENGTH(riwayatbarang.barangkeluar) > 0, 'KELUAR', 'UNDEFINED')) jenis
+              , CONCAT(FORMAT(riwayatbarang.jumlah, 0), ' ', barangsatuan.nama) jumlah
+              , IF(donasi.tiket_id IS NOT NULL, donasi.tiket_id, IF(pengajuan.tiket_id IS NOT NULL, pengajuan.tiket_id, 'MANUAL')) tiket_id
+              , user.nama donatur
+              , desa.nama kelurahan
+              , bencana.nama bencana
+            FROM riwayatbarang
+            LEFT JOIN barang ON riwayatbarang.barang = barang.uuid
+            LEFT JOIN barangsatuan ON barangsatuan.uuid = riwayatbarang.satuan
+            LEFT JOIN barangmasuk ON riwayatbarang.barangmasuk = barangmasuk.uuid
+            LEFT JOIN barangkeluar ON riwayatbarang.barangKeluar = barangkeluar.uuid
+            LEFT JOIN barangmasukbulk ON barangmasuk.barangmasukbulk = barangmasukbulk.uuid
+            LEFT JOIN barangkeluarbulk ON barangkeluar.barangkeluarbulk = barangkeluarbulk.uuid
+            LEFT JOIN donasi ON barangmasukbulk.donasi = donasi.uuid
+            LEFT JOIN pengajuan ON barangkeluarbulk.pengajuan = pengajuan.uuid
+            LEFT JOIN user ON donasi.createdBy = user.uuid
+            LEFT JOIN desa ON pengajuan.kelurahan = desa.uuid
+            LEFT JOIN bencana ON pengajuan.bencana = bencana.uuid
+            WHERE riwayatbarang.createdAt >= '$start_date' AND riwayatbarang.createdAt <= '$end_date'
+        ";
         $no = 0;
         return array_map(function ($record) use (&$no) {
             $no++;

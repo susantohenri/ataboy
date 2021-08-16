@@ -27,7 +27,10 @@ class RiwayatBarang extends MY_Controller
 		$vars['js'] = array(
 			'jquery.dataTables.min.js',
 			'dataTables.bootstrap4.js',
-			'table.js'
+			'table.js',
+                        'moment.min.js',
+                        'daterangepicker.min.js',
+                        'table-riwayatbarang.js'
 		);
 		$vars['thead'] = $this->$model->thead;
 		$this->loadview('index', $vars);
@@ -35,7 +38,7 @@ class RiwayatBarang extends MY_Controller
 
 	function excel()
 	{
-		$rows = $this->{$this->model}->download();
+		$rows = $this->{$this->model}->download($this->input->get('start_date'), $this->input->get('end_date'));
 		$colnames = array('NO', 'TANGGAL', 'BARANG', 'JENIS', 'JUMLAH', 'DONASI / PENGAJUAN', 'DONATUR', 'KELURAHAN', 'BENCANA');
 
 		$spreadsheet = new Spreadsheet();
@@ -92,12 +95,12 @@ class RiwayatBarang extends MY_Controller
 	function pdf()
 	{
 		$data = array(
-			'rows' => $this->{$this->model}->download()
+			'rows' => $this->{$this->model}->download($this->input->post('start_date'), $this->input->post('end_date'))
 		);
 		$viewer = 'pdf-riwayatbarang';
 		$filename = 'Riwayat Barang ATAboy';
 		$html = $this->load->view($viewer, $data, TRUE);
-
+                
 		$pdf = new Dompdf();
 		$pdf->loadHtml($html);
 		$pdf->render();

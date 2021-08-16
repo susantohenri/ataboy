@@ -42,12 +42,14 @@
     <table id="table">
         <thead>
             <tr>
-                <?php foreach ($rows[0] as $field => $value) : ?>
-                    <th><?= $field ?></th>
-                <?php endforeach ?>
+                <th>NO</th>
+                <th>BARANG</th>
+                <th>STATUS</th>
+                <th>STOK</th>
             </tr>
         </thead>
         <tbody>
+            <?php if (count($rows) > 0): ?>
             <?php foreach ($rows as $row) : ?>
                 <tr>
                     <?php foreach ($row as $cell) : ?>
@@ -57,6 +59,7 @@
                     <?php endforeach ?>
                 </tr>
             <?php endforeach ?>
+            <?php endif ?>
         </tbody>
     </table>
 </body>

@@ -33,14 +33,7 @@ $(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: {
-                start_date: start_date + " 00:00:00",
-                end_date: end_date + " 23:59:59"
-            }
-        });
+        window.open(url + '?start_date=' + start_date + " 00:00:00&end_date=" + end_date + " 23:59:59", '_blank');
     });
 
     // download excel

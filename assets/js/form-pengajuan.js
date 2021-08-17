@@ -381,7 +381,7 @@ function prepareModalErrorBencanaFreeText() {
 }
 
 function validateBencanaFreeText () {
-    if ($('.select2-selection__rendered:contains(free-text)').length > 0) {
+    if (['DIVERIFIKASI', 'DITERIMA', 'SELESAI'].indexOf($('[name="status"]').val()) > -1 && $('.select2-selection__rendered:contains(free-text)').length > 0) {
         $('#errorBencanaFreeText').modal('show')
         return false
     } else return true

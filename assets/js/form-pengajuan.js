@@ -9,7 +9,7 @@ window.onload = function () {
     $('[data-number]').each(function () {
       $(this).val(getNumber($(this)))
     })
-    return validateBencanaFreeText()
+    return validateBencanaFreeText() && validateBarangFreeText()
   })
 
   $('.form-child').each(function () {
@@ -58,8 +58,8 @@ window.onload = function () {
   });
 
   if (window.location.href.indexOf('ChangePassword') > -1) $('form a[href*="ChangePassword/delete"]').hide()
-  
   prepareModalErrorBencanaFreeText()
+  prepareModalErrorBarangFreeText()
 }
 
 function formInit(scope) {
@@ -357,32 +357,63 @@ function handleDisableChild() {
   $(`[data-controller="${disableChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
 }
 
-function prepareModalErrorBencanaFreeText() {
-    $('body').append(`
-        <div class="modal" id="errorBencanaFreeText" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title">Error</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                <p>Jenis Bencana Free Text Tidak Dapat Diproses</p>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            </div>
-        </div>  
-    `)
+
+function prepareModalErrorBarangFreeText() {
+  $('body').append(`
+      <div class="modal" id="errorBarangFreeText" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title">Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+              <p>Barang Free Text Tidak Dapat Diproses</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+          </div>
+      </div>
+  `)
 }
 
-function validateBencanaFreeText () {
-    if (['DIVERIFIKASI', 'DITERIMA', 'SELESAI'].indexOf($('[name="status"]').val()) > -1 && $('.select2-selection__rendered:contains(free-text)').length > 0) {
-        $('#errorBencanaFreeText').modal('show')
-        return false
-    } else return true
+function validateBarangFreeText() {
+  if ('SELESAI' === $('[name="status"]').val() && $('.select2-selection__rendered:contains(free-text)').length > 0) {
+    $('#errorBarangFreeText').modal('show')
+    return false
+  } else return true
+}
+
+function prepareModalErrorBencanaFreeText() {
+  $('body').append(`
+      <div class="modal" id="errorBencanaFreeText" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+              <h5 class="modal-title">Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <div class="modal-body">
+              <p>Jenis Bencana Free Text Tidak Dapat Diproses</p>
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+          </div>
+          </div>
+      </div>
+  `)
+}
+
+function validateBencanaFreeText() {
+  if (['DIVERIFIKASI', 'DITERIMA', 'SELESAI'].indexOf($('[name="status"]').val()) > -1 && $('.select2-selection__rendered:contains(free-text)').length > 0) {
+    $('#errorBencanaFreeText').modal('show')
+    return false
+  } else return true
 }

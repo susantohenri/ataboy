@@ -12,7 +12,8 @@ class Migration_bencana extends CI_Migration {
         `createdAt` datetime DEFAULT NULL,
         `updatedAt` datetime DEFAULT NULL,
         `nama` varchar(100) NOT NULL,
-        `status` TINYINT(1) NOT NULL,
+        `jenis` varchar(16) NOT NULL,
+        `status` TINYINT(1) NOT NULL DEFAULT 1,
         PRIMARY KEY (`uuid`)
       ) ENGINE=InnoDB DEFAULT CHARSET=utf8
     ");

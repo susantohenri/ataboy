@@ -211,7 +211,22 @@ class Pengajuans extends MY_Model
 					return !in_array($field['name'], $hide);
 				}
 			);
-		}
+		} else {
+                    $form = array_map(function ($field) use($pengajuan){
+                        switch ($field['name']) {
+                            case 'bencana':
+                                $this->load->model('Bencanas');
+                                $bencana = $this->Bencanas->findOne($pengajuan['bencana']);
+                                $jn_bencana = $bencana['jenis'] === 'free-text' ? "{$bencana['nama']} (free-text)": $bencana['nama'];
+                                $field['value'] = $bencana['uuid'];
+                                $field['options'] = array(
+                                    array('text' => $jn_bencana, 'value' => $bencana['uuid'])
+                                );
+                                break;
+                        }
+                        return $field;
+                    }, $form);
+                }
 
 		$form = array_map(function ($field) use ($disabled) {
 			if (in_array($field['name'], $disabled)) {
@@ -229,6 +244,8 @@ class Pengajuans extends MY_Model
 		unset($this->childs[3]); // HIDE PENGAJUANLOG
 		unset($record['propinsi']);
 		unset($record['kabupaten']);
+                $this->load->model('Bencanas');
+                $record['bencana'] = $this->Bencanas->getUuid($record['bencana']);
 
 		// UPLOAD DOKUMEN PENGAJUAN
 		if (strlen($_FILES['dokumen_pengajuan']['name']) > 0) {

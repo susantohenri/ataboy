@@ -42,6 +42,44 @@ scratch. This page gets rid of all links and provides the needed markup only.
             background-color: #ffc107 !important;
             border-color: #ffc107 !important;
         }
+
+        /* slider begin */
+        .mySlides {
+            display: none;
+        }
+
+        .btn-slider {
+            opacity: .2;
+            color: #fff !important;
+            background-color: #000 !important;
+            border: none;
+            display: inline-block;
+            padding: 8px 16px;
+            vertical-align: middle;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            background-color: inherit;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-slider-left {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            transform: translate(0%, -50%);
+        }
+
+        .btn-slider-right {
+            position: absolute;
+            top: 50%;
+            right: 0%;
+            transform: translate(0%, -50%);
+        }
+
+        /* slider end */
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
     <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
@@ -124,71 +162,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="row">
                                 <div class="col-sm-12" style="background-color: white; height: 225px">
-                                    <style>
-                                        .mySlides {
-                                            display: none;
-                                        }
-
-                                        .btn-slider {
-                                            color: #fff !important;
-                                            background-color: #000 !important;
-                                            border: none;
-                                            display: inline-block;
-                                            padding: 8px 16px;
-                                            vertical-align: middle;
-                                            overflow: hidden;
-                                            text-decoration: none;
-                                            color: inherit;
-                                            background-color: inherit;
-                                            text-align: center;
-                                            cursor: pointer;
-                                            white-space: nowrap;
-                                        }
-
-                                        .btn-slider-left {
-                                            position: absolute;
-                                            top: 50%;
-                                            left: 0%;
-                                            transform: translate(0%, -50%);
-                                        }
-
-                                        .btn-slider-right {
-                                            position: absolute;
-                                            top: 50%;
-                                            right: 0%;
-                                            transform: translate(0%, -50%);
-                                        }
-                                    </style>
                                     <?php foreach ($slideshow as $img) : ?>
-                                        <img class="mySlides" src="<?= $img ?>" style="width:100%; max-height: 220px">
+                                        <img class="mySlides sliderSerahTerima" src="<?= $img ?>" style="width:100%; max-height: 220px">
                                     <?php endforeach ?>
 
-                                    <button class="btn-slider btn-slider-left" onclick="plusDivs(-1)">&#10094;</button>
-                                    <button class="btn-slider btn-slider-right" onclick="plusDivs(1)">&#10095;</button>
-                                    <script>
-                                        var myIndex = 0;
-                                        carousel();
-
-                                        function carousel() {
-                                            var i;
-                                            var x = document.getElementsByClassName("mySlides");
-                                            for (i = 0; i < x.length; i++) {
-                                                x[i].style.display = "none";
-                                            }
-                                            myIndex++;
-                                            if (myIndex > x.length) {
-                                                myIndex = 1
-                                            }
-                                            x[myIndex - 1].style.display = "block";
-                                            setTimeout(carousel, 2500); // Change image every 2 seconds
-                                        }
-                                    </script>
+                                    <button class="btn-slider btn-slider-left btn-serah-terima">&#10094;</button>
+                                    <button class="btn-slider btn-slider-right btn-serah-terima">&#10095;</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-12 col-md-6 contains-dt" style="background-color: black; width: 32%">
+                        <div class="col-sm-12 col-md-6 contains-dt bg-success" style="width: 32%">
                             <h4 class="text-center">Bantuan Tersalurkan</h4>
                             <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model"></table>
 
@@ -212,10 +197,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6" style="background-color: white; border-radius: 25px">
-                            <h4 class="text-center">Tahukah Anda?</h4>
+                            <h4 class="text-center">INFO TERBARU</h4>
                             <div class="row">
                                 <?php foreach ($blogs as $blog) : ?>
-                                    <div class="col-sm-12 col-md-4" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                    <div class="col-sm-12 col-md-4 mySlides sliderBlog" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
                                         <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
                                         <b><?= $blog->judul ?></b>
                                     </div>
@@ -485,6 +470,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 })
             }
         })
+
+        // slider-start
+        var isSerahTerimaCarouselActive = true
+        function serahTerimaCarousel() {
+            if (!isSerahTerimaCarouselActive) return false
+            var index = $('.sliderSerahTerima:visible').index()
+            index++
+            if (index > $('.sliderSerahTerima').last().index()) index = 0
+            $('.sliderSerahTerima').hide()
+            $('.sliderSerahTerima').eq(index).show()
+            setTimeout(function() {
+                serahTerimaCarousel()
+            }, 2500)
+        }
+        $('.btn-serah-terima').click(function() {
+            isSerahTerimaCarouselActive = false
+            var index = $('.sliderSerahTerima:visible').index()
+            if ($(this).is('.btn-slider-left')) index--
+            if ($(this).is('.btn-slider-right')) index++
+            if (index < 0) index = $('.sliderSerahTerima').last().index()
+            if (index > $('.sliderSerahTerima').last().index()) index = 0
+            $('.sliderSerahTerima').hide()
+            $('.sliderSerahTerima').eq(index).show()
+        })
+        serahTerimaCarousel()
+        // slider end
     </script>
 </body>
 

@@ -357,7 +357,6 @@ function handleDisableChild() {
   $(`[data-controller="${disableChild}"] input`).attr('placeholder', '').attr('disabled', 'disabled')
 }
 
-
 function prepareModalErrorBarangFreeText() {
   $('body').append(`
       <div class="modal" id="errorBarangFreeText" tabindex="-1" role="dialog">
@@ -416,4 +415,5 @@ function validateBencanaFreeText() {
     $('#errorBencanaFreeText').modal('show')
     return false
   } else return true
+
 }

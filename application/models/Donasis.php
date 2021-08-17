@@ -221,6 +221,24 @@ class Donasis extends MY_Model
 
     $uuid = parent::update($next);
 
+    // AUTOMATICALLY INSERT GOODS INTO WAREHOUSE
+    if ('SELESAI' === $next['status'] && 'SELESAI' !== $prev['status']) {
+      $this->load->model(array('BarangMasukBulks', 'DonasiBarangs'));
+      $donbars = $this->DonasiBarangs->find(array('donasi' => $uuid));
+      $this->BarangMasukBulks->create(array(
+        'donasi' => $uuid,
+        'BarangMasuk_barang' => implode(',', array_map(function ($donbar) {
+            return $donbar->barang;
+          }, $donbars)),
+        'BarangMasuk_jumlah' => implode(',', array_map(function ($donbar) {
+            return $donbar->jumlah;
+          }, $donbars)),
+        'BarangMasuk_satuan' => implode(',', array_map(function ($donbar) {
+            return $donbar->satuan;
+          }, $donbars))
+      ));
+    }
+
     $this->load->model('DonasiLogs');
     $fieldToScan = array_map(function ($field) {
       return $field['name'];
@@ -264,11 +282,11 @@ class Donasis extends MY_Model
   {
     $this->db->where("$this->table.status", 'DIVERIFIKASI');
     return $this->db
-                ->select("$this->table.uuid as id", false)
-                ->select("CONCAT($field, ' - ', user.nama) as text", false)
-                ->join("user", "$this->table.createdBy = user.uuid", "left")
-                ->limit(10)
-                ->like($field, $term)->get($this->table)->result();
+      ->select("$this->table.uuid as id", false)
+      ->select("CONCAT($field, ' - ', user.nama) as text", false)
+      ->join("user", "$this->table.createdBy = user.uuid", "left")
+      ->limit(10)
+      ->like($field, $term)->get($this->table)->result();
   }
 
   function selesai($uuid)
@@ -286,7 +304,7 @@ class Donasis extends MY_Model
     return $done;
   }
 
-  function rollBackToDiverfifikasi ($uuid)
+  function rollBackToDiverfifikasi($uuid)
   {
     $prev = parent::findOne($uuid);
     $done = $this->db->set('status', 'DIVERIFIKASI')->where('uuid', $uuid)->update($this->table);

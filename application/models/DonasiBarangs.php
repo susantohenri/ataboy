@@ -73,6 +73,36 @@ class DonasiBarangs extends MY_Model
 		return parent::dt();
 	}
 
+	function prepopulate($uuid)
+	{
+		$record = $this->findOne($uuid);
+		foreach ($this->form as &$f) {
+			if (isset($f['attributes']) && in_array(array('data-autocomplete' => 'true'), $f['attributes'])) {
+				$model = '';
+				$field = '';
+				foreach ($f['attributes'] as $attr) foreach ($attr as $key => $value) switch ($key) {
+					case 'data-model':
+						$model = $value;
+						break;
+					case 'data-field':
+						$field = $value;
+						break;
+				}
+				$this->load->model($model);
+				foreach ($this->$model->findIn('uuid', explode(',', $record[$f['name']])) as $option) {
+					$text = $option->$field;
+					if ('Barangs' === $model && 'free-text' === $option->jenis) $text .= ' (free-text)';
+					$f['options'][] = array('text' => $text, 'value' => $option->uuid);
+				}
+			}
+			if (isset($f['value'])) {
+			} else if (isset($f['multiple'])) $f['value'] = explode(',', $record[$f['name']]);
+			else if ($f['name'] === 'password') $f['value'] = '';
+			else $f['value'] = $record[$f['name']];
+		}
+		return $this->form;
+	}
+
 	function create($data)
 	{
 		$uuid = parent::create($data);

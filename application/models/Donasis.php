@@ -225,7 +225,7 @@ class Donasis extends MY_Model
     if ('SELESAI' === $next['status'] && 'SELESAI' !== $prev['status']) {
       $this->load->model(array('BarangMasukBulks', 'DonasiBarangs'));
       $donbars = $this->DonasiBarangs->find(array('donasi' => $uuid));
-      $this->BarangMasukBulks->create(array(
+      if (count($donbars) > 0) $this->BarangMasukBulks->create(array(
         'donasi' => $uuid,
         'BarangMasuk_barang' => implode(',', array_map(function ($donbar) {
             return $donbar->barang;

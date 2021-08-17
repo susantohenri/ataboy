@@ -292,7 +292,7 @@ class Pengajuans extends MY_Model
 		if ('SELESAI' === $next['status'] && 'SELESAI' !== $prev['status']) {
 			$this->load->model(array('BarangKeluarBulks', 'PengajuanBarangs'));
 			$pengbars = $this->PengajuanBarangs->find(array('pengajuan' => $uuid));
-			$this->BarangKeluarBulks->create(array(
+			if (count($pengbars) > 0) $this->BarangKeluarBulks->create(array(
 				'pengajuan' => $uuid,
 				'BarangKeluar_barang' => implode(',', array_map(function ($pengbar) {
 					return $pengbar->barang;

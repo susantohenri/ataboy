@@ -381,7 +381,7 @@ function prepareModalErrorBarangFreeText() {
 }
 
 function validateBarangFreeText() {
-  if ('SELESAI' === $('[name="status"]').val() && $('.select2-selection__rendered:contains(free-text)').length > 0) {
+  if ('SELESAI' === $('[name="status"]').val() && $('.select2-selection__rendered:contains(free-text)[id*="barang"]').length > 0) {
     $('#errorBarangFreeText').modal('show')
     return false
   } else return true
@@ -411,7 +411,7 @@ function prepareModalErrorBencanaFreeText() {
 }
 
 function validateBencanaFreeText() {
-  if (['DIVERIFIKASI', 'DITERIMA', 'SELESAI'].indexOf($('[name="status"]').val()) > -1 && $('.select2-selection__rendered:contains(free-text)').length > 0) {
+  if (['DIVERIFIKASI', 'DITERIMA', 'SELESAI'].indexOf($('[name="status"]').val()) > -1 && $('.select2-selection__rendered:contains(free-text)[id*="bencana"]').length > 0) {
     $('#errorBencanaFreeText').modal('show')
     return false
   } else return true

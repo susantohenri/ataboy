@@ -40,13 +40,23 @@ class Bencanas extends MY_Model
       ->select("{$this->table}.uuid")
       ->select("{$this->table}.orders")
       ->select("IF(0 = status, 'INACTIVE', 'ACTIVE') status", false)
-      ->select('bencana.nama');
+      ->select('bencana.nama')
+      ->where('jenis', '');
     return parent::dt();
   }
 
   function select2($field, $term)
   {
      $this->db->where('status', 1);
+     $this->db->where('jenis', '');
      return parent::select2($field, $term);
   }
+  
+  function getUuid($uuid) {
+        $found = $this->findOne($uuid);
+        if (isset($found['uuid']))
+            return $uuid;
+        else
+            return $this->create(array('nama' => $uuid, 'jenis' => 'free-text'));
+    }
 }

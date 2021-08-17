@@ -95,7 +95,7 @@ class RiwayatBarang extends MY_Controller
 	function pdf()
 	{
 		$data = array(
-			'rows' => $this->{$this->model}->download($this->input->post('start_date'), $this->input->post('end_date'))
+			'rows' => $this->{$this->model}->download($this->input->get('start_date'), $this->input->get('end_date'))
 		);
 		$viewer = 'pdf-riwayatbarang';
 		$filename = 'Riwayat Barang ATAboy';

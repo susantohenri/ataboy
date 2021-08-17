@@ -271,6 +271,24 @@ class Pengajuans extends MY_Model
 
 		$uuid = parent::update($next);
 
+		// AUTOMATICALLY RELEASE GOODS FROM WAREHOUSE
+		if ('SELESAI' === $next['status'] && 'SELESAI' !== $prev['status']) {
+			$this->load->model(array('BarangKeluarBulks', 'PengajuanBarangs'));
+			$pengbars = $this->PengajuanBarangs->find(array('pengajuan' => $uuid));
+			$this->BarangKeluarBulks->create(array(
+				'pengajuan' => $uuid,
+				'BarangKeluar_barang' => implode(',', array_map(function ($pengbar) {
+					return $pengbar->barang;
+				}, $pengbars)),
+				'BarangKeluar_jumlah' => implode(',', array_map(function ($pengbar) {
+					return $pengbar->jumlah;
+				}, $pengbars)),
+				'BarangKeluar_satuan' => implode(',', array_map(function ($pengbar) {
+					return $pengbar->satuan;
+				}, $pengbars))
+			));
+		}
+
 		$this->load->model('PengajuanLogs');
 		$fieldToScan = array_map(function ($field) {
 			return $field['name'];

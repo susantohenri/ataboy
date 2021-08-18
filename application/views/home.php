@@ -42,44 +42,55 @@ scratch. This page gets rid of all links and provides the needed markup only.
             background-color: #ffc107 !important;
             border-color: #ffc107 !important;
         }
-
-        /* slider begin */
-        .mySlides {
-            display: none;
+        
+        /*slider serah terima*/
+        #carouselSerahTerima .carousel-item img{
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
         }
-
-        .btn-slider {
-            opacity: .2;
-            color: #fff !important;
-            background-color: #000 !important;
-            border: none;
-            display: inline-block;
-            padding: 8px 16px;
-            vertical-align: middle;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            background-color: inherit;
-            text-align: center;
-            cursor: pointer;
+        /*end slider serah terima*/
+        
+        /*slider blog*/
+        #blogSlider {
+            position: relative;
+        }
+        #blogSlider .MS-content {
             white-space: nowrap;
+            overflow: hidden;
+            margin: 0;
         }
-
-        .btn-slider-left {
+        #blogSlider .MS-content .item {
+            display: inline-block;
+            width: 33.333%;
+            position: relative;
+            vertical-align: top;
+            overflow: hidden;
+            height: 100%;
+            white-space: normal;
+            padding: 0 5px;
+        }
+        #blogSlider .MS-content .item img{
+            height: 200px;
+            object-fit: cover;
+        }
+        #blogSlider .MS-controls button {
+            color: white;
+            font-size: 20px;
             position: absolute;
-            top: 50%;
-            left: 0%;
-            transform: translate(0%, -50%);
+            top: 80px;
+            opacity: 0.5;
         }
-
-        .btn-slider-right {
-            position: absolute;
-            top: 50%;
-            right: 0%;
-            transform: translate(0%, -50%);
+        #blogSlider .MS-controls .MS-left {
+            left: 10px;
         }
-
-        /* slider end */
+        #blogSlider .MS-controls .MS-right {
+            right: 10px;
+        }
+        #blogSlider .MS-controls button:hover{
+            opacity: 1;
+        }
+        /*end slider blog*/
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
     <script src="<?= base_url('assets/js/leaflet.js') ?>"></script>
@@ -162,12 +173,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                             <div class="row">
                                 <div class="col-sm-12" style="background-color: white; height: 225px">
-                                    <?php foreach ($slideshow as $img) : ?>
-                                        <img class="mySlides sliderSerahTerima" src="<?= $img ?>" style="width:100%; max-height: 220px">
-                                    <?php endforeach ?>
-
-                                    <button class="btn-slider btn-slider-left btn-serah-terima">&#10094;</button>
-                                    <button class="btn-slider btn-slider-right btn-serah-terima">&#10095;</button>
+                                    <div id="carouselSerahTerima" class="carousel slide" data-ride="carousel" data-interval="2500">
+                                        <div class="carousel-inner">
+                                            <?php foreach ($slideshow as $img) : ?>
+                                          <div class="carousel-item">
+                                                <img class="d-block w-100" src="<?= $img ?>">
+                                          </div>
+                                            <?php endforeach ?>
+                                        </div>
+                                        <a class="carousel-control-prev" href="#carouselSerahTerima" role="button" data-slide="prev">
+                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#carouselSerahTerima" role="button" data-slide="next">
+                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                          <span class="sr-only">Next</span>
+                                        </a>
+                                      </div>
                                 </div>
                             </div>
                         </div>
@@ -197,14 +219,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6" style="background-color: white; border-radius: 25px">
-                            <h4 class="text-center">INFO TERBARU</h4>
-                            <div class="row">
-                                <?php foreach ($blogs as $blog) : ?>
-                                    <div class="col-sm-12 col-md-4 mySlides sliderBlog" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
-                                        <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
-                                        <b><?= $blog->judul ?></b>
-                                    </div>
-                                <?php endforeach ?>
+                            <h4 class="text-center" style="font-family: 'algerian'">INFO TERBARU</h4>
+                            <div id="blogSlider">
+                                <div class="MS-content">
+                                    <?php foreach ($blogs as $blog) : ?>
+                                        <div class="item" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                            <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                            <b><?= $blog->judul ?></b>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                                <div class="MS-controls">
+                                    <button class="MS-left btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                                    <button class="MS-right btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                                </div>
                             </div>
                             <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-xl" role="document">
@@ -227,7 +255,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                                         <div class="card-body">
                                                             <img id="gambar" src="" style="width: 100%;">
                                                         </div>
-                                                    </div><!-- /.card -->
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-12" id="isi">
                                                 </div>
@@ -268,6 +296,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script type="text/javascript" src="<?= base_url('assets/js/select2.full.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/jquery.dataTables.min.js') ?>"></script>
     <script type="text/javascript" src="<?= base_url('assets/js/dataTables.bootstrap4.js') ?>"></script>
+    <script src="<?= base_url('assets/js/multislider.min.js') ?>"></script>
     <script>
         // PREVENT FORM RESUBMISSION ON REFRESH OR BACK
         if (window.history.replaceState) {
@@ -470,32 +499,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 })
             }
         })
+        
+        // slider serah terima
+        $('#carouselSerahTerima .carousel-inner .carousel-item').first().addClass('active');
+        
+        // slider blog
+        $('#blogSlider').multislider({
+            interval:4000,
+            slideAll:true
+        });
 
-        // slider-start
-        var isSerahTerimaCarouselActive = true
-        function serahTerimaCarousel() {
-            if (!isSerahTerimaCarouselActive) return false
-            var index = $('.sliderSerahTerima:visible').index()
-            index++
-            if (index > $('.sliderSerahTerima').last().index()) index = 0
-            $('.sliderSerahTerima').hide()
-            $('.sliderSerahTerima').eq(index).show()
-            setTimeout(function() {
-                serahTerimaCarousel()
-            }, 2500)
-        }
-        $('.btn-serah-terima').click(function() {
-            isSerahTerimaCarouselActive = false
-            var index = $('.sliderSerahTerima:visible').index()
-            if ($(this).is('.btn-slider-left')) index--
-            if ($(this).is('.btn-slider-right')) index++
-            if (index < 0) index = $('.sliderSerahTerima').last().index()
-            if (index > $('.sliderSerahTerima').last().index()) index = 0
-            $('.sliderSerahTerima').hide()
-            $('.sliderSerahTerima').eq(index).show()
-        })
-        serahTerimaCarousel()
-        // slider end
     </script>
 </body>
 

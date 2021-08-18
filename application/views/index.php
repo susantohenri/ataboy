@@ -22,7 +22,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     .form-child .form-group.row > div {margin: 5px 0}
   </style>
   <?php if (isset ($css)): foreach ($css as $style): ?>
-    <link rel="stylesheet" href="<?= base_url("assets/css/{$style}") ?>">
+    <link rel="stylesheet" href="<?= base_url("assets/css/{$style}?no-cache=" . time()) ?>">
   <?php endforeach; endif; ?>
 </head>
 <body class="hold-transition layout-top-nav">
@@ -117,7 +117,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   var current_controller_url = '<?= site_url ($current['controller']) ?>'
 </script>
 <?php if (isset ($js)): foreach ($js as $script): ?>
-  <script type="text/javascript" src="<?= base_url("assets/js/{$script}") ?>"></script>
+  <script type="text/javascript" src="<?= base_url("assets/js/{$script}?no-cache=" . time()) ?>"></script>
 <?php endforeach; endif; ?>
 </body>
 </html>

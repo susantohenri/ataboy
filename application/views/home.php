@@ -504,11 +504,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $('#carouselSerahTerima .carousel-inner .carousel-item').first().addClass('active');
         
         // slider blog
+        <?php if(count($blogs) > 3): ?>
         $('#blogSlider').multislider({
             interval:4000,
             slideAll:true
         });
-
+        <?php endif ?>
     </script>
 </body>
 

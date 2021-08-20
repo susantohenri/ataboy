@@ -429,12 +429,12 @@ class Pengajuans extends MY_Model
 	{
 		return $this
 			->db
-			->select('latitude lat', false)
-			->select('longitude lng', false)
+			->select('latitude as lat', false)
+			->select('longitude as lng', false)
 			->select('pengajuan.status')
-			->select('jumlah_kk_jiwa korban', false)
-			->select('bencana.nama bencana', false)
-			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->select('jumlah_kk_jiwa as korban', false)
+			->select('bencana.nama as bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") as kebutuhan', false)
 			->where_in('pengajuan.status', array(
 				'DIAJUKAN',
 				'DIVERIFIKASI',
@@ -451,9 +451,9 @@ class Pengajuans extends MY_Model
 	{
 		return $this
 			->datatables
-			->select('desa.nama desa', false)
-			->select('bencana.nama bencana', false)
-			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->select('desa.nama as desa', false)
+			->select('bencana.nama as bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") as kebutuhan', false)
 			->from('pengajuan')
 			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
 			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
@@ -468,9 +468,9 @@ class Pengajuans extends MY_Model
 	{
 		return $this
 			->datatables
-			->select('desa.nama desa', false)
-			->select('bencana.nama bencana', false)
-			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") kebutuhan', false)
+			->select('desa.nama as desa', false)
+			->select('bencana.nama as bencana', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") as kebutuhan', false)
 			->from('pengajuan')
 			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
 			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
@@ -486,11 +486,11 @@ class Pengajuans extends MY_Model
 		$base_url = base_url();
 		return $this
 			->datatables
-			->select('desa.nama desa', false)
-			->select('bencana.nama bencana', false)
-			->select('jumlah_kk_jiwa korban', false)
-			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") bantuan', false)
-			->select("CONCAT('<a class=\"btn btn-sm btn-warning\" data-img=\"', '{$base_url}', photo_serah_terima, '\">preview</a>') button", false)
+			->select('desa.nama as desa', false)
+			->select('bencana.nama as bencana', false)
+			->select('jumlah_kk_jiwa as korban', false)
+			->select('GROUP_CONCAT(barang.nama SEPARATOR ", ") as bantuan', false)
+			->select("CONCAT('<a class=\"btn btn-sm btn-warning\" data-img=\"', '{$base_url}', photo_serah_terima, '\">preview</a>') as button", false)
 			->from('pengajuan')
 			->join('desa', 'pengajuan.kelurahan = desa.uuid', 'left')
 			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')

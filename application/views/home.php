@@ -396,7 +396,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 {
                     mData: 'kebutuhan',
-                    sTitle: 'KEBUTUHAN'
+                    sTitle: 'KEBUTUHAN',
+                    searchable: false
                 }
             ],
             ajax: {
@@ -423,7 +424,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 {
                     mData: 'kebutuhan',
-                    sTitle: 'KEBUTUHAN'
+                    sTitle: 'KEBUTUHAN',
+                    searchable: false
                 }
             ],
             ajax: {
@@ -446,7 +448,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 {
                     mData: 'donasi',
-                    sTitle: 'DONASI'
+                    sTitle: 'DONASI',
+                    searchable: false
                 },
                 {
                     mData: 'tanggal',
@@ -481,11 +484,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 },
                 {
                     mData: 'bantuan',
-                    sTitle: 'BANTUAN'
+                    sTitle: 'BANTUAN',
+                    searchable: false
                 },
                 {
                     mData: 'button',
-                    sTitle: 'PHOTO'
+                    sTitle: 'PHOTO',
+                    searchable: false
                 }
             ],
             ajax: {

@@ -443,6 +443,7 @@ class Pengajuans extends MY_Model
 			->join('bencana', 'pengajuan.bencana = bencana.uuid', 'left')
 			->join('pengajuanbarang', 'pengajuan.uuid = pengajuanbarang.pengajuan', 'left')
 			->join('barang', 'barang.uuid = pengajuanbarang.barang', 'left')
+			->group_by('pengajuan.uuid')
 			->get($this->table)
 			->result_array();
 	}

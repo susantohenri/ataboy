@@ -185,6 +185,23 @@ class Pengajuans extends MY_Model
 
 	function getForm($uuid = false, $isSubform = false)
 	{
+
+		// PREVENT CREATE PENGAJUAN DIVERIFIKASI/DITERIMA/SELESAI CONTAINS BARANG/BENCANA FREE-TEXT
+		if (false === $uuid) {
+			$this->form = array_map(function ($field) {
+				if ('status' === $field['name']) {
+					$field['options'] = array_filter($field['options'], function ($option) {
+						return !in_array($option['value'], array(
+							'DIVERIFIKASI',
+							'DITERIMA',
+							'SELESAI'
+						));
+					});
+				}
+				return $field;
+			}, $this->form);
+		}
+
 		// SHOW PHOTO SERAH TERIMA ON SELESAI ONLY
 		$pengajuan = $this->findOne($uuid);
 		if ($pengajuan['status'] !== 'SELESAI') {
@@ -194,13 +211,20 @@ class Pengajuans extends MY_Model
 		}
 
 		$form = parent::getForm($uuid, $isSubform);
-		$hide = array('status', 'tiket_id');
 		$this->load->model('Roles');
 
 		if (strpos($this->Roles->getRole(), 'Admin') > -1) {
-			$disabled = array('tiket_id');
 			$hide = array('tiket_id');
-		} else $disabled = array('status', 'tiket_id');
+			$disabled = array('tiket_id');
+		} else {
+			$hide = array('status', 'tiket_id');
+			$disabled = array('status', 'tiket_id');
+		}
+
+		// PENGAJUAN SELESAI CANNOT GO BACK
+		if ($pengajuan['status'] === 'SELESAI') {
+			$disabled[] = 'status';
+		}
 
 		if (false === $uuid) {
 			unset($this->childs[2]); // HIDE BARANGKELUAR
@@ -212,21 +236,21 @@ class Pengajuans extends MY_Model
 				}
 			);
 		} else {
-                    $form = array_map(function ($field) use($pengajuan){
-                        switch ($field['name']) {
-                            case 'bencana':
-                                $this->load->model('Bencanas');
-                                $bencana = $this->Bencanas->findOne($pengajuan['bencana']);
-                                $jn_bencana = $bencana['jenis'] === 'free-text' ? "{$bencana['nama']} (free-text)": $bencana['nama'];
-                                $field['value'] = $bencana['uuid'];
-                                $field['options'] = array(
-                                    array('text' => $jn_bencana, 'value' => $bencana['uuid'])
-                                );
-                                break;
-                        }
-                        return $field;
-                    }, $form);
-                }
+			$form = array_map(function ($field) use ($pengajuan) {
+				switch ($field['name']) {
+					case 'bencana':
+						$this->load->model('Bencanas');
+						$bencana = $this->Bencanas->findOne($pengajuan['bencana']);
+						$jn_bencana = $bencana['jenis'] === 'free-text' ? "{$bencana['nama']} (free-text)" : $bencana['nama'];
+						$field['value'] = $bencana['uuid'];
+						$field['options'] = array(
+							array('text' => $jn_bencana, 'value' => $bencana['uuid'])
+						);
+						break;
+				}
+				return $field;
+			}, $form);
+		}
 
 		$form = array_map(function ($field) use ($disabled) {
 			if (in_array($field['name'], $disabled)) {
@@ -244,8 +268,8 @@ class Pengajuans extends MY_Model
 		unset($this->childs[3]); // HIDE PENGAJUANLOG
 		unset($record['propinsi']);
 		unset($record['kabupaten']);
-                $this->load->model('Bencanas');
-                $record['bencana'] = $this->Bencanas->getUuid($record['bencana']);
+		$this->load->model('Bencanas');
+		$record['bencana'] = $this->Bencanas->getUuid($record['bencana']);
 
 		// UPLOAD DOKUMEN PENGAJUAN
 		if (strlen($_FILES['dokumen_pengajuan']['name']) > 0) {

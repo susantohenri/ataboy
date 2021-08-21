@@ -133,15 +133,37 @@ class Donasis extends MY_Model
 
   function getForm($uuid = false, $isSubform = false)
   {
+    // PREVENT CREATE DONASI DIVERIFIKASI/SELESAI CONTAINS BARANG FREE-TEXT
+    if (false === $uuid) {
+      $this->form = array_map(function ($field) {
+        if ('status' === $field['name']) {
+          $field['options'] = array_filter($field['options'], function ($option) {
+            return !in_array($option['value'], array(
+              'DIVERIFIKASI',
+              'SELESAI'
+            ));
+          });
+        }
+        return $field;
+      }, $this->form);
+    }
+
     $form = parent::getForm($uuid, $isSubform);
-    $hide = array('donatur', 'status', 'tiket_id', 'updatedAt');
-    $disabled = array('status', 'tiket_id', 'updatedAt');
 
     $this->load->model('Roles');
     if (strpos($this->Roles->getRole(), 'Admin') > -1) {
       $hide = array('donatur', 'tiket_id', 'updatedAt');
       $disabled = array('tiket_id', 'updatedAt');
+    } else {
+      $hide = array('donatur', 'status', 'tiket_id', 'updatedAt');
+      $disabled = array('status', 'tiket_id', 'updatedAt');
     }
+
+		// DONNASI SELESAI CANNOT GO BACK
+    $donasi = $this->findOne($uuid);
+		if ($donasi['status'] === 'SELESAI') {
+			$disabled[] = 'status';
+		}
 
     if (false === $uuid) {
       unset($this->childs[1]); // HIDE BARANGMASUK

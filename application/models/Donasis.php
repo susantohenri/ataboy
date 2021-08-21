@@ -307,6 +307,7 @@ class Donasis extends MY_Model
   function rollBackToDiverfifikasi($uuid)
   {
     $prev = parent::findOne($uuid);
+		if (!$prev) return false;
     $done = $this->db->set('status', 'DIVERIFIKASI')->where('uuid', $uuid)->update($this->table);
     $this->load->model('DonasiLogs');
     $this->DonasiLogs->create(array(

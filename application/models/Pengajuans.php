@@ -397,6 +397,7 @@ class Pengajuans extends MY_Model
 	function rollBackToDiterima($uuid)
 	{
 		$prev = parent::findOne($uuid);
+		if (!$prev) return false;
 		$done = $this->db->set('status', 'DITERIMA')->where('uuid', $uuid)->update($this->table);
 		$this->load->model('PengajuanLogs');
 		$this->PengajuanLogs->create(array(

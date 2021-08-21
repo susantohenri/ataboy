@@ -42,24 +42,31 @@ scratch. This page gets rid of all links and provides the needed markup only.
             background-color: #ffc107 !important;
             border-color: #ffc107 !important;
         }
-        
+
+        .small-box {
+            padding: 5px;
+        }
+
         /*slider serah terima*/
-        #carouselSerahTerima .carousel-item img{
+        #carouselSerahTerima .carousel-item img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
+
         /*end slider serah terima*/
-        
+
         /*slider blog*/
         #blogSlider {
             position: relative;
         }
+
         #blogSlider .MS-content {
             white-space: nowrap;
             overflow: hidden;
             margin: 0;
         }
+
         #blogSlider .MS-content .item {
             display: inline-block;
             width: 33.333%;
@@ -70,10 +77,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
             white-space: normal;
             padding: 0 5px;
         }
-        #blogSlider .MS-content .item img{
+
+        #blogSlider .MS-content .item img {
             height: 200px;
             object-fit: cover;
         }
+
         #blogSlider .MS-controls button {
             color: white;
             font-size: 20px;
@@ -81,15 +90,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
             top: 80px;
             opacity: 0.5;
         }
+
         #blogSlider .MS-controls .MS-left {
             left: 10px;
         }
+
         #blogSlider .MS-controls .MS-right {
             right: 10px;
         }
-        #blogSlider .MS-controls button:hover{
+
+        #blogSlider .MS-controls button:hover {
             opacity: 1;
         }
+
         /*end slider blog*/
     </style>
     <link rel="stylesheet" href="<?= base_url('assets/css/leaflet.css') ?>" />
@@ -138,134 +151,166 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="container-" style="padding: 10px">
 
                     <div class="row">
-                        <div class="col-sm-12 col-md-4" style="background-color: #1f567c">
-                            <a class="weatherwidget-io" href="https://forecast7.com/en/n7d43110d69/boyolali-regency/" data-label_1="KABUPATEN" data-label_2="BOYOLALI" data-theme="original">BOYOLALI</a>
-                            <script>
-                                ! function(d, s, id) {
-                                    var js, fjs = d.getElementsByTagName(s)[0];
-                                    if (!d.getElementById(id)) {
-                                        js = d.createElement(s);
-                                        js.id = id;
-                                        js.src = 'https://weatherwidget.io/js/widget.min.js';
-                                        fjs.parentNode.insertBefore(js, fjs);
-                                    }
-                                }(document, 'script', 'weatherwidget-io-js');
-                            </script>
-                        </div>
-                        <div class="col-sm-12 col-md-4 contains-dt" style="background-color: #ed7d31; max-width: 33%; margin: 0 2px">
-                            <h4 class="text-center">Verifikasi</h4>
-                            <table id="tableDiverifikasi" class="table table-bordered table-striped datatable table-model"></table>
-                        </div>
-                        <div class="col-sm-12 col-md-4 contains-dt" style="background-color: #c10100;">
-                            <h4 class="text-center">Pengajuan</h4>
-                            <table id="tableDiajukan" class="table table-bordered table-striped datatable table-model"></table>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top: 5px; margin-bottom: 5px">
-                        <div class="col-sm-12 col-md-8" style="background-color: white;">
-                            <div id="mapid" style="min-width:200px; height:450px; width: 100%; cursor: pointer"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-4">
-                            <div class="row">
-                                <div class="col-sm-12 contains-dt" style="background-color: white; color: black; height: 225px">
-                                    <table id="tableDonatur" class="table table-bordered table-striped datatable table-model"></table>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12" style="background-color: white; height: 225px">
-                                    <div id="carouselSerahTerima" class="carousel slide" data-ride="carousel" data-interval="2500">
-                                        <div class="carousel-inner">
-                                            <?php foreach ($slideshow as $img) : ?>
-                                          <div class="carousel-item">
-                                                <img class="d-block w-100" src="<?= $img ?>">
-                                          </div>
-                                            <?php endforeach ?>
-                                        </div>
-                                        <a class="carousel-control-prev" href="#carouselSerahTerima" role="button" data-slide="prev">
-                                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                          <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselSerahTerima" role="button" data-slide="next">
-                                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                          <span class="sr-only">Next</span>
-                                        </a>
-                                      </div>
-                                </div>
+                        <div class="col-lg-4 col-12">
+                            <!-- small box -->
+                            <div class="small-box bg-info" style="min-height: 241px;">
+                                <a class="weatherwidget-io" href="https://forecast7.com/en/n7d43110d69/boyolali-regency/" data-label_1="KABUPATEN" data-label_2="BOYOLALI" data-theme="">BOYOLALI</a>
+                                <script>
+                                    ! function(d, s, id) {
+                                        var js, fjs = d.getElementsByTagName(s)[0];
+                                        if (!d.getElementById(id)) {
+                                            js = d.createElement(s);
+                                            js.id = id;
+                                            js.src = 'https://weatherwidget.io/js/widget.min.js';
+                                            fjs.parentNode.insertBefore(js, fjs);
+                                        }
+                                    }(document, 'script', 'weatherwidget-io-js');
+                                </script>
                             </div>
                         </div>
+                        <!-- ./col -->
+                        <div class="col-lg-4 col-12">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <h4 class="text-center">Verifikasi</h4>
+                                <table id="tableDiverifikasi" class="table table-bordered table-striped datatable table-model"></table>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-4 col-12">
+                            <!-- small box -->
+                            <div class="small-box bg-danger">
+                                <h4 class="text-center">Pengajuan</h4>
+                                <table id="tableDiajukan" class="table table-bordered table-striped datatable table-model"></table>
+                            </div>
+                        </div>
+                        <!-- ./col -->
                     </div>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6 contains-dt bg-success" style="width: 32%">
-                            <h4 class="text-center">Bantuan Tersalurkan</h4>
-                            <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model"></table>
 
-                            <div class="modal" tabindex="-1" role="dialog" id="modalSerahTerima">
-                                <div class="modal-dialog" role="document" style="display: table;">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title"></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img id="previewSerahTerima">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="row">
+                        <div class="col-lg-8 col-12">
+                            <!-- small box -->
+                            <div class="small-box" style="min-height: 465px;">
+                                <div id="mapid" style="min-width:200px; height:450px; width: 100%; cursor: pointer"></div>
+                            </div>
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-4 col-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="small-box" style="padding: 5px; background-color: white">
+                                        <h4 class="text-center">Donasi</h4>
+                                        <table id="tableDonatur" class="table table-bordered table-striped datatable table-model"></table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="small-box">
+                                        <div id="carouselSerahTerima" class="carousel slide" data-ride="carousel" data-interval="2500">
+                                            <div class="carousel-inner">
+                                                <?php foreach ($slideshow as $img) : ?>
+                                                    <div class="carousel-item">
+                                                        <img class="d-block w-100" src="<?= $img ?>">
+                                                    </div>
+                                                <?php endforeach ?>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselSerahTerima" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselSerahTerima" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6" style="background-color: white; border-radius: 25px">
-                            <h4 class="text-center" style="font-family: 'algerian'">INFO TERBARU</h4>
-                            <div id="blogSlider">
-                                <div class="MS-content">
-                                    <?php foreach ($blogs as $blog) : ?>
-                                        <div class="item" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
-                                            <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
-                                            <b><?= $blog->judul ?></b>
+                        <!-- ./col -->
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-12">
+                            <!-- small box -->
+                            <div class="small-box bg-success" style="padding: 5px; min-height: 342px">
+                                <h4 class="text-center">Bantuan Tersalurkan</h4>
+                                <table id="tablePenyaluran" class="table table-bordered table-striped datatable table-model"></table>
+
+                                <div class="modal" tabindex="-1" role="dialog" id="modalSerahTerima">
+                                    <div class="modal-dialog" role="document" style="display: table;">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title"></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img id="previewSerahTerima">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
                                         </div>
-                                    <?php endforeach ?>
-                                </div>
-                                <div class="MS-controls">
-                                    <button class="MS-left btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
-                                    <button class="MS-right btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-xl" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
+                        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-6 col-12">
+                            <!-- small box -->
+                            <div class="small-box" style="padding: 5px; background-color: white">
+                                <h4 class="text-center" style="font-family: 'algerian'">INFO TERBARU</h4>
+                                <div id="blogSlider">
+                                    <div class="MS-content">
+                                        <?php foreach ($blogs as $blog) : ?>
+                                            <div class="item" data-toggle="modal" data-target="#blogModal" style="cursor: pointer" onclick="$('#judul').html('<?= $blog->judul ?>');$('#isi').html('<?= htmlentities($blog->isi) ?>');$('#gambar').attr('src', '<?= base_url($blog->gambar) ?>')">
+                                                <img src="<?= base_url($blog->gambar) ?>" style="width: 100%;">
+                                                <b><?= $blog->judul ?></b>
+                                            </div>
+                                        <?php endforeach ?>
+                                    </div>
+                                    <div class="MS-controls">
+                                        <button class="MS-left btn"><i class="fa fa-chevron-left" aria-hidden="true"></i></button>
+                                        <button class="MS-right btn"><i class="fa fa-chevron-right" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <div class="modal fade" id="blogModal" tabindex="-1" role="dialog" aria-labelledby="blogModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
 
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <center>
-                                                        <h2 id="judul"></h2>
-                                                    </center>
-                                                </div>
-                                                <div class="col-sm-12">
-                                                    <div class="card card-outline">
-                                                        <div class="card-body">
-                                                            <img id="gambar" src="" style="width: 100%;">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <center>
+                                                            <h2 id="judul"></h2>
+                                                        </center>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="card card-outline">
+                                                            <div class="card-body">
+                                                                <img id="gambar" src="" style="width: 100%;">
+                                                            </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-sm-12" id="isi">
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-12" id="isi">
-                                                </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- ./col -->
                     </div>
 
                 </div>
@@ -465,10 +510,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         $('#tablePenyaluran').DataTable({
             processing: true,
             serverSide: true,
-            pageLength: 1,
+            pageLength: 2,
             lengthMenu: [
-                [1, 5, -1],
-                [1, 5, 'Semua']
+                [2, 5, -1],
+                [2, 5, 'Semua']
             ],
             columns: [{
                     mData: 'desa',
@@ -504,16 +549,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 })
             }
         })
-        
+
         // slider serah terima
         $('#carouselSerahTerima .carousel-inner .carousel-item').first().addClass('active');
-        
+
         // slider blog
-        <?php if(count($blogs) > 3): ?>
-        $('#blogSlider').multislider({
-            interval:4000,
-            slideAll:true
-        });
+        <?php if (count($blogs) > 3) : ?>
+            $('#blogSlider').multislider({
+                interval: 4000,
+                slideAll: true
+            });
         <?php endif ?>
     </script>
 </body>

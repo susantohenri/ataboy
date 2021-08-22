@@ -34,15 +34,11 @@ $(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        var barang = form.find('input[name="barang"]').val(),
-                jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk': form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked')? 'keluar': '',
-                id = form.find('input[name="id"]').val();
+        var jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk' : form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked') ? 'keluar' : '';
         window.open(
                 url + '?start_date=' + start_date + " 00:00:00"
                 + "&end_date=" + end_date + " 23:59:59"
-                + "&barang=" + barang
-                + "&jenis=" + jenis
-                + "&tiket_id=" + id,
+                + "&jenis=" + jenis,
                 '_blank'
                 );
     });
@@ -81,15 +77,11 @@ $(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        var barang = form.find('input[name="barang"]').val(),
-                jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk': form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked')? 'keluar': '',
-                id = form.find('input[name="id"]').val();
+        var jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk' : form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked') ? 'keluar' : '';
         window.open(
                 url + '?start_date=' + start_date + " 00:00:00"
                 + "&end_date=" + end_date + " 23:59:59"
-                + "&barang=" + barang
-                + "&jenis=" + jenis
-                + "&tiket_id=" + id,
+                + "&jenis=" + jenis,
                 '_blank'
                 );
     });

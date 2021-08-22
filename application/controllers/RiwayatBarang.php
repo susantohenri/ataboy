@@ -41,9 +41,7 @@ class RiwayatBarang extends MY_Controller
 		$rows = $this->{$this->model}->download(
                                     $this->input->get('start_date'), 
                                     $this->input->get('end_date'),
-                                    $this->input->get('barang'),
-                                    $this->input->get('jenis'),
-                                    $this->input->get('tiket_id')
+                                    $this->input->get('jenis')
                                 );
                 
 		$colnames = array('NO', 'TANGGAL', 'BARANG', 'JENIS', 'JUMLAH', 'DONASI / PENGAJUAN', 'DONATUR', 'KELURAHAN', 'BENCANA');
@@ -105,9 +103,7 @@ class RiwayatBarang extends MY_Controller
 			'rows' => $this->{$this->model}->download(
                                     $this->input->get('start_date'), 
                                     $this->input->get('end_date'),
-                                    $this->input->get('barang'),
-                                    $this->input->get('jenis'),
-                                    $this->input->get('tiket_id')
+                                    $this->input->get('jenis')
                                 )
 		);
 		$viewer = 'pdf-riwayatbarang';

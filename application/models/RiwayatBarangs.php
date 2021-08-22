@@ -86,10 +86,16 @@ class RiwayatBarangs extends MY_Model {
         return $this->datatables->generate();
     }
 
-    function download($start_date, $end_date, $barang='', $jenis='', $tiket_id='') {
+    function download($start_date, $end_date, $jenis='') {
+        if ($jenis == 'masuk'){
+            $jenis = 'AND riwayatbarang.jumlah > 0';
+        } elseif ($jenis == 'keluar') {
+            $jenis = 'AND riwayatbarang.jumlah < 0';
+        } else {
+            $jenis = '';
+        }
         $this->query = "
-            SELECT * FROM 
-            (SELECT
+            SELECT
               riwayatbarang.orders
               , riwayatbarang.uuid
               , riwayatbarang.createdAt tanggal
@@ -111,11 +117,10 @@ class RiwayatBarangs extends MY_Model {
             LEFT JOIN pengajuan ON barangkeluarbulk.pengajuan = pengajuan.uuid
             LEFT JOIN user ON donasi.createdBy = user.uuid
             LEFT JOIN desa ON pengajuan.kelurahan = desa.uuid
-            LEFT JOIN bencana ON pengajuan.bencana = bencana.uuid)A
-            WHERE tanggal >= '$start_date' AND tanggal <= '$end_date'
-            AND namabarang LIKE '%$barang%'
-            AND jenis LIKE '%$jenis%'
-            AND tiket_id LIKE '%$tiket_id%'
+            LEFT JOIN bencana ON pengajuan.bencana = bencana.uuid
+            WHERE riwayatbarang.createdAt >= '$start_date' AND riwayatbarang.createdAt <= '$end_date'
+            $jenis
+            ORDER BY riwayatbarang.createdAt ASC
         ";
         $no = 0;
         return array_map(function ($record) use (&$no) {

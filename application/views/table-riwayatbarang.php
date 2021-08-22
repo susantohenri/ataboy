@@ -53,22 +53,10 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label">Barang</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" name="barang">
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-sm-3 control-label">Jenis</label>
                         <div class="col-sm-9">
                             <input class="" type="checkbox" name="jenis[]" value="masuk" id="masuk"> <label for="masuk" class="font-weight-normal">MASUK</label>
                             <input class="ml-4" type="checkbox" name="jenis[]" value="keluar" id="keluar"> <label for="keluar" class="font-weight-normal">KELUAR</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 control-label">Donasi / Pengajuan</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" name="id">
                         </div>
                     </div>
 
@@ -106,22 +94,10 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-sm-3 control-label">Barang</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" name="barang">
-                        </div>
-                    </div>
-                    <div class="form-group row">
                         <label class="col-sm-3 control-label">Jenis</label>
                         <div class="col-sm-9">
                             <input class="" type="checkbox" name="jenis[]" value="masuk" id="masukEx"> <label for="masukEx" class="font-weight-normal">MASUK</label>
                             <input class="ml-4" type="checkbox" name="jenis[]" value="keluar" id="keluarEx"> <label for="keluarEx" class="font-weight-normal">KELUAR</label>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 control-label">Donasi / Pengajuan</label>
-                        <div class="col-sm-9">
-                            <input class="form-control" type="text" name="id">
                         </div>
                     </div>
 

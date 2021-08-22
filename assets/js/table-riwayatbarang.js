@@ -11,6 +11,7 @@ $(function () {
     }
 
     $('#rangemodalPDF').daterangepicker({
+        showDropdowns: true,
         startDate: start,
         endDate: end,
         ranges: {
@@ -33,7 +34,17 @@ $(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        window.open(url + '?start_date=' + start_date + " 00:00:00&end_date=" + end_date + " 23:59:59", '_blank');
+        var barang = form.find('input[name="barang"]').val(),
+                jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk': form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked')? 'keluar': '',
+                id = form.find('input[name="id"]').val();
+        window.open(
+                url + '?start_date=' + start_date + " 00:00:00"
+                + "&end_date=" + end_date + " 23:59:59"
+                + "&barang=" + barang
+                + "&jenis=" + jenis
+                + "&tiket_id=" + id,
+                '_blank'
+                );
     });
 
     // download excel
@@ -47,6 +58,7 @@ $(function () {
     }
 
     $('#rangemodalExcel').daterangepicker({
+        showDropdowns: true,
         startDate: start_excel,
         endDate: end_excel,
         ranges: {
@@ -69,7 +81,17 @@ $(function () {
         e.preventDefault();
         var form = $(this);
         var url = form.attr('action');
-        window.open(url + '?start_date=' + start_date_excel + " 00:00:00&end_date=" + end_date_excel + " 23:59:59", '_blank');
+        var barang = form.find('input[name="barang"]').val(),
+                jenis = form.find('input[name="jenis[]"]:eq(0)').is(':checked') && !form.find('input[name="jenis[]"]:eq(1)').is(':checked') ? 'masuk': form.find('input[name="jenis[]"]:eq(1)').is(':checked') && !form.find('input[name="jenis[]"]:eq(0)').is(':checked')? 'keluar': '',
+                id = form.find('input[name="id"]').val();
+        window.open(
+                url + '?start_date=' + start_date + " 00:00:00"
+                + "&end_date=" + end_date + " 23:59:59"
+                + "&barang=" + barang
+                + "&jenis=" + jenis
+                + "&tiket_id=" + id,
+                '_blank'
+                );
     });
 
 });

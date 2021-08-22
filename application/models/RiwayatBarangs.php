@@ -86,7 +86,14 @@ class RiwayatBarangs extends MY_Model {
         return $this->datatables->generate();
     }
 
-    function download($start_date, $end_date) {
+    function download($start_date, $end_date, $jenis='') {
+        if ($jenis == 'masuk'){
+            $jenis = 'AND riwayatbarang.jumlah > 0';
+        } elseif ($jenis == 'keluar') {
+            $jenis = 'AND riwayatbarang.jumlah < 0';
+        } else {
+            $jenis = '';
+        }
         $this->query = "
             SELECT
               riwayatbarang.orders
@@ -112,6 +119,8 @@ class RiwayatBarangs extends MY_Model {
             LEFT JOIN desa ON pengajuan.kelurahan = desa.uuid
             LEFT JOIN bencana ON pengajuan.bencana = bencana.uuid
             WHERE riwayatbarang.createdAt >= '$start_date' AND riwayatbarang.createdAt <= '$end_date'
+            $jenis
+            ORDER BY riwayatbarang.createdAt ASC
         ";
         $no = 0;
         return array_map(function ($record) use (&$no) {

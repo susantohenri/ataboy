@@ -43,9 +43,21 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="<?= site_url($current['controller'] . '/pdf') ?>" id="formPDF">
-                    <div id="rangemodalPDF" class="mb-4" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                        <i class="fa fa-calendar"></i>&nbsp;
-                        <span></span> <i class="fa fa-caret-down"></i>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Tanggal</label>
+                        <div class="col-sm-9">
+                            <div id="rangemodalPDF" style="background: #fff; cursor: pointer; padding: .375rem .75rem; border: 1px solid #ced4da; width: 100%; border-radius: .25rem;">
+                                <i class="fa fa-calendar"></i>&nbsp;
+                                <span></span> <i class="fa fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Jenis</label>
+                        <div class="col-sm-9">
+                            <input class="" type="checkbox" name="jenis[]" value="masuk" id="masuk"> <label for="masuk" class="font-weight-normal">MASUK</label>
+                            <input class="ml-4" type="checkbox" name="jenis[]" value="keluar" id="keluar"> <label for="keluar" class="font-weight-normal">KELUAR</label>
+                        </div>
                     </div>
 
                     <div class="form-group row">
@@ -72,9 +84,21 @@
             </div>
             <div class="modal-body">
                 <form method="post" action="<?= site_url($current['controller'] . '/excel') ?>" id="formExcel">
-                    <div id="rangemodalExcel" class="mb-4" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%">
-                        <i class="fa fa-calendar"></i>&nbsp;
-                        <span></span> <i class="fa fa-caret-down"></i>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Tanggal</label>
+                        <div class="col-sm-9">
+                            <div id="rangemodalExcel" style="background: #fff; cursor: pointer; padding: .375rem .75rem; border: 1px solid #ced4da; width: 100%; border-radius: .25rem;">
+                                <i class="fa fa-calendar"></i>&nbsp;
+                                <span></span> <i class="fa fa-caret-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 control-label">Jenis</label>
+                        <div class="col-sm-9">
+                            <input class="" type="checkbox" name="jenis[]" value="masuk" id="masukEx"> <label for="masukEx" class="font-weight-normal">MASUK</label>
+                            <input class="ml-4" type="checkbox" name="jenis[]" value="keluar" id="keluarEx"> <label for="keluarEx" class="font-weight-normal">KELUAR</label>
+                        </div>
                     </div>
 
                     <div class="form-group row">
